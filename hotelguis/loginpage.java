@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import java.lang.String;
 
 //This is a comment
+//This is another comment
 
 public class loginpage extends javax.swing.JDialog {
     String username = "";
