@@ -4,6 +4,8 @@ import java.awt.Component;
 import javax.swing.JOptionPane;
 import java.lang.String;
 
+//This is a comment
+
 public class loginpage extends javax.swing.JDialog {
     String username = "";
     String pwd = "";
