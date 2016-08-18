@@ -16,15 +16,16 @@ import java.util.ArrayList;
 public class hotelsystemMAIN {
 	
 	//DATA
-    public static User user = new User();
+    public static User user;
     //String currentUser;
     
     //System Level
     public static String systemUser;
     public static int systemUserID;
-    public static reservationProcess systemReservationList = new reservationProcess();
-    public static Users systemUserList = new Users(); 
+    public static reservationProcess systemReservationList;
+    public static Users systemUserList; 
     
+    /*
     //Constructors
     private loginpage loginpageInstance;
     public hotelsystemMAIN(loginpage lp){
@@ -44,6 +45,26 @@ public class hotelsystemMAIN {
     private createaccount createaccountInstance;
     public hotelsystemMAIN(createaccount ca){
         createaccountInstance = ca;
+    }
+    */
+    
+    public hotelsystemMAIN(){
+    	user = new User();
+    	systemUserList = new Users();
+    	systemReservationList = new reservationProcess();
+    }
+    
+    public void run(){
+    	//System set up
+    	systemUserList.readFromFile();
+    	
+    	//Open Start Window
+        welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
+        homewindow.setSize(800,620);
+        homewindow.setVisible(true);
+        
+        //System save
+        systemUserList.writeToFile();
     }
     
     

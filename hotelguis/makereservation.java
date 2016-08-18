@@ -25,7 +25,7 @@ public class makereservation extends javax.swing.JDialog {
     int userID;
     int reservationReturn;
     
-    User user = new User();
+    //User user = new User();
     //Users users = new Users();
     
     public makereservation(java.awt.Frame parent, boolean modal) {
@@ -65,7 +65,7 @@ public class makereservation extends javax.swing.JDialog {
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(usernameLabel);
         usernameLabel.setBounds(110, 570, 100, 0);
-        usernameLabel.setText(String.valueOf(user._userID));
+        usernameLabel.setText(String.valueOf(hotelsystemMAIN.user._userID));
 
         monthlabel.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         monthlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -251,7 +251,7 @@ public class makereservation extends javax.swing.JDialog {
     }//GEN-LAST:event_roomtypeActionPerformed
 
     private void confirmbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmbuttonActionPerformed
-        userID = user.getUserID(); 
+        userID = hotelsystemMAIN.user.getUserID(); 
         
         startMonth = Integer.valueOf((String)Month.getSelectedItem());
         startDay = Integer.valueOf((String)day.getSelectedItem());

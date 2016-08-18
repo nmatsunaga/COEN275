@@ -7,13 +7,10 @@ public class User {
 	//DATA (removed all 'private')
 	String _firstName, _lastName;
 	String _userName, _passWord;
-	//private ArrayList<Reservation> _reservations;
 	String _email, _phoneNumber;
 	boolean _admin;
 	boolean _loggedIn;
 	int _userID;
-	
-	//private ArrayList<Reservation> _reservations;
 	
 	//CONSTRUCTORS
 	public User(){
@@ -148,22 +145,7 @@ public class User {
 	}
 	
 	//METHODS
-	/*
-	//Let's avoid using this if possible...
-	public void assign(User that){
-		_firstName = that.getFirstName();
-		_lastName = that.getLastName();
-		_userName = that.getUserName();
-		_passWord = that.getPassWord();
-		_email = that.getEmail();
-		_phoneNumber = that.getPhoneNumber();
-		
-		_admin = that.getAdmin();
-		_loggedIn = that.getLoggedIn();
-		
-		_userID = that.getUID();
-	}
-	*/
+	
 	@Override
 	public String toString(){
 		String result = "";

@@ -1,30 +1,49 @@
 package hotelguis;
 
 import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+/*	User management class:
+ * 
+ * 	Holds an array list of User objects which define the
+ * 	current users (both admin and regular) that exist in
+ * 	the system.
+ * 
+ * 	Allows for the creation, logging in, loggin out, and
+ * 	editing of users.
+ */
 public class Users {
 	
 	//DATA
-	public ArrayList<User> _users;
-	private int _listID;
-        User user = new User();
+	private ArrayList<User> _users; //List of users in the system
+	private int _listID; //Unique ID given to each user of the system
 	
 	//CONSTRUCTORS
 	public Users()
 	{
-		_listID = 0;
 		_users = new ArrayList<User>();
-		_users.add(new User(_listID));
-		_listID += 1;
+		_users.add(new User(0));
+		_listID = 1;
 	}
 	
 	//ACCESSORS
 	
 	//METHODS
-	boolean createNewUser(String firstName, String lastName, String userName, String passWord, String email, String phoneNumber){
-		
+	public boolean createNewUser(String firstName,
+									String lastName,
+									String userName,
+									String passWord,
+									String email,
+									String phoneNumber)
+	{	
 		int i;
 		System.out.println("check"+ firstName + lastName + userName + passWord + email + phoneNumber);
 		for(i = 0; i < _users.size(); i++){
@@ -40,8 +59,31 @@ public class Users {
 		return true;
 	}
 	
+	private boolean createUserFromFile(String firstName,
+										String lastName,
+										String userName,
+										String passWord,
+										String email,
+										String phoneNumber,
+										int userID)
+	{	
+		int i;
+		System.out.println("check"+ firstName + lastName + userName + passWord + email + phoneNumber);
+		for(i = 0; i < _users.size(); i++){
+			System.out.println(_users.get(i).getUserName() + " " + userName);
+			if(_users.get(i).getUserName().equals(userName)){
+				return false;
+			}
+		}
+		
+		_users.add(new User(firstName, lastName, userName, passWord, email, phoneNumber, userID));
+		_listID = userID;
+                
+		return true;
+	}
+	
 	//Return reference to current user.
-	User login(String userName, String passWord){
+	public User login(String userName, String passWord){
 		
 		int i;
         
@@ -71,13 +113,13 @@ public class Users {
 		return new User();
 	}
 	
-	boolean logout(String userName){
+	public boolean logout(String userName){
 		
 		int i;
 		
 		for(i = 0; i < _users.size(); i++){
 			
-			if(_users.get(i).getUserName() == userName){
+			if(_users.get(i).getUserName().equals(userName)){
 				
 				_users.get(i).setLoggedIn(false);
 				
@@ -90,13 +132,13 @@ public class Users {
 		return false;
 	}
 	
-	boolean isLoggedIn(String userName){
+	public boolean isLoggedIn(String userName){
 		
 		int i;
 		
 		for(i = 0; i < _users.size(); i++){
 			
-			if(_users.get(i).getUserName() == userName){
+			if(_users.get(i).getUserName().equals(userName)){
 				
 				return _users.get(i).getLoggedIn();
 			}
@@ -105,13 +147,13 @@ public class Users {
 		return false;
 	}
 	
-	boolean isAdmin(String userName){
+	public boolean isAdmin(String userName){
 		
 		int i;
 		
 		for(i = 0; i < _users.size(); i++){
 			
-			if(_users.get(i).getUserName() == userName){
+			if(_users.get(i).getUserName().equals(userName)){
 				
 				return _users.get(i).getAdmin();
 			}
@@ -120,13 +162,13 @@ public class Users {
 		return false;
 	}
 	
-	void editUserInfo(String userName, int field, String newValue){
+	public void editUserInfo(String userName, int field, String newValue){
 		
 		int i;
 		
 		for(i = 0; i < _users.size(); i++){
 			
-			if(_users.get(i).getUserName() == userName){
+			if(_users.get(i).getUserName().equals(userName)){
 				
 				switch(field){
 				
@@ -142,11 +184,105 @@ public class Users {
 		}
 	}
 	
-	//boolean canEdit()
-	//boolean setReservation(String userName, Reservation reservation)
-	//Reservation list/Reservation data checkReservations() ?? How would this work best
-	//boolean removeReservation(String userName, int ID)
+	public void writeToFile(){
+		Charset charset = Charset.forName("US-ASCII");
+		Path p = Paths.get("list.txt");
+		
+		try(BufferedWriter writer = Files.newBufferedWriter(p, charset)){
+			for(int i = 1; i < _users.size(); i++){
+				User user = _users.get(i);
+				String line = user.getFirstName() + "," +
+							user.getLastName() + "," +
+							user.getUserName() + "," +
+							user.getPassWord() + "," +
+							user.getEmail() + "," +
+							user.getPhoneNumber() + "," +
+							user.getUserID();
+				writer.write(line, 0, line.length());
+			} 
+		} catch (IOException x) {
+				System.err.format("IOException: %s%n", x);
+		}
+	}
 	
+	private void parseAndAdd(String line){
+		
+		String firstName = "";
+		String lastName = "";
+		String userName = "";
+		String passWord = "";
+		String email = "";
+		String phoneNumber = "";
+		int userID = 0;
+		
+		int i = 0;
+		
+		while(line.charAt(i) != ','){
+			firstName += line.charAt(i);
+			i++;
+		}
+		
+		i++;
+		
+		while(line.charAt(i) != ','){
+			lastName += line.charAt(i);
+			i++;
+		}
+		
+		i++;
+		
+		while(line.charAt(i) != ','){
+			userName += line.charAt(i);
+			i++;
+		}
+		
+		i++;
+		
+		while(line.charAt(i) != ','){
+			passWord += line.charAt(i);
+			i++;
+		}
+		
+		i++;
+		
+		while(line.charAt(i) != ','){
+			email += line.charAt(i);
+			i++;
+		}
+		
+		i++;
+		
+		while(line.charAt(i) != ','){
+			phoneNumber += line.charAt(i);
+			i++;
+		}
+		
+		i++;
+		
+		while(i != line.length()){
+			userID = (10 * userID) + (line.charAt(i) - '0');
+			i++;
+		}
+		
+		createUserFromFile(firstName, lastName, userName, passWord, email, phoneNumber, userID);
+	}
+	
+	public void readFromFile(){
+		Charset charset = Charset.forName("US-ASCII");
+		Path p = Paths.get("list.txt");
+		
+		try(BufferedReader reader = Files.newBufferedReader(p, charset)){
+			String line = null;
+			while((line = reader.readLine()) != null){
+				parseAndAdd(line);
+			}
+		} catch (IOException x) {
+			//Do nothing
+			System.out.println("Nothing to read");
+		}
+	}
+	
+	@Override
 	public String toString(){
 		String result = "";
 		int i;
@@ -158,5 +294,4 @@ public class Users {
 		
 		return result;
 	}
-	
 }
