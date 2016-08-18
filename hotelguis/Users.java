@@ -1,6 +1,6 @@
 package hotelguis;
 
-import java.awt.Component;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+
 
 /*	User management class:
  * 
@@ -17,8 +17,12 @@ import javax.swing.JOptionPane;
  * 	current users (both admin and regular) that exist in
  * 	the system.
  * 
- * 	Allows for the creation, logging in, loggin out, and
+ * 	Allows for the creation, logging in, logging out, and
  * 	editing of users.
+ * 
+ * 	Has the ability to retrieve a user list from a file
+ * 	upon start up and/or save a user list to a file upon
+ * 	completion.
  */
 public class Users {
 	
@@ -187,6 +191,11 @@ public class Users {
 	public void writeToFile(){
 		Charset charset = Charset.forName("US-ASCII");
 		Path p = Paths.get("list.txt");
+		
+		if(_users.size() == 1){
+			System.out.println("Nothing to write");
+			return;
+		}
 		
 		try(BufferedWriter writer = Files.newBufferedWriter(p, charset)){
 			for(int i = 1; i < _users.size(); i++){

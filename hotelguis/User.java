@@ -1,6 +1,14 @@
 package hotelguis;
 
-import java.util.*;
+
+/*	User object class:
+ * 
+ * 	Represents a single user in the system. Users may
+ * 	be either admin or regular. Currently only one
+ * 	generic admin user exists. Each object tracks user
+ * 	specific information and whether or not the user is
+ * 	logged in.
+ */
 
 public class User {
 	
@@ -57,10 +65,6 @@ public class User {
 		
 		_userID = userID;
 	}
-
-    /*public class User() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
 	
 	//ACCESSORS
 	String getFirstName(){
@@ -144,8 +148,7 @@ public class User {
 		_phoneNumber = newValue;
 	}
 	
-	//METHODS
-	
+	//METHODS	
 	@Override
 	public String toString(){
 		String result = "";
