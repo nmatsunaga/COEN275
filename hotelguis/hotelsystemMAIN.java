@@ -16,8 +16,7 @@ import java.util.ArrayList;
 public class hotelsystemMAIN {
 	
 	//DATA
-    public User user;
-    public Window window;
+    public static User user = new User();
     //String currentUser;
     
     //System Level
@@ -47,9 +46,6 @@ public class hotelsystemMAIN {
         createaccountInstance = ca;
     }
     
-    private void run(){
-    	
-    }
     
     public static void main(String[] args) {
         

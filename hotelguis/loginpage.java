@@ -10,7 +10,7 @@ import java.lang.String;
 public class loginpage extends javax.swing.JDialog {
     String username = "";
     String pwd = "";
-    User user = new User();
+    //User user = new User();
     String checklogin = "";
     // removed "users" to use global hotelsystemMAIN.systemUserList
     //Users users = new Users();
@@ -113,9 +113,9 @@ public class loginpage extends javax.swing.JDialog {
         username = usernametextfield.getText();    
         pwd = passwordtextfield.getText();
         //users.login(username, pwd);
-        user = hotelsystemMAIN.systemUserList.login(username, pwd);
+        hotelsystemMAIN.user = hotelsystemMAIN.systemUserList.login(username, pwd);
         
-        if (user.getLoggedIn()==true && user.getAdmin()==true){
+        if (hotelsystemMAIN.user.getLoggedIn()==true && hotelsystemMAIN.user.getAdmin()==true){
         	dispose();
         	administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(),true);
         	adminwindow.setSize(800,620);
@@ -125,7 +125,7 @@ public class loginpage extends javax.swing.JDialog {
              return;
         }
         
-        if (user.getLoggedIn()==true){
+        if (hotelsystemMAIN.user.getLoggedIn()==true){
                 useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
                 optwin.setSize(800,620);
                 optwin.setVisible(true);
@@ -133,7 +133,7 @@ public class loginpage extends javax.swing.JDialog {
                 return;
         }
         
-        if (user.getLoggedIn()==false){
+        if (hotelsystemMAIN.user.getLoggedIn()==false){
         	Component frame = null;
             JOptionPane.showMessageDialog(frame, "Login invalid.");
         }
