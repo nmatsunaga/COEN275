@@ -54,11 +54,6 @@ public class createaccount extends javax.swing.JDialog {
         getContentPane().add(homebutton);
         homebutton.setBounds(700, 10, 97, 29);
 
-        lastname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lastnameActionPerformed(evt);
-            }
-        });
         getContentPane().add(lastname);
         lastname.setBounds(430, 40, 200, 26);
 
@@ -83,49 +78,58 @@ public class createaccount extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        phonenumbertextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phonenumbertextfieldActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(phonenumbertextfield);
         phonenumbertextfield.setBounds(430, 160, 200, 26);
-
-        passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(passwordtextfield);
         passwordtextfield.setBounds(430, 130, 200, 26);
-
         namelabel.setText("First Name");
         getContentPane().add(namelabel);
         namelabel.setBounds(340, 10, 70, 20);
-
-        emailtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(emailtextfield);
         emailtextfield.setBounds(430, 70, 200, 26);
+        getContentPane().add(usernametextfield);
+        usernametextfield.setBounds(430, 100, 200, 26);
+        getContentPane().add(firstname);
+        firstname.setBounds(430, 10, 200, 26);
 
+        /*
+        firstname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstnameActionPerformed(evt);
+        	}
+        });
+        
+        lastname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastnameActionPerformed(evt);
+            }
+        });
+                
         usernametextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernametextfieldActionPerformed(evt);
             }
         });
-        getContentPane().add(usernametextfield);
-        usernametextfield.setBounds(430, 100, 200, 26);
-
-        firstname.addActionListener(new java.awt.event.ActionListener() {
+        
+        passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstnameActionPerformed(evt);
+                passwordtextfieldActionPerformed(evt);
             }
         });
-        getContentPane().add(firstname);
-        firstname.setBounds(430, 10, 200, 26);
+        
+        emailtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailtextfieldActionPerformed(evt);
+            }
+        });
+                
+        phonenumbertextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                phonenumbertextfieldActionPerformed(evt);
+            }
+        });  
+        */
 
         jLabel1.setText("Last Name");
         getContentPane().add(jLabel1);
@@ -153,15 +157,16 @@ public class createaccount extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
-        userfirstname = firstname.getText(); 
-    }//GEN-LAST:event_firstnameActionPerformed
-
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
+    
+    /*
+    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
+        userfirstname = firstname.getText(); 
+    }//GEN-LAST:event_firstnameActionPerformed
 
     private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
         userlastname = lastname.getText();
@@ -182,25 +187,90 @@ public class createaccount extends javax.swing.JDialog {
     private void phonenumbertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumbertextfieldActionPerformed
         userphonenum = phonenumbertextfield.getText();
     }//GEN-LAST:event_phonenumbertextfieldActionPerformed
-
+	*/
+    
     private void createaccountbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createaccountbuttonActionPerformed
-        userfirstname = firstname.getText(); 
+        boolean valid = true;
+    	userfirstname = firstname.getText(); 
         userlastname = lastname.getText();
-        useremail = emailtextfield.getText();
         username = usernametextfield.getText();
         userpassword = passwordtextfield.getText();
+        useremail = emailtextfield.getText();
         userphonenum = phonenumbertextfield.getText();
         
-        if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
-        	Component frame = null;
-			JOptionPane.showMessageDialog(frame, "Username already exists!");
-        }
-        else{
-        	Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Successfully created new account!");
+        //Checks on user input
+        for(int i = 0; i < userfirstname.length(); i++){
+        	char c = userfirstname.charAt(i);
+        	if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')){
+        		System.out.println("Invalid character in First Name!");
+        		hotelsystemMAIN.reportError("Invalid character in \"First Name\"");
+        		valid = false;
+        		break;
+        	}
         }
         
-        System.out.println("added " + username);
+        for(int i = 0; i < userlastname.length(); i++){
+        	char c = userlastname.charAt(i);
+        	if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')){
+        		System.out.println("Invalid character in Last Name!");
+        		hotelsystemMAIN.reportError("Invalid character in \"Last Name\"");
+        		valid = false;
+        		break;
+        	}
+        }
+        
+        for(int i = 0; i < username.length(); i++){
+        	char c = username.charAt(i);
+        	if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && !(c >= '0' && c <= '9')){
+        		System.out.println("Invalid character in User Name!");
+        		hotelsystemMAIN.reportError("Invalid character in \"Desired Username\"");
+        		valid = false;
+        		break;
+        	}
+        }
+        
+        for(int i = 0; i < userpassword.length(); i++){
+        	char c = userpassword.charAt(i);
+        	if(!(c >= '!' && c <= '}') || (c == '\"') || (c == '`')){
+        		System.out.println("Invalid character in Password!");
+        		hotelsystemMAIN.reportError("Invalid character in \"Password\"");
+        		valid = false;
+        		break;
+        	}
+        }
+        
+        for(int i = 0; i < useremail.length(); i++){
+        	char c = useremail.charAt(i);
+        	if(!(c >= '!' && c <= '}') || (c == '\"') || (c == '`')){
+        		System.out.println("Invalid character in Password!");
+        		hotelsystemMAIN.reportError("Invalid character in \"Password\"");
+        		valid = false;
+        		break;
+        	}
+        }
+        
+        for(int i = 0; i < userphonenum.length(); i++){
+        	char c = userphonenum.charAt(i);
+        	if(!(c >= '!' && c <= '}') || (c == '\"') || (c == '`')){
+        		System.out.println("Invalid character in Password!");
+        		hotelsystemMAIN.reportError("Invalid character in \"Password\"");
+        		valid = false;
+        		break;
+        	}
+        }
+        
+        if(valid){
+	        if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
+	        	Component frame = null;
+				JOptionPane.showMessageDialog(frame, "Username already exists!");
+	        }
+	        else{
+	        	Component frame = null;
+	            JOptionPane.showMessageDialog(frame, "Successfully created new account!");
+	        }
+        
+	        System.out.println("added " + username);
+        }
         
     }//GEN-LAST:event_createaccountbuttonActionPerformed
 
