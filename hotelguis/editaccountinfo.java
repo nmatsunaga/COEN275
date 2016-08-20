@@ -1,6 +1,10 @@
 package hotelguis;
 
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.lang.String;
+
+import javax.swing.JTextArea;
 
 public class editaccountinfo extends javax.swing.JDialog {
 
@@ -9,7 +13,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     String newpassword = "";
     String newemail = "";
     String newphonenumber;
-    User user = new User();
+    //User user = new User();
     //Users users = new Users();
     
     public editaccountinfo(java.awt.Frame parent, boolean modal) {
@@ -17,6 +21,77 @@ public class editaccountinfo extends javax.swing.JDialog {
         initComponents();
     }
 
+    private String getUserInfo(){
+    	if(!hotelsystemMAIN.user.getLoggedIn()){
+    		System.out.println("Current user is not logged in!");
+    		return "";
+    	}
+    	else{
+    		String s = hotelsystemMAIN.user.getFirstName() + "\n" +
+    					hotelsystemMAIN.user.getLastName() + "\n" +
+    					hotelsystemMAIN.user.getUserName() + "\n" +
+    					hotelsystemMAIN.user.getPassWord() + "\n" +
+    					hotelsystemMAIN.user.getEmail() + "\n" +
+    					hotelsystemMAIN.user.getPhoneNumber();
+    		
+    		return s;
+    	}
+    }
+    
+    private String getStringWidth(FontMetrics fm){
+    	if(!hotelsystemMAIN.user.getLoggedIn()){
+    		System.out.println("Current user is not logged in!");
+    		return "";
+    	}
+    	else{
+    		String list[] = {hotelsystemMAIN.user.getFirstName(),
+    							hotelsystemMAIN.user.getLastName(),
+    							hotelsystemMAIN.user.getFirstName(),
+    							hotelsystemMAIN.user.getFirstName(),
+    							hotelsystemMAIN.user.getFirstName(),
+    							hotelsystemMAIN.user.getPhoneNumber()
+    						};
+    		String a = list[0];
+    		
+    		for(int i = 1; i < list.length; i++){
+    			if(fm.stringWidth(list[i]) > fm.stringWidth(a)){
+    				a = list[i];
+    			}
+    		}
+    		
+    		return a;
+    	}
+    }
+    
+    private void setUserHeader(){
+    	userHeader.setText("Current user information");
+    	FontMetrics fm = userHeader.getFontMetrics(userHeader.getFont());
+        userHeader.setBounds(20, 120, fm.stringWidth("Current user information"), 20);
+    }
+    
+    private void setUserLabels(){
+    	String s = "First Name:\n" +
+    				"Last Name:\n" +
+    				"Username:\n" +
+    				"Password:\n" +
+    				"E-mail:\n" +
+    				"Phone Number:";
+    	
+    	userLabels.setText(s);
+    	FontMetrics fm = userLabels.getFontMetrics(userLabels.getFont());
+    	userLabels.setBounds(20, 120 + userHeader.getHeight() + 15, fm.stringWidth("Phone Number:"), 100);
+    }
+    
+    private void updateUserInfoText(){
+    	userInfo.setEnabled(false);
+    	userInfo.setText(getUserInfo());
+        FontMetrics fm = userInfo.getFontMetrics(userInfo.getFont());
+        userInfo.setBounds(20 + userLabels.getWidth() + 10, 120 + userHeader.getHeight() + 15, fm.stringWidth(getStringWidth(fm)), 100);
+        userInfo.setEnabled(true);
+        
+        System.out.println(userInfo.getText());
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -32,7 +107,9 @@ public class editaccountinfo extends javax.swing.JDialog {
         emailbutton = new javax.swing.JButton();
         passwordtextfield = new javax.swing.JTextField();
         LNbutton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        userHeader = new javax.swing.JTextArea();
+        userLabels = new javax.swing.JTextArea();
+        userInfo = new javax.swing.JTextArea();
         pagetitle = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
         editaccountinfobackground = new javax.swing.JLabel();
@@ -54,11 +131,6 @@ public class editaccountinfo extends javax.swing.JDialog {
         getContentPane().add(instructions);
         instructions.setBounds(130, 300, 440, 16);
 
-        LNtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LNtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(LNtextfield);
         LNtextfield.setBounds(130, 350, 200, 26);
 
@@ -67,20 +139,12 @@ public class editaccountinfo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        phonenumtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phonenumtextfieldActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(phonenumtextfield);
         phonenumtextfield.setBounds(130, 440, 200, 26);
 
         FNtextfield.setToolTipText("");
-        FNtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FNtextfieldActionPerformed(evt);
-            }
-        });
+
         getContentPane().add(FNtextfield);
         FNtextfield.setBounds(130, 320, 200, 30);
 
@@ -107,11 +171,7 @@ public class editaccountinfo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        emailtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailtextfieldActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(emailtextfield);
         emailtextfield.setBounds(130, 410, 200, 26);
 
@@ -124,11 +184,6 @@ public class editaccountinfo extends javax.swing.JDialog {
         getContentPane().add(emailbutton);
         emailbutton.setBounds(340, 410, 170, 29);
 
-        passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(passwordtextfield);
         passwordtextfield.setBounds(130, 380, 200, 26);
 
@@ -141,9 +196,14 @@ public class editaccountinfo extends javax.swing.JDialog {
         getContentPane().add(LNbutton);
         LNbutton.setBounds(340, 350, 170, 29);
 
-        jLabel3.setText("Current Information:");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 120, 140, 20);
+        setUserHeader();
+        getContentPane().add(userHeader);
+        
+        setUserLabels();
+        getContentPane().add(userLabels);
+        
+        updateUserInfoText();
+        getContentPane().add(userInfo);
 
         pagetitle.setFont(new java.awt.Font("Oriya MN", 0, 24)); // NOI18N
         pagetitle.setText("Edit User Account Information");
@@ -197,40 +257,24 @@ public class editaccountinfo extends javax.swing.JDialog {
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
 
-    private void FNtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FNtextfieldActionPerformed
-        newfirstname = FNtextfield.getText();
-    }//GEN-LAST:event_FNtextfieldActionPerformed
-
-    private void LNtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNtextfieldActionPerformed
-        newlastname = LNtextfield.getText();
-    }//GEN-LAST:event_LNtextfieldActionPerformed
-
-    private void phonenumberbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumberbuttonActionPerformed
-         hotelsystemMAIN.systemUserList.editUserInfo(user.getUserName(), 5, newphonenumber);
-    }//GEN-LAST:event_phonenumberbuttonActionPerformed
-
-    private void phonenumtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumtextfieldActionPerformed
-        newphonenumber = phonenumtextfield.getText();
-    }//GEN-LAST:event_phonenumtextfieldActionPerformed
-
-    private void emailtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailtextfieldActionPerformed
-        newemail = emailtextfield.getText();
-    }//GEN-LAST:event_emailtextfieldActionPerformed
-
     private void FNbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FNbuttonActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(user.getUserName(), 0, newfirstname);
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 0, FNtextfield.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_FNbuttonActionPerformed
 
     private void LNbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNbuttonActionPerformed
-         hotelsystemMAIN.systemUserList.editUserInfo(user.getUserName(), 1, newlastname);
+         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, LNtextfield.getText());
+         updateUserInfoText();
     }//GEN-LAST:event_LNbuttonActionPerformed
 
     private void passwordbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordbuttonActionPerformed
-         hotelsystemMAIN.systemUserList.editUserInfo(user.getUserName(), 3, newpassword);
+         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, passwordtextfield.getText());
+         updateUserInfoText();
     }//GEN-LAST:event_passwordbuttonActionPerformed
 
     private void emailbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailbuttonActionPerformed
-         hotelsystemMAIN.systemUserList.editUserInfo(user.getUserName(), 4, newemail);
+         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, emailtextfield.getText());
+         updateUserInfoText();
     }//GEN-LAST:event_emailbuttonActionPerformed
 
     private void backtouseroptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtouseroptionsActionPerformed
@@ -238,10 +282,11 @@ public class editaccountinfo extends javax.swing.JDialog {
              optwin.setSize(800,620);
              optwin.setVisible(true);
     }//GEN-LAST:event_backtouseroptionsActionPerformed
-
-    private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
-        newpassword = passwordtextfield.getText();
-    }//GEN-LAST:event_passwordtextfieldActionPerformed
+    
+    private void phonenumberbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumberbuttonActionPerformed
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, phonenumtextfield.getText());
+        updateUserInfoText();
+    }//GEN-LAST:event_phonenumberbuttonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -286,20 +331,27 @@ public class editaccountinfo extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton FNbutton;
     private javax.swing.JTextField FNtextfield;
+    
     private javax.swing.JButton LNbutton;
     private javax.swing.JTextField LNtextfield;
-    private javax.swing.JButton backtouseroptions;
-    private javax.swing.JLabel editaccountinfobackground;
-    private javax.swing.JButton emailbutton;
-    private javax.swing.JFormattedTextField emailtextfield;
-    private javax.swing.JButton homebutton;
-    private javax.swing.JLabel instructions;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel pagetitle;
+    
     private javax.swing.JButton passwordbutton;
     private javax.swing.JTextField passwordtextfield;
+    
+    private javax.swing.JButton emailbutton;
+    private javax.swing.JFormattedTextField emailtextfield;
+    
     private javax.swing.JButton phonenumberbutton;
     private javax.swing.JFormattedTextField phonenumtextfield;
+    
+    private javax.swing.JButton backtouseroptions;
+    private javax.swing.JLabel editaccountinfobackground;
+    private javax.swing.JButton homebutton;
+    private javax.swing.JLabel instructions;
+    private javax.swing.JTextArea userHeader;
+    private javax.swing.JTextArea userLabels;
+    private javax.swing.JTextArea userInfo;
+    private javax.swing.JLabel pagetitle;
     private javax.swing.JLabel welcomelabel;
     private javax.swing.JLabel whiteboxbackground;
     // End of variables declaration//GEN-END:variables
