@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class hotelsystemMAIN {
 	
-	//DATA
+    //DATA
     public static User user;
     //String currentUser;
     
