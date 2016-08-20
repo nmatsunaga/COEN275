@@ -316,9 +316,9 @@ public class checkavail extends javax.swing.JDialog {
     	//int testRoomType = 0;
     	//Date testStartDate = new Date((2017),Calendar.AUGUST, 3);
     	//Date testEndDate = new Date((2017),Calendar.AUGUST, 10);
-    	System.out.println("testStartDate =  " + testStartDate + ", and testEndDate = " + testEndDate);
-    	int testRoomNumber = hotelsystemMAIN.hotelRoomList.check_availability(testRoomType, testStartDate, testEndDate);
-    	System.out.println("the returned room number is " + testRoomNumber);
+    	//System.out.println("testStartDate =  " + testStartDate + ", and testEndDate = " + testEndDate);
+    	//int testRoomNumber = hotelsystemMAIN.hotelRoomList.check_availability(testRoomType, testStartDate, testEndDate);
+    	//System.out.println("the returned room number is " + testRoomNumber);
     	
     	/*the following boolean value is to indicate if an available room is found in the date specified*/
     	boolean roomFound = false;
