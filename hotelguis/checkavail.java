@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import java.util.Date;
+import java.util.Calendar;
 
 public class checkavail extends javax.swing.JDialog {
 
@@ -307,6 +309,16 @@ public class checkavail extends javax.swing.JDialog {
     	//DateReserve reserveDate = new DateReserve(startDate, endDate);
     	//HotelMgr hotelRoomObject = new HotelMgr();
     	//boolean loggedInStatus = UserLoginStatus.currentLoggedInStatus();
+    	
+    	/*********************************************
+    	 * below is for testing purpose
+    	 */
+    	//int testRoomType = 0;
+    	//Date testStartDate = new Date((2017),Calendar.AUGUST, 3);
+    	//Date testEndDate = new Date((2017),Calendar.AUGUST, 10);
+    	System.out.println("testStartDate =  " + testStartDate + ", and testEndDate = " + testEndDate);
+    	int testRoomNumber = hotelsystemMAIN.hotelRoomList.check_availability(testRoomType, testStartDate, testEndDate);
+    	System.out.println("the returned room number is " + testRoomNumber);
     	
     	/*the following boolean value is to indicate if an available room is found in the date specified*/
     	boolean roomFound = false;
