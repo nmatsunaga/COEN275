@@ -1,11 +1,13 @@
 package hotelguis;
 
 import static hotelguis.reservationProcess.entries;
+import java.awt.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class adminEditReservations extends javax.swing.JDialog {
@@ -18,6 +20,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     public Date startDate;
     public Date endDate;
     public User usernum;
+    public int selectedReservationID;
     //public reservationEntryPublic entry = new reservationEntryPublic();
     
     User user = new User();
@@ -182,13 +185,30 @@ public class adminEditReservations extends javax.swing.JDialog {
     }//GEN-LAST:event_searchResButtonActionPerformed
 
     private void editResDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editResDatesActionPerformed
-        reservationID = reservationDisplayTable.getSelectedRow();
-        System.out.println(reservationID);//testing to ensure correct userID is selected
+        selectedReservationID = reservationDisplayTable.getSelectedRow();
+        System.out.println(reservationID);//testing to ensure correct reservationID is selected
+        
         
     }//GEN-LAST:event_editResDatesActionPerformed
 
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteResButtonActionPerformed
-        // TODO add your handling code here:
+       //NEED TO FINISH, INCOMPLETE
+        
+        int selectedRowIndex = reservationDisplayTable.getSelectedRow();
+        int selectedColumnIndex = reservationDisplayTable.getSelectedColumn();
+        Object selectedObject = reservationDisplayTable.getValueAt(selectedRowIndex, 0);
+
+        int confirmCancel = Integer.parseInt((String) selectedObject);
+
+        confirmCancel = hotelsystemMAIN.systemReservationList.adminCancelReservationByRid(reservationID);
+        if (confirmCancel == 1){
+            Component frame = null;
+            JOptionPane.showMessageDialog(frame, "Successfully cancelled reservationID# " + reservationID);
+        }
+        if (confirmCancel == 0){
+            Component frame = null;
+            JOptionPane.showMessageDialog(frame, "Reservation not found.");
+        }        
     }//GEN-LAST:event_deleteResButtonActionPerformed
 
     public static void main(String args[]) {
