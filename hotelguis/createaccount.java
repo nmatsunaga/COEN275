@@ -189,6 +189,25 @@ public class createaccount extends javax.swing.JDialog {
     }//GEN-LAST:event_phonenumbertextfieldActionPerformed
 	*/
     
+    /*
+    private boolean emailIsValid(String s){
+    	boolean firstEmpty = true;
+    	boolean first = true;
+    	for(int i = 0; i < s.length(); i++){
+    		char c = s.charAt(i);
+    		if(c == )
+    		if(!(c >= 'a' && c <= 'z') &&
+				!(c >= 'A' && c <= 'Z') &&
+				!(c >= '0' && c <= '9') &&
+				c != '!' &&
+				c != '#' &&
+				)
+    	}
+    	
+    	return true;
+    }
+    */
+    
     private void createaccountbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createaccountbuttonActionPerformed
         boolean valid = true;
     	userfirstname = firstname.getText(); 
@@ -239,14 +258,10 @@ public class createaccount extends javax.swing.JDialog {
         	}
         }
         
-        for(int i = 0; i < useremail.length(); i++){
-        	char c = useremail.charAt(i);
-        	if(!(c >= '!' && c <= '}') || (c == '\"') || (c == '`')){
-        		System.out.println("Invalid character in Password!");
-        		hotelsystemMAIN.reportError("Invalid character in \"Password\"");
-        		valid = false;
-        		break;
-        	}
+        /*
+        if(!emailIsValid(useremail)){
+        	hotelsystemMAIN.reportError("Invalid character in \"Email\"");
+        	valid = false;
         }
         
         for(int i = 0; i < userphonenum.length(); i++){
@@ -258,6 +273,7 @@ public class createaccount extends javax.swing.JDialog {
         		break;
         	}
         }
+        */
         
         if(valid){
 	        if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
