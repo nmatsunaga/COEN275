@@ -5,26 +5,35 @@ import java.text.*;
 
 public class Hotel_room_manager {
 
-public static One_Hotel_room[] Hotel_room_manager_object = new One_Hotel_room[5] ; 
+public One_Hotel_room[] Hotel_room_manager_object  ; 
 	
-	
+public Hotel_room_manager() 
+{
+	Hotel_room_manager_object = new One_Hotel_room[5] ; 
+for ( int i=0; i<5; i++) {
+	Hotel_room_manager_object[i]=new One_Hotel_room();
+	}
+
+}
+
+
 @SuppressWarnings("deprecation")
 		
-public static ArrayList<Date> get_each_Hotel_room_reservation_list ( int room_number){
+public  ArrayList<Date> get_each_Hotel_room_reservation_list ( int room_number){
     return Hotel_room_manager_object[room_number].Get_Hotel_room_Reservation_list() ;
     }
 		
-public static void Occupy_Hotel_room ( Date Start_Date_1 , Date End_Date_1 , int room_number ) { 	
+public  void Occupy_Hotel_room ( Date Start_Date_1 , Date End_Date_1 , int room_number ) { 	
     Hotel_room_manager_object[room_number].Occupy_Hotel_room(Start_Date_1 , End_Date_1 , room_number ) ;
 }
 		
-public static void free_expired_rooms ( Date free_room_1 ) {
+public  void free_expired_rooms ( Date free_room_1 ) {
     for ( int counter = 0; counter < 5; counter++){ 
 	Hotel_room_manager_object[counter].free_room(free_room_1) ;
     }
 }
 		
-public static void configure_hotel_room ( int configuration_1   ) {
+public  void configure_hotel_room ( int configuration_1   ) {
     if ( configuration_1 == 0 ){
 	Hotel_room_manager_object[0].Set_Hotel_room(0 , 0) ;          // configuring Hotel room number 0 to 2 King size bed 
         Hotel_room_manager_object[1].Set_Hotel_room(2 , 1) ;          // configuring Hotel room number 1 to 2 queen size bed 
@@ -41,7 +50,7 @@ public static void configure_hotel_room ( int configuration_1   ) {
     }   
 }
 
-public static int check_availability (int type_of_the_room_requsted , Date Start_Date_1 , Date End_Date_1   ) {
+public int check_availability (int type_of_the_room_requsted , Date Start_Date_1 , Date End_Date_1   ) {
     int local_variable_integer ;
     boolean local_variable_boolean ;
     int room_number = 0 ;

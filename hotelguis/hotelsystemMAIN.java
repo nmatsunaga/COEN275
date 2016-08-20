@@ -69,10 +69,14 @@ public class hotelsystemMAIN {
     
     
     public static void main(String[] args) {
-        
+    	//Instantiation of New Hotel MGR Object and Configuration of Hotel Room
+        Hotel_room_manager Hotel_room_manager_object = new Hotel_room_manager();
+        Hotel_room_manager_object.configure_hotel_room(0); 
         //Open Start Window
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
+        
+        
     }
 }
