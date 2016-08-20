@@ -27,6 +27,8 @@ public class adminEditReservations extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         reservationDisplayTable.setRowSelectionAllowed(true);
+        //reservationDisplayTable.getRowSelectionAllowed();
+        //reservationDisplayTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         model = (DefaultTableModel) reservationDisplayTable.getModel();
     }
 
@@ -161,6 +163,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
     private void adminPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPageButtonActionPerformed
+        this.dispose();
         administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(), true);
         adminwindow.setSize(800,620);
         adminwindow.setVisible(true);
@@ -179,16 +182,15 @@ public class adminEditReservations extends javax.swing.JDialog {
     }//GEN-LAST:event_searchResButtonActionPerformed
 
     private void editResDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editResDatesActionPerformed
-        // TODO add your handling code here:
+        reservationID = reservationDisplayTable.getSelectedRow();
+        System.out.println(reservationID);//testing to ensure correct userID is selected
+        
     }//GEN-LAST:event_editResDatesActionPerformed
 
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteResButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteResButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -223,6 +225,7 @@ public class adminEditReservations extends javax.swing.JDialog {
                         System.exit(0);
                     }
                 });
+                dialog.setSize(800,620);
                 dialog.setVisible(true);
             }
         });
