@@ -1,11 +1,13 @@
 package hotelguis;
 
 import static hotelguis.reservationProcess.entries;
+import java.awt.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class adminEditReservations extends javax.swing.JDialog {
@@ -18,6 +20,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     public Date startDate;
     public Date endDate;
     public User usernum;
+    public int selectedReservationID;
     //public reservationEntryPublic entry = new reservationEntryPublic();
     
     User user = new User();
@@ -27,6 +30,8 @@ public class adminEditReservations extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         reservationDisplayTable.setRowSelectionAllowed(true);
+        //reservationDisplayTable.getRowSelectionAllowed();
+        //reservationDisplayTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         model = (DefaultTableModel) reservationDisplayTable.getModel();
     }
 
@@ -161,6 +166,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
     private void adminPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPageButtonActionPerformed
+        this.dispose();
         administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(), true);
         adminwindow.setSize(800,620);
         adminwindow.setVisible(true);
@@ -179,16 +185,32 @@ public class adminEditReservations extends javax.swing.JDialog {
     }//GEN-LAST:event_searchResButtonActionPerformed
 
     private void editResDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editResDatesActionPerformed
-        // TODO add your handling code here:
+        selectedReservationID = reservationDisplayTable.getSelectedRow();
+        System.out.println(reservationID);//testing to ensure correct reservationID is selected
+        
+        
     }//GEN-LAST:event_editResDatesActionPerformed
 
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteResButtonActionPerformed
-        // TODO add your handling code here:
+       //NEED TO FINISH, INCOMPLETE
+        
+        int selectedRowIndex = reservationDisplayTable.getSelectedRow();
+        int selectedColumnIndex = reservationDisplayTable.getSelectedColumn();
+        Object selectedObject = reservationDisplayTable.getValueAt(selectedRowIndex, 0);
+
+        int confirmCancel = Integer.parseInt((String) selectedObject);
+
+        confirmCancel = hotelsystemMAIN.systemReservationList.adminCancelReservationByRid(reservationID);
+        if (confirmCancel == 1){
+            Component frame = null;
+            JOptionPane.showMessageDialog(frame, "Successfully cancelled reservationID# " + reservationID);
+        }
+        if (confirmCancel == 0){
+            Component frame = null;
+            JOptionPane.showMessageDialog(frame, "Reservation not found.");
+        }        
     }//GEN-LAST:event_deleteResButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -223,6 +245,7 @@ public class adminEditReservations extends javax.swing.JDialog {
                         System.exit(0);
                     }
                 });
+                dialog.setSize(800,620);
                 dialog.setVisible(true);
             }
         });

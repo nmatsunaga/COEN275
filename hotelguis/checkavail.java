@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import java.util.Date;
+import java.util.Calendar;
 
 public class checkavail extends javax.swing.JDialog {
 
@@ -180,8 +182,11 @@ public class checkavail extends javax.swing.JDialog {
         checkavailabilitypanel.add(daychoice1);
         daychoice1.setBounds(590, 430, 57, 20);
 
-        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two King Beds");
         roomtypechoice.add("Two Queen Beds");
+        roomtypechoice.add("One King Bed");
+        roomtypechoice.add("One Queen Bed");
+        roomtypechoice.add("One King Bed and One Queen Bed");
         checkavailabilitypanel.add(roomtypechoice);
         roomtypechoice.setBounds(370, 530, 280, 20);
 
@@ -232,8 +237,8 @@ public class checkavail extends javax.swing.JDialog {
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-/*utility for converting read in month from user to int format*/
 
+    /*utility for converting read in month from user to int format*/
 	public int SwitchMonth(String monthString)
 	{
 		int month;
@@ -266,15 +271,24 @@ public class checkavail extends javax.swing.JDialog {
 	                 break;
 	    }
 	    return month;
-	}
+	}    
     
-	public RoomType GetRoomType(String roomTypeFromUser)
-	{
-		RoomType roomType;
+	/* The function below is utility to convert room type input from user to integer matching the hotel room def*/    
+	public int GetRoomType(String roomTypeFromUser)
+	{	
+		int roomType;
 	    switch (roomTypeFromUser) {
-	        case "Two Queen Beds":  roomType = RoomType.DOUBLE_QUEEN;
+	    	case "Two King Beds":  roomType = 0;
+	    		break;
+	    	case "One King Bed and One Queen Bed":  roomType = 1;
+	    		break;
+	        case "Two Queen Beds":  roomType = 2;
 	        	break;
-	        default: roomType = RoomType.DEFAULT;
+	        case "One King Bed":  roomType = 3;
+        		break;
+	        case "One Queen Bed": roomType = 4;
+	        	break;
+	        default: roomType = -1;
 	        	break;
 	    }
 	    return roomType;
@@ -290,52 +304,63 @@ public class checkavail extends javax.swing.JDialog {
     	String yearEnd = yearchoice1.getSelectedItem();
     	String roomTypeSelected = roomtypechoice.getSelectedItem();
     	
-    	/*convert date format from string to int*/
-    	int DayStart = Integer.parseInt(dayStart);
-    	int DayEnd = Integer.parseInt(dayEnd);
-    	int YearStart = Integer.parseInt(yearStart);
-    	int YearEnd = Integer.parseInt(yearEnd);
+        int startMonth = SwitchMonth(monthStart);
+        int startDay = Integer.valueOf((String)daychoice.getSelectedItem());
+        int startYear = Integer.valueOf((String)yearchoice.getSelectedItem());
+        
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(Calendar.MONTH, startMonth);
+        startDate.set(Calendar.DAY_OF_MONTH, startDay);
+        startDate.set(Calendar.YEAR, (startYear+1900));//The calendar.year gets the year-1900, so I added 1900 back for hotel_room_manager
+        //if input year is only 116, it would cause the hotel room to be unavailable
+        
+        Date sD = startDate.getTime();
+        
+        int endMonth = SwitchMonth(monthEnd);
+        int endDay = Integer.valueOf((String)daychoice1.getSelectedItem());
+        int endYear = Integer.valueOf((String)yearchoice1.getSelectedItem());
+        System.out.println("startYear = " + startYear + ", and endYear =  "+ endYear);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(Calendar.MONTH, endMonth);
+        endDate.set(Calendar.DAY_OF_MONTH, endDay);
+        endDate.set(Calendar.YEAR, (endYear + 1900));
+        
+        Date eD = endDate.getTime();
     	
-    	int MonthStart = SwitchMonth(monthStart);
-    	int MonthEnd = SwitchMonth(monthEnd);
+    	int roomType = GetRoomType(roomTypeSelected);
     	
-    	MyDate startDate = new MyDate(YearStart, MonthStart, DayStart);
-    	MyDate endDate = new MyDate(YearEnd, MonthEnd, DayEnd);
-    	
-    	RoomType roomType = GetRoomType(roomTypeSelected);
-    	
-    	//DateReserve reserveDate = new DateReserve(startDate, endDate);
-    	//HotelMgr hotelRoomObject = new HotelMgr();
-    	//boolean loggedInStatus = UserLoginStatus.currentLoggedInStatus();
+    	int roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, sD, eD);
     	
     	/*the following boolean value is to indicate if an available room is found in the date specified*/
     	boolean roomFound = false;
+    	if (roomNumber < 999)
+    		roomFound = true;
     	
-    	/*
-    	for (int i = 0; i < 5; i++) //check all the rooms in the correct range for the roomtype, need t update roomnum range 
+    	if (roomFound == true)
     	{
-    		if (hotelRoomObject.checkAvailability( i, reserveDate) == true)
-	    	{
-    			roomFound = true;
-    			if (loggedInStatus) //if user already logged in
-    			{
-    				makereservation mrwindow = new makereservation(new javax.swing.JFrame(), true);
-	    			mrwindow.setSize(800,630);
-	    			mrwindow.setVisible(true);
-	    			break;
-    			}
-    			else
-    			{
-                        loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
-    		        loginwindow.setSize(800,620);
-    		        loginwindow.setVisible(true);
-    		        break;
-    			}
-	    	}
+    		JFrame frame = new JFrame();
+			
+			/*message is for displaying to user when a room is available, if the user wants to make a reservation*/
+		    String message = "The room is available.  Would you like to make a reservation?";
+		    int answer = JOptionPane.showConfirmDialog(frame, message);
+		    if (answer == JOptionPane.YES_OPTION) {
+		      // User clicked YES.
+		    	boolean loggedInStatus = hotelsystemMAIN.user.getLoggedIn();
+				if (loggedInStatus) //if user already logged in
+				{
+					makereservation mrwindow = new makereservation(new javax.swing.JFrame(), true);
+					mrwindow.setSize(800,630);
+					mrwindow.setVisible(true);
+				}
+				else
+				{
+		            loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
+			        loginwindow.setSize(800,620);
+			        loginwindow.setVisible(true);
+				}
+		    }
     	}
-    	*/
-
-    	if (!roomFound)
+    	else 
     	{
     		Component frame = null;
             JOptionPane.showMessageDialog(frame, "Sorry, " + roomTypeSelected + " room is not available in the date range specified!");

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class hotelsystemMAIN {
 	
-	//DATA
+    //DATA
     public static User user;
     //String currentUser;
     
@@ -24,7 +24,7 @@ public class hotelsystemMAIN {
     public static int systemUserID;
     public static reservationProcess systemReservationList;
     public static Users systemUserList; 
-    
+    public static Hotel_room_manager hotelRoomList;
     /*
     //Constructors
     private loginpage loginpageInstance;
@@ -57,11 +57,13 @@ public class hotelsystemMAIN {
     	user = new User();
     	systemUserList = new Users();
     	systemReservationList = new reservationProcess();
+    	hotelRoomList         = new Hotel_room_manager();
     }
     
     public void run(){
     	//System set up
     	systemUserList.readFromFile();
+    	hotelRoomList.configure_hotel_room(0); 
     	
     	//Open Start Window
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
@@ -75,8 +77,8 @@ public class hotelsystemMAIN {
     
     public static void main(String[] args) {
     	//Instantiation of New Hotel MGR Object and Configuration of Hotel Room
-        Hotel_room_manager Hotel_room_manager_object = new Hotel_room_manager();
-        Hotel_room_manager_object.configure_hotel_room(0); 
+       
+    	hotelRoomList.configure_hotel_room(0); 
         //Open Start Window
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
