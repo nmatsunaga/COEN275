@@ -80,12 +80,14 @@ public class welcomepage extends javax.swing.JDialog {
 
     
     private void checkavailbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkavailbuttonActionPerformed
+        this.dispose();
         checkavail cawindow = new checkavail(new javax.swing.JFrame(), true);
         cawindow.setSize(800,620);
         cawindow.setVisible(true);
     }//GEN-LAST:event_checkavailbuttonActionPerformed
 
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
+        this.dispose();
         loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
         loginwindow.setSize(800,620);
         loginwindow.setVisible(true);
