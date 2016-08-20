@@ -11,25 +11,17 @@ public class administratoroptions extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        edithotellabel = new javax.swing.JLabel();
         edituserslabel = new javax.swing.JLabel();
         editreservationslabel = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
         signoutbutton = new javax.swing.JButton();
         changereservations = new javax.swing.JButton();
         editaccounts = new javax.swing.JButton();
-        edithotel = new javax.swing.JButton();
         adminoptiontitle = new javax.swing.JLabel();
         administratoroptionsbackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        edithotellabel.setFont(new java.awt.Font("Oriya MN", 0, 14)); // NOI18N
-        edithotellabel.setForeground(new java.awt.Color(255, 255, 255));
-        edithotellabel.setText("Make changes to hotel rooms' status and update features.");
-        getContentPane().add(edithotellabel);
-        edithotellabel.setBounds(250, 450, 500, 30);
 
         edituserslabel.setFont(new java.awt.Font("Oriya MN", 0, 14)); // NOI18N
         edituserslabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -79,15 +71,6 @@ public class administratoroptions extends javax.swing.JDialog {
         getContentPane().add(editaccounts);
         editaccounts.setBounds(40, 500, 190, 29);
 
-        edithotel.setText("Edit Room Information");
-        edithotel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edithotelActionPerformed(evt);
-            }
-        });
-        getContentPane().add(edithotel);
-        edithotel.setBounds(40, 450, 190, 29);
-
         adminoptiontitle.setFont(new java.awt.Font("Oriya MN", 0, 36)); // NOI18N
         adminoptiontitle.setForeground(new java.awt.Color(255, 255, 255));
         adminoptiontitle.setText("Administrator Options");
@@ -107,10 +90,6 @@ public class administratoroptions extends javax.swing.JDialog {
         editAccounts.setSize(800,620);
         editAccounts.setVisible(true);
     }//GEN-LAST:event_editaccountsActionPerformed
-
-    private void edithotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edithotelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edithotelActionPerformed
 
     private void changereservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changereservationsActionPerformed
         this.dispose();
@@ -178,8 +157,6 @@ public class administratoroptions extends javax.swing.JDialog {
     private javax.swing.JLabel adminoptiontitle;
     private javax.swing.JButton changereservations;
     private javax.swing.JButton editaccounts;
-    private javax.swing.JButton edithotel;
-    private javax.swing.JLabel edithotellabel;
     private javax.swing.JLabel editreservationslabel;
     private javax.swing.JLabel edituserslabel;
     private javax.swing.JButton homebutton;

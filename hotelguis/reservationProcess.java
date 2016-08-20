@@ -350,13 +350,14 @@ public class reservationProcess {
 	 * adminChangeReservation can change userId of the corresponding reservation, 
 	 * the general changeReservation function cannot change userId.  
 	 */
-	int adminChangeReservation (int reservationId, int roomNum, Date startDate, Date endDate, int userId)
+        //int roomNum taken out as a parameter temporarily for testing of adminEditReservations
+	int adminChangeReservation (int reservationId, Date startDate, Date endDate, int userId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
 			if ((entries.get(i).getReservId() == reservationId))
 			{
-				entries.get(i).setRoomId(roomNum);
+				//entries.get(i).setRoomId(roomNum);
 				entries.get(i).setStartDate(startDate);
 				entries.get(i).setEndDate(endDate);
 				entries.get(i).adminSetUserId(userId);
