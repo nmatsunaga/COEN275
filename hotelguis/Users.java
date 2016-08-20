@@ -206,7 +206,7 @@ public class Users {
 							user.getPassWord() + "," +
 							user.getEmail() + "," +
 							user.getPhoneNumber() + "," +
-							user.getUserID();
+							user.getUserID() + "\n";
 				writer.write(line, 0, line.length());
 			} 
 		} catch (IOException x) {
