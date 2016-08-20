@@ -341,19 +341,23 @@ public class checkavail extends javax.swing.JDialog {
     		JFrame frame = new JFrame();
 			
 			/*message is for displaying to user when a room is available, if the user wants to make a reservation*/
-		    String message = "The room is available.  Would you like to make a reservation?";
+    		/*currently the hotel room mgr only returns one available room number, so the code below only display that single room*/
+		    String message = "The following rooms are available.  Would you like to make a reservation?\n";
+		    message += "Room Number: " + roomNumber + "\n";
 		    int answer = JOptionPane.showConfirmDialog(frame, message);
 		    if (answer == JOptionPane.YES_OPTION) {
 		      // User clicked YES.
 		    	boolean loggedInStatus = hotelsystemMAIN.user.getLoggedIn();
 				if (loggedInStatus) //if user already logged in
 				{
+					this.dispose();
 					makereservation mrwindow = new makereservation(new javax.swing.JFrame(), true);
 					mrwindow.setSize(800,630);
 					mrwindow.setVisible(true);
 				}
 				else
 				{
+					this.dispose();
 		            loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
 			        loginwindow.setSize(800,620);
 			        loginwindow.setVisible(true);
