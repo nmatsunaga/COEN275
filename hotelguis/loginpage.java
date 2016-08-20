@@ -1,8 +1,12 @@
 package hotelguis;
 
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import java.lang.String;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 //This is a comment
 //This is another comment
@@ -19,7 +23,7 @@ public class loginpage extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-
+    
     @SuppressWarnings("unchecked")   
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -104,6 +108,7 @@ public class loginpage extends javax.swing.JDialog {
     }//GEN-LAST:event_usernametextfieldActionPerformed
 
     private void newuserbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newuserbuttonActionPerformed
+        this.dispose();
         createaccount accwindow = new createaccount(new javax.swing.JFrame(), true);
         accwindow.setSize(800,620);
         accwindow.setVisible(true);
@@ -140,9 +145,10 @@ public class loginpage extends javax.swing.JDialog {
     }//GEN-LAST:event_submitbuttonActionPerformed
         
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
+        this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
-        homewindow.setVisible(true);
+        homewindow.setVisible(true); 
     }//GEN-LAST:event_homebuttonActionPerformed
 
     private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
@@ -153,7 +159,8 @@ public class loginpage extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 loginpage dialog = new loginpage(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter(){
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
