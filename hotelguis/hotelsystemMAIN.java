@@ -48,6 +48,11 @@ public class hotelsystemMAIN {
     }
     */
     
+    public static void reportError(String message){
+    	Component frame = null;
+    	JOptionPane.showMessageDialog(frame, message);
+    }
+    
     public hotelsystemMAIN(){
     	user = new User();
     	systemUserList = new Users();
