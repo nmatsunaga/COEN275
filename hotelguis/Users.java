@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class Users {
 	
 	//DATA
-	private ArrayList<User> _users; //List of users in the system
+	public ArrayList<User> _users; //List of users in the system
 	private int _listID; //Unique ID given to each user of the system
 	
 	//CONSTRUCTORS
