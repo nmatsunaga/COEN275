@@ -52,7 +52,6 @@ public class makereservation extends javax.swing.JDialog {
         checkinlabel = new javax.swing.JLabel();
         checkoutdatelabel = new javax.swing.JLabel();
         makereservationlabel = new javax.swing.JLabel();
-        username = new javax.swing.JLabel();
         roomrequestedlabel = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
         confirmbutton = new javax.swing.JButton();
@@ -65,7 +64,7 @@ public class makereservation extends javax.swing.JDialog {
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(usernameLabel);
         usernameLabel.setBounds(110, 570, 100, 0);
-        usernameLabel.setText(String.valueOf(hotelsystemMAIN.user._userID));
+        usernameLabel.setText(String.valueOf(user._userID));
 
         monthlabel.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         monthlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,11 +172,6 @@ public class makereservation extends javax.swing.JDialog {
         makereservationlabel.setText("Make a New Reservation");
         getContentPane().add(makereservationlabel);
         makereservationlabel.setBounds(30, 20, 310, 30);
-
-        username.setForeground(new java.awt.Color(255, 255, 255));
-        username.setText("Logged In As:");
-        getContentPane().add(username);
-        username.setBounds(10, 570, 90, 16);
 
         roomrequestedlabel.setFont(new java.awt.Font("Oriya MN", 0, 18)); // NOI18N
         roomrequestedlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -367,7 +361,6 @@ public class makereservation extends javax.swing.JDialog {
     private javax.swing.JLabel reservationbackground;
     private javax.swing.JLabel roomrequestedlabel;
     private javax.swing.JComboBox<String> roomtype;
-    private javax.swing.JLabel username;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JComboBox<String> year;
     private javax.swing.JComboBox<String> year2;
