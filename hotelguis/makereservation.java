@@ -258,7 +258,7 @@ public class makereservation extends javax.swing.JDialog {
         startDay = Integer.valueOf((String)day.getSelectedItem());
         startYear = Integer.valueOf((String)year.getSelectedItem());
         
-        startDate.set(Calendar.MONTH, startMonth);
+        startDate.set(Calendar.MONTH, (startMonth - 1));
         startDate.set(Calendar.DAY_OF_MONTH, startDay);
         startDate.set(Calendar.YEAR, startYear);
         
@@ -268,7 +268,7 @@ public class makereservation extends javax.swing.JDialog {
         endDay = Integer.valueOf((String)day2.getSelectedItem());
         endYear = Integer.valueOf((String)year2.getSelectedItem());
         
-        endDate.set(Calendar.MONTH, endMonth);
+        endDate.set(Calendar.MONTH, (endMonth - 1));
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
         endDate.set(Calendar.YEAR, endYear);
         
