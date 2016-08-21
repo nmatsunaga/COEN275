@@ -11,14 +11,17 @@ public class adminEditUsers extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
- String newfirstname = "";
+    
+    public JTextArea userHeader;
+    public JTextArea userLabels;
+    public JTextArea userInfo;
+    String newfirstname = "";
     String newlastname = "";
     String newpassword = "";
     String newemail = "";
     String newphonenumber;
     int searchedUserID;
-    //User user = new User();
-    //Users users = new Users();
+    
 
     private String getUserInfo(){
     	if(!hotelsystemMAIN.user.getLoggedIn()){
@@ -36,19 +39,19 @@ public class adminEditUsers extends javax.swing.JDialog {
     		return s;
     	}
     }
-    
+   
+    //Need help to set the "current user" to the 'searchedUserID' so that the accessors in the User and Users class can be utilized.
+    /*
     private String getStringWidth(FontMetrics fm){
-    	if(!hotelsystemMAIN.user.getLoggedIn()){
-    		System.out.println("Current user is not logged in!");
-    		return "";
-    	}
-    	else{
-    		String list[] = {hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getLastName(),
-                    hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getPhoneNumber()
+        int i;
+            for(i = 0; i < 50; i++){ //arbitrary size for testing - should be length of user list (arraylist of users)
+		if(hotelsystemMAIN.user.get(i).getUserID().equals(searchedUserID)){
+                            String list[] = {hotelsystemMAIN.user.getFirstName(),
+                            hotelsystemMAIN.user.getLastName(),
+                            hotelsystemMAIN.user.getFirstName(),
+                            hotelsystemMAIN.user.getFirstName(),
+                            hotelsystemMAIN.user.getFirstName(),
+                            hotelsystemMAIN.user.getPhoneNumber()
     		};
     		String a = list[0];
     		
@@ -56,11 +59,12 @@ public class adminEditUsers extends javax.swing.JDialog {
     			if(fm.stringWidth(list[i]) > fm.stringWidth(a)){
     				a = list[i];
     			}
-    		}
-    		
-    		return a;
-    	}
+    		}	
+            }
+            }
+            return a;
     }
+    */
     
     private void setUserHeader(){
     	userHeader.setText("Account information for User ID#: " + searchedUserID);
@@ -105,18 +109,15 @@ public class adminEditUsers extends javax.swing.JDialog {
         changeUsernameButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
         deleteUserButton = new javax.swing.JButton();
+        userHeader = new javax.swing.JTextArea();
+        userLabels = new javax.swing.JTextArea();
+        userInfo = new javax.swing.JTextArea();
         changeNameTXT = new javax.swing.JTextField();
         changeEmailTXT = new javax.swing.JTextField();
         changePhoneNumTXT = new javax.swing.JTextField();
         changeUsernameTXT = new javax.swing.JTextField();
         changePasswordTXT = new javax.swing.JTextField();
         instructions = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        userInfo = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        userLabels = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        userHeader = new javax.swing.JTextArea();
         graphic = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
@@ -252,27 +253,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         getContentPane().add(instructions);
         instructions.setBounds(20, 330, 440, 16);
 
-        userInfo.setColumns(20);
-        userInfo.setRows(5);
-        jScrollPane1.setViewportView(userInfo);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(260, 210, 350, 110);
-
-        userLabels.setColumns(20);
-        userLabels.setRows(5);
-        jScrollPane2.setViewportView(userLabels);
-
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(10, 210, 250, 110);
-
-        userHeader.setColumns(20);
-        userHeader.setRows(5);
-        jScrollPane3.setViewportView(userHeader);
-
-        getContentPane().add(jScrollPane3);
-        jScrollPane3.setBounds(10, 170, 330, 40);
-
         graphic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelguis/newpackage/146931675277809-1.png"))); // NOI18N
         getContentPane().add(graphic);
         graphic.setBounds(300, 0, 660, 180);
@@ -300,7 +280,20 @@ public class adminEditUsers extends javax.swing.JDialog {
     }//GEN-LAST:event_changeEmailTXTActionPerformed
 
     private void userIDSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDSearchButtonActionPerformed
-        // TODO add your handling code here:
+        int i;
+		
+		for(i = 0; i < _users.size(); i++){
+			
+			if(_users.get(i).getUserName().equals(userName)){
+				
+				_users.get(i).setLoggedIn(false);
+				
+				
+
+
+
+
+// TODO add your handling code here:
     }//GEN-LAST:event_userIDSearchButtonActionPerformed
 
     private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed
@@ -404,13 +397,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     private javax.swing.JLabel graphic;
     private javax.swing.JLabel instructions;
     private javax.swing.JLabel instructionsLabel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JTextArea userHeader;
     private javax.swing.JButton userIDSearchButton;
-    private javax.swing.JTextArea userInfo;
-    private javax.swing.JTextArea userLabels;
     // End of variables declaration//GEN-END:variables
 }

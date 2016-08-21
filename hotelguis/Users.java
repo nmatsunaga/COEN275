@@ -1,6 +1,5 @@
 package hotelguis;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
 
 /*	User management class:
  * 
@@ -33,20 +31,20 @@ public class Users {
 	//CONSTRUCTORS
 	public Users()
 	{
-		_users = new ArrayList<User>();
-		_users.add(new User(0));
-		_listID = 1;
+            _users = new ArrayList<User>();
+            _users.add(new User(0));
+            _listID = 1;
 	}
 	
 	//ACCESSORS
 	
 	//METHODS
 	public boolean createNewUser(String firstName,
-									String lastName,
-									String userName,
-									String passWord,
-									String email,
-									String phoneNumber)
+            String lastName,
+            String userName,
+            String passWord,
+            String email,
+            String phoneNumber)
 	{	
 		int i;
 		System.out.println("check"+ firstName + lastName + userName + passWord + email + phoneNumber);
@@ -64,12 +62,12 @@ public class Users {
 	}
 	
 	private boolean createUserFromFile(String firstName,
-										String lastName,
-										String userName,
-										String passWord,
-										String email,
-										String phoneNumber,
-										int userID)
+            String lastName,
+            String userName,
+            String passWord,
+            String email,
+            String phoneNumber,
+            int userID)
 	{	
 		int i;
 		System.out.println("check"+ firstName + lastName + userName + passWord + email + phoneNumber);
