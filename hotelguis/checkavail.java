@@ -1,16 +1,14 @@
 package hotelguis;
 
-import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import java.util.Date;
 import java.util.Calendar;
+//import java.awt.Component;
+//import javax.swing.JOptionPane;
 
 public class checkavail extends javax.swing.JDialog {
 
@@ -182,8 +180,12 @@ public class checkavail extends javax.swing.JDialog {
         checkavailabilitypanel.add(daychoice1);
         daychoice1.setBounds(577, 430, 70, 20);
 
-        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two King Beds");
         roomtypechoice.add("Two Queen Beds");
+        roomtypechoice.add("One King Bed");
+        roomtypechoice.add("One Queen Bed");
+        roomtypechoice.add("One King Bed and One Queen Bed");
+
         checkavailabilitypanel.add(roomtypechoice);
         roomtypechoice.setBounds(370, 530, 280, 20);
 
@@ -230,7 +232,8 @@ public class checkavail extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
-        welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
+        this.dispose();
+    	welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
@@ -347,24 +350,30 @@ public class checkavail extends javax.swing.JDialog {
 		    	boolean loggedInStatus = hotelsystemMAIN.user.getLoggedIn();
 				if (loggedInStatus) //if user already logged in
 				{
-                                    this.dispose();
-                                    makereservation mrwindow = new makereservation(new javax.swing.JFrame(), true);
-                                    mrwindow.setSize(800,630);
-                                    mrwindow.setVisible(true);
+                    //this.dispose();
+					int reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNumber, sD, eD, hotelsystemMAIN.user.getUserID());
+					if (reservationReturn == -1){
+			            Component reservationConfirmFrame = null;
+			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Reservation unsuccessful!");
+			        }
+			        if (reservationReturn != -1){
+			            Component reservationConfirmFrame = null;
+			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
+			        }    
 				}
 				else
 				{
-                                    this.dispose();
-                                    loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
-                                    loginwindow.setSize(800,620);
-                                    loginwindow.setVisible(true);
+                    this.dispose();
+                    loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
+                    loginwindow.setSize(800,620);
+                    loginwindow.setVisible(true);
 				}
 		    }
     	}
     	else 
     	{
-    		Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Sorry, " + roomTypeSelected + " room is not available in the date range specified!");
+    		Component roomUnavailableFrame = null;
+            JOptionPane.showMessageDialog(roomUnavailableFrame, "Sorry, " + roomTypeSelected + " room is not available in the date range specified!");
     	}
     
     }//GEN-LAST:event_submitbuttonActionPerformed

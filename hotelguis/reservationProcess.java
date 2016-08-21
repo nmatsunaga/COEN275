@@ -161,6 +161,9 @@ public class reservationProcess {
 		boolean bookSuccessful = false;
 		//entries.add(new Entry(roomNum, startDate, endDate, userId));
 		
+		//reserve the room first
+		hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(startDate , endDate, roomNum);
+		
 		//add entry
 		int reservId = pushEntry(roomNum, startDate, endDate, userId);
 		if (reservId < 0)
