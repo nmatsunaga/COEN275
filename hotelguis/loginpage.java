@@ -115,6 +115,7 @@ public class loginpage extends javax.swing.JDialog {
     }//GEN-LAST:event_newuserbuttonActionPerformed
 
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
+        this.dispose();
         username = usernametextfield.getText();    
         pwd = passwordtextfield.getText();
         //users.login(username, pwd);
