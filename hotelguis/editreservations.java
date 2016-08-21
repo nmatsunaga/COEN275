@@ -51,6 +51,11 @@ public class editreservations extends javax.swing.JDialog {
         homebutton.setBounds(700, 10, 82, 29);
 
         backbutton.setText("BACK");
+        backbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backbuttonActionPerformed(evt);
+            }
+        });
         getContentPane().add(backbutton);
         backbutton.setBounds(700, 40, 80, 29);
 
@@ -93,6 +98,7 @@ public class editreservations extends javax.swing.JDialog {
 
     private void reservationIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationIDtextfieldActionPerformed
         reservationID = reservationIDtextfield.getText();
+        hotelsystemMAIN.systemReservationList.checkReservationByRid(Integer.parseInt(reservationID));
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
     private void confirmchangesbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmchangesbuttonActionPerformed
@@ -105,6 +111,13 @@ public class editreservations extends javax.swing.JDialog {
         reservationID = reservationIDtextfield.getText();
        //hotelsystemMAIN.systemReservationList.cancelReservation(reservationID, user.getUserID()); //need to cast as INT
     }//GEN-LAST:event_cancelbuttonActionPerformed
+
+    private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
+        this.dispose();
+        useroptionswindow userpage = new useroptionswindow(new javax.swing.JFrame(), true);
+        userpage.setSize(800,620);
+        userpage.setVisible(true);
+    }//GEN-LAST:event_backbuttonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

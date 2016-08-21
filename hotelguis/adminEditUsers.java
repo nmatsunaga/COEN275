@@ -289,11 +289,14 @@ public class adminEditUsers extends javax.swing.JDialog {
     }//GEN-LAST:event_enterUserIDNumActionPerformed
 
     private void changeNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameTXTActionPerformed
-        // TODO add your handling code here:
+        //Doesn't change full name, just the last name.
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeNameTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changeNameTXTActionPerformed
 
     private void changeEmailTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailTXTActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, changeEmailTXT.getText());
+         updateUserInfoText();
     }//GEN-LAST:event_changeEmailTXTActionPerformed
 
     private void userIDSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDSearchButtonActionPerformed
@@ -301,19 +304,24 @@ public class adminEditUsers extends javax.swing.JDialog {
     }//GEN-LAST:event_userIDSearchButtonActionPerformed
 
     private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed
-        // TODO add your handling code here:
+        //Doesn't change full name, just the last name.
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeNameTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changeNameButtonActionPerformed
 
     private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, changeEmailTXT.getText());
+         updateUserInfoText();
     }//GEN-LAST:event_changeEmailButtonActionPerformed
 
     private void changePhoneNumTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhoneNumTXTActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, changePhoneNumTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changePhoneNumTXTActionPerformed
 
     private void changePhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhoneButtonActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, changePhoneNumTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changePhoneButtonActionPerformed
 
     private void changeUsernameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUsernameTXTActionPerformed
@@ -325,20 +333,19 @@ public class adminEditUsers extends javax.swing.JDialog {
     }//GEN-LAST:event_changeUsernameButtonActionPerformed
 
     private void changePasswordTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordTXTActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, changePasswordTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changePasswordTXTActionPerformed
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, changePasswordTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changePasswordButtonActionPerformed
 
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
-        // TODO add your handling code here:
+        //Is there a delete function in Users/User?
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
