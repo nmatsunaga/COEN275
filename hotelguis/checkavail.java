@@ -313,7 +313,7 @@ public class checkavail extends javax.swing.JDialog {
         Calendar startDate = Calendar.getInstance();
         startDate.set(Calendar.MONTH, startMonth);
         startDate.set(Calendar.DAY_OF_MONTH, startDay);
-        startDate.set(Calendar.YEAR, (startYear + 1900));
+        startDate.set(Calendar.YEAR, (startYear));
         
         Date sD = startDate.getTime();
         
@@ -324,7 +324,7 @@ public class checkavail extends javax.swing.JDialog {
         Calendar endDate = Calendar.getInstance();
         endDate.set(Calendar.MONTH, endMonth);
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
-        endDate.set(Calendar.YEAR, (endYear + 1900));
+        endDate.set(Calendar.YEAR, (endYear));
         
         Date eD = endDate.getTime();
 
