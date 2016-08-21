@@ -17,8 +17,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         userListTable.setRowSelectionAllowed(true);
-        //reservationDisplayTable.getRowSelectionAllowed();
-        //reservationDisplayTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         model = (DefaultTableModel) userListTable.getModel();
     }
     
@@ -85,14 +83,14 @@ public class adminEditUsers extends javax.swing.JDialog {
         backButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
         userIDSearchButton = new javax.swing.JButton();
-        searchUserIDTextBox = new javax.swing.JTextField();
         instructionsLabel = new javax.swing.JLabel();
         changeFirstNameButton = new javax.swing.JButton();
         changeEmailButton = new javax.swing.JButton();
         changePhoneButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
         deleteUserButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        UserIDSearch = new javax.swing.JTextField();
+        changeLastNameButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         userListTable = new javax.swing.JTable();
         listAllButton = new javax.swing.JButton();
@@ -109,6 +107,11 @@ public class adminEditUsers extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         backButton.setText("BACK");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(backButton);
         backButton.setBounds(10, 560, 90, 29);
 
@@ -125,14 +128,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         });
         getContentPane().add(userIDSearchButton);
         userIDSearchButton.setBounds(510, 160, 85, 29);
-
-        searchUserIDTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchUserIDTextBoxActionPerformed(evt);
-            }
-        });
-        getContentPane().add(searchUserIDTextBox);
-        searchUserIDTextBox.setBounds(310, 160, 200, 26);
 
         instructionsLabel.setText("Enter a User ID to edit account information:");
         getContentPane().add(instructionsLabel);
@@ -183,14 +178,22 @@ public class adminEditUsers extends javax.swing.JDialog {
         getContentPane().add(deleteUserButton);
         deleteUserButton.setBounds(550, 570, 190, 29);
 
-        jButton1.setText("Change Last Name");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        UserIDSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                UserIDSearchActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(550, 420, 190, 29);
+        getContentPane().add(UserIDSearch);
+        UserIDSearch.setBounds(320, 160, 160, 26);
+
+        changeLastNameButton.setText("Change Last Name");
+        changeLastNameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeLastNameButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(changeLastNameButton);
+        changeLastNameButton.setBounds(550, 420, 190, 29);
 
         userListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -279,7 +282,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeFirstNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameTXTActionPerformed
-        //Doesn't change full name, just the last name.
+        //Doesn't change full name, just the first name.
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeFirstNameTXT.getText());
         updateUserInfoText();
     }//GEN-LAST:event_changeFirstNameTXTActionPerformed
@@ -343,11 +346,6 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
     }//GEN-LAST:event_userIDSearchButtonActionPerformed
 
-    private void searchUserIDTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchUserIDTextBoxActionPerformed
-        //Collects UserID inputted from administrator in the text box.
-        searchedUserID = Integer.parseInt(searchUserIDTextBox.getText());
-    }//GEN-LAST:event_searchUserIDTextBoxActionPerformed
-
     private void listAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAllButtonActionPerformed
         int size = 100; //needs to be size of Users list
         
@@ -367,12 +365,26 @@ public class adminEditUsers extends javax.swing.JDialog {
     }//GEN-LAST:event_listAllButtonActionPerformed
 
     private void changeLastNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameTXTActionPerformed
-        // TODO add your handling code here:
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeLastNameTXT.getText());
+        updateUserInfoText();
     }//GEN-LAST:event_changeLastNameTXTActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void changeLastNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameButtonActionPerformed
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeLastNameTXT.getText());
+        updateUserInfoText();
+    }//GEN-LAST:event_changeLastNameButtonActionPerformed
+
+    private void UserIDSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserIDSearchActionPerformed
+        //Collects UserID inputted from administrator in the text box.
+        searchedUserID = Integer.parseInt(UserIDSearch.getText());
+    }//GEN-LAST:event_UserIDSearchActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        this.dispose();
+        administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(), true);
+        adminwindow.setSize(800,620);
+        adminwindow.setVisible(true);
+    }//GEN-LAST:event_backButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -415,12 +427,14 @@ public class adminEditUsers extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField UserIDSearch;
     private javax.swing.JButton backButton;
     private javax.swing.JLabel background;
     private javax.swing.JButton changeEmailButton;
     private javax.swing.JTextField changeEmailTXT;
     private javax.swing.JButton changeFirstNameButton;
     private javax.swing.JTextField changeFirstNameTXT;
+    private javax.swing.JButton changeLastNameButton;
     private javax.swing.JTextField changeLastNameTXT;
     private javax.swing.JButton changePasswordButton;
     private javax.swing.JTextField changePasswordTXT;
@@ -430,10 +444,8 @@ public class adminEditUsers extends javax.swing.JDialog {
     private javax.swing.JLabel graphic;
     private javax.swing.JLabel instructions;
     private javax.swing.JLabel instructionsLabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listAllButton;
-    private javax.swing.JTextField searchUserIDTextBox;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton userIDSearchButton;
     private javax.swing.JTable userListTable;
