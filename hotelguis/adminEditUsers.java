@@ -76,6 +76,32 @@ public class adminEditUsers extends javax.swing.JDialog {
         
         System.out.println(userInfo.getText());
     }
+    
+     private String getStringWidth(FontMetrics fm){
+    	if(!hotelsystemMAIN.user.getLoggedIn()){
+    		System.out.println("Current user is not logged in!");
+    		return "";
+    	}
+    	else{
+    		String list[] = {hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getLastName(),
+                    hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getPhoneNumber()
+    		};
+    		String a = list[0];
+    		
+    		for(int i = 1; i < list.length; i++){
+    			if(fm.stringWidth(list[i]) > fm.stringWidth(a)){
+    				a = list[i];
+    			}
+    		}
+    		
+    		return a;
+    	}
+    }
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -296,6 +322,7 @@ public class adminEditUsers extends javax.swing.JDialog {
         //Doesn't change full name, just the last name.
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeFirstNameTXT.getText());
         updateUserInfoText();
+        hotelsystemMAIN.reportError("Changed First Name");
     }//GEN-LAST:event_changeFirstNameButtonActionPerformed
 
     private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
@@ -321,10 +348,12 @@ public class adminEditUsers extends javax.swing.JDialog {
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, changePasswordTXT.getText());
         updateUserInfoText();
+        hotelsystemMAIN.reportError("Changed Password");
     }//GEN-LAST:event_changePasswordButtonActionPerformed
 
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
         //Is there a delete function in Users/User?
+        hotelsystemMAIN.reportError("User Deleted!");
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
     private void userIDSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDSearchButtonActionPerformed
@@ -372,6 +401,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     private void changeLastNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameButtonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeLastNameTXT.getText());
         updateUserInfoText();
+        hotelsystemMAIN.reportError("Changed Last Name");
     }//GEN-LAST:event_changeLastNameButtonActionPerformed
 
     private void UserIDSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserIDSearchActionPerformed
