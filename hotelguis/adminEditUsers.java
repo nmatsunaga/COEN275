@@ -3,13 +3,23 @@ package hotelguis;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.lang.String;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 
 public class adminEditUsers extends javax.swing.JDialog {
+
+    private final DefaultTableModel model;
 
     public adminEditUsers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        userListTable.setRowSelectionAllowed(true);
+        //reservationDisplayTable.getRowSelectionAllowed();
+        //reservationDisplayTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        model = (DefaultTableModel) userListTable.getModel();
     }
     
     public JTextArea userHeader;
@@ -39,32 +49,6 @@ public class adminEditUsers extends javax.swing.JDialog {
     		return s;
     	}
     }
-   
-    //Need help to set the "current user" to the 'searchedUserID' so that the accessors in the User and Users class can be utilized.
-    /*
-    private String getStringWidth(FontMetrics fm){
-        int i;
-            for(i = 0; i < 50; i++){ //arbitrary size for testing - should be length of user list (arraylist of users)
-		if(hotelsystemMAIN.user.get(i).getUserID().equals(searchedUserID)){
-                            String list[] = {hotelsystemMAIN.user.getFirstName(),
-                            hotelsystemMAIN.user.getLastName(),
-                            hotelsystemMAIN.user.getFirstName(),
-                            hotelsystemMAIN.user.getFirstName(),
-                            hotelsystemMAIN.user.getFirstName(),
-                            hotelsystemMAIN.user.getPhoneNumber()
-    		};
-    		String a = list[0];
-    		
-    		for(int i = 1; i < list.length; i++){
-    			if(fm.stringWidth(list[i]) > fm.stringWidth(a)){
-    				a = list[i];
-    			}
-    		}	
-            }
-            }
-            return a;
-    }
-    */
     
     private void setUserHeader(){
     	userHeader.setText("Account information for User ID#: " + searchedUserID);
@@ -101,22 +85,22 @@ public class adminEditUsers extends javax.swing.JDialog {
         backButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
         userIDSearchButton = new javax.swing.JButton();
-        enterUserIDNum = new javax.swing.JTextField();
+        searchUserIDTextBox = new javax.swing.JTextField();
         instructionsLabel = new javax.swing.JLabel();
-        changeNameButton = new javax.swing.JButton();
+        changeFirstNameButton = new javax.swing.JButton();
         changeEmailButton = new javax.swing.JButton();
         changePhoneButton = new javax.swing.JButton();
-        changeUsernameButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
         deleteUserButton = new javax.swing.JButton();
-        userHeader = new javax.swing.JTextArea();
-        userLabels = new javax.swing.JTextArea();
-        userInfo = new javax.swing.JTextArea();
-        changeNameTXT = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        userListTable = new javax.swing.JTable();
+        listAllButton = new javax.swing.JButton();
+        changeFirstNameTXT = new javax.swing.JTextField();
         changeEmailTXT = new javax.swing.JTextField();
         changePhoneNumTXT = new javax.swing.JTextField();
-        changeUsernameTXT = new javax.swing.JTextField();
         changePasswordTXT = new javax.swing.JTextField();
+        changeLastNameTXT = new javax.swing.JTextField();
         instructions = new javax.swing.JLabel();
         graphic = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -140,28 +124,28 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(userIDSearchButton);
-        userIDSearchButton.setBounds(520, 150, 85, 29);
+        userIDSearchButton.setBounds(510, 160, 85, 29);
 
-        enterUserIDNum.addActionListener(new java.awt.event.ActionListener() {
+        searchUserIDTextBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enterUserIDNumActionPerformed(evt);
+                searchUserIDTextBoxActionPerformed(evt);
             }
         });
-        getContentPane().add(enterUserIDNum);
-        enterUserIDNum.setBounds(310, 150, 200, 26);
+        getContentPane().add(searchUserIDTextBox);
+        searchUserIDTextBox.setBounds(310, 160, 200, 26);
 
         instructionsLabel.setText("Enter a User ID to edit account information:");
         getContentPane().add(instructionsLabel);
-        instructionsLabel.setBounds(20, 150, 290, 16);
+        instructionsLabel.setBounds(30, 160, 290, 16);
 
-        changeNameButton.setText("Change Name");
-        changeNameButton.addActionListener(new java.awt.event.ActionListener() {
+        changeFirstNameButton.setText("Change First Name");
+        changeFirstNameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeNameButtonActionPerformed(evt);
+                changeFirstNameButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(changeNameButton);
-        changeNameButton.setBounds(550, 360, 190, 29);
+        getContentPane().add(changeFirstNameButton);
+        changeFirstNameButton.setBounds(550, 390, 190, 29);
 
         changeEmailButton.setText("Change Email");
         changeEmailButton.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +154,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(changeEmailButton);
-        changeEmailButton.setBounds(550, 390, 190, 29);
+        changeEmailButton.setBounds(550, 450, 190, 29);
 
         changePhoneButton.setText("Change Phone Number");
         changePhoneButton.addActionListener(new java.awt.event.ActionListener() {
@@ -179,16 +163,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(changePhoneButton);
-        changePhoneButton.setBounds(550, 420, 190, 29);
-
-        changeUsernameButton.setText("Change Username");
-        changeUsernameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeUsernameButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(changeUsernameButton);
-        changeUsernameButton.setBounds(550, 450, 190, 29);
+        changePhoneButton.setBounds(550, 480, 190, 29);
 
         changePasswordButton.setText("Change Password");
         changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
@@ -197,7 +172,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(changePasswordButton);
-        changePasswordButton.setBounds(550, 480, 190, 29);
+        changePasswordButton.setBounds(550, 510, 190, 29);
 
         deleteUserButton.setText("DELETE USER");
         deleteUserButton.addActionListener(new java.awt.event.ActionListener() {
@@ -206,15 +181,54 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(deleteUserButton);
-        deleteUserButton.setBounds(550, 550, 190, 29);
+        deleteUserButton.setBounds(550, 570, 190, 29);
 
-        changeNameTXT.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Change Last Name");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeNameTXTActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(changeNameTXT);
-        changeNameTXT.setBounds(200, 360, 320, 26);
+        getContentPane().add(jButton1);
+        jButton1.setBounds(550, 420, 190, 29);
+
+        userListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "UserID", "First Name", "Last Name", "Phone Number", "Username", "Email"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(userListTable);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(30, 200, 750, 160);
+
+        listAllButton.setText("List All Users");
+        listAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listAllButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(listAllButton);
+        listAllButton.setBounds(610, 160, 140, 29);
+
+        changeFirstNameTXT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeFirstNameTXTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(changeFirstNameTXT);
+        changeFirstNameTXT.setBounds(230, 390, 320, 26);
 
         changeEmailTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +236,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(changeEmailTXT);
-        changeEmailTXT.setBounds(200, 390, 320, 26);
+        changeEmailTXT.setBounds(230, 450, 320, 26);
 
         changePhoneNumTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,15 +244,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(changePhoneNumTXT);
-        changePhoneNumTXT.setBounds(200, 420, 320, 26);
-
-        changeUsernameTXT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                changeUsernameTXTActionPerformed(evt);
-            }
-        });
-        getContentPane().add(changeUsernameTXT);
-        changeUsernameTXT.setBounds(200, 450, 320, 26);
+        changePhoneNumTXT.setBounds(230, 480, 320, 26);
 
         changePasswordTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,12 +252,20 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         getContentPane().add(changePasswordTXT);
-        changePasswordTXT.setBounds(200, 480, 320, 26);
+        changePasswordTXT.setBounds(230, 510, 320, 26);
+
+        changeLastNameTXT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeLastNameTXTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(changeLastNameTXT);
+        changeLastNameTXT.setBounds(230, 420, 320, 26);
 
         instructions.setFont(new java.awt.Font("Lucida Grande", 2, 13)); // NOI18N
         instructions.setText("Enter updated information, and click the adjacent 'change' button.");
         getContentPane().add(instructions);
-        instructions.setBounds(20, 330, 440, 16);
+        instructions.setBounds(10, 370, 440, 16);
 
         graphic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelguis/newpackage/146931675277809-1.png"))); // NOI18N
         getContentPane().add(graphic);
@@ -264,43 +278,22 @@ public class adminEditUsers extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void enterUserIDNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterUserIDNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enterUserIDNumActionPerformed
-
-    private void changeNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameTXTActionPerformed
+    private void changeFirstNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameTXTActionPerformed
         //Doesn't change full name, just the last name.
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeNameTXT.getText());
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeFirstNameTXT.getText());
         updateUserInfoText();
-    }//GEN-LAST:event_changeNameTXTActionPerformed
+    }//GEN-LAST:event_changeFirstNameTXTActionPerformed
 
     private void changeEmailTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailTXTActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, changeEmailTXT.getText());
          updateUserInfoText();
     }//GEN-LAST:event_changeEmailTXTActionPerformed
 
-    private void userIDSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDSearchButtonActionPerformed
-        int i;
-		
-		for(i = 0; i < _users.size(); i++){
-			
-			if(_users.get(i).getUserName().equals(userName)){
-				
-				_users.get(i).setLoggedIn(false);
-				
-				
-
-
-
-
-// TODO add your handling code here:
-    }//GEN-LAST:event_userIDSearchButtonActionPerformed
-
-    private void changeNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNameButtonActionPerformed
+    private void changeFirstNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameButtonActionPerformed
         //Doesn't change full name, just the last name.
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeNameTXT.getText());
+        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeFirstNameTXT.getText());
         updateUserInfoText();
-    }//GEN-LAST:event_changeNameButtonActionPerformed
+    }//GEN-LAST:event_changeFirstNameButtonActionPerformed
 
     private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, changeEmailTXT.getText());
@@ -317,14 +310,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         updateUserInfoText();
     }//GEN-LAST:event_changePhoneButtonActionPerformed
 
-    private void changeUsernameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUsernameTXTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_changeUsernameTXTActionPerformed
-
-    private void changeUsernameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUsernameButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_changeUsernameButtonActionPerformed
-
     private void changePasswordTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordTXTActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, changePasswordTXT.getText());
         updateUserInfoText();
@@ -338,6 +323,56 @@ public class adminEditUsers extends javax.swing.JDialog {
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
         //Is there a delete function in Users/User?
     }//GEN-LAST:event_deleteUserButtonActionPerformed
+
+    private void userIDSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDSearchButtonActionPerformed
+        int size = 100; //needs to be size of Users List
+
+        for(int i = 0; i < size; i++){
+            if((hotelsystemMAIN.systemUserList._users.get(i).getUserID()) == searchedUserID){
+                //User s = hotelsystemMAIN.user NEED TO SET TO SEARCHED USER
+                Vector<String> usr = new Vector<>();
+
+                usr.add(Integer.toString(s.getUserID()));
+                usr.add((s.getFirstName()));
+                usr.add((s.getLastName()));
+                usr.add((s.getPhoneNumber()));
+                usr.add((s.getUserName()));
+                usr.add((s.getEmail()));
+
+                model.addRow(usr);   
+            }
+    }//GEN-LAST:event_userIDSearchButtonActionPerformed
+
+    private void searchUserIDTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchUserIDTextBoxActionPerformed
+        //Collects UserID inputted from administrator in the text box.
+        searchedUserID = Integer.parseInt(searchUserIDTextBox.getText());
+    }//GEN-LAST:event_searchUserIDTextBoxActionPerformed
+
+    private void listAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAllButtonActionPerformed
+        int size = 100; //needs to be size of Users list
+        
+        for (int i = 0; i < size; i++) {
+            User e = hotelsystemMAIN.systemUserList._users.get(i);
+            Vector<String> usr = new Vector<>();
+            
+            usr.add(Integer.toString(e.getUserID()));
+            usr.add((e.getFirstName()));
+            usr.add((e.getLastName()));
+            usr.add((e.getPhoneNumber()));
+            usr.add((e.getUserName()));
+            usr.add((e.getEmail()));
+              
+            model.addRow(usr);            
+        }
+    }//GEN-LAST:event_listAllButtonActionPerformed
+
+    private void changeLastNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameTXTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_changeLastNameTXTActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -384,20 +419,23 @@ public class adminEditUsers extends javax.swing.JDialog {
     private javax.swing.JLabel background;
     private javax.swing.JButton changeEmailButton;
     private javax.swing.JTextField changeEmailTXT;
-    private javax.swing.JButton changeNameButton;
-    private javax.swing.JTextField changeNameTXT;
+    private javax.swing.JButton changeFirstNameButton;
+    private javax.swing.JTextField changeFirstNameTXT;
+    private javax.swing.JTextField changeLastNameTXT;
     private javax.swing.JButton changePasswordButton;
     private javax.swing.JTextField changePasswordTXT;
     private javax.swing.JButton changePhoneButton;
     private javax.swing.JTextField changePhoneNumTXT;
-    private javax.swing.JButton changeUsernameButton;
-    private javax.swing.JTextField changeUsernameTXT;
     private javax.swing.JButton deleteUserButton;
-    private javax.swing.JTextField enterUserIDNum;
     private javax.swing.JLabel graphic;
     private javax.swing.JLabel instructions;
     private javax.swing.JLabel instructionsLabel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton listAllButton;
+    private javax.swing.JTextField searchUserIDTextBox;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton userIDSearchButton;
+    private javax.swing.JTable userListTable;
     // End of variables declaration//GEN-END:variables
 }
