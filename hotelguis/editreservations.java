@@ -161,6 +161,7 @@ public class editreservations extends javax.swing.JDialog {
         reservationID = reservationIDtextfield.getText();
         hotelsystemMAIN.systemReservationList.cancelReservation(Integer.parseInt(reservationID));
         hotelsystemMAIN.reportError("Reservation has been cancelled!");
+        //Should add sanity check to make sure that the reservation ID is found, and add logic.
     }//GEN-LAST:event_cancelbuttonActionPerformed
 
     private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
