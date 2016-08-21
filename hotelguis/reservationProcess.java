@@ -421,7 +421,8 @@ public class reservationProcess {
 		}
 		return count; //return how many reservations removed
 	}
-	
+	/* The following main function is for the purpose of testing reservation process*/
+	/*
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args)
 	{
@@ -513,5 +514,5 @@ public class reservationProcess {
 					 + ", startDate = " + searchResult.get(j).startDate
 					 + ", endDate = " + searchResult.get(j).endDate);
 		 }
-	}
+	}*/
 }
