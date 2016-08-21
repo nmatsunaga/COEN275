@@ -289,6 +289,44 @@ public class Users {
 		}
 	}
 	
+	public boolean removeUser(int userID){
+		int i;
+		
+		for(i = 0; i < _users.size(); i++){
+			if(userID == _users.get(i).getUserID()){
+				break;
+			}
+		}
+		
+		if(i == _users.size()){
+			return false;
+		}
+		else{
+			_users.remove(i);
+			
+			return true;
+		}
+	}
+	
+	public User getUserByID(int userID){
+		int i;
+		
+		for(i = 0; i < _users.size(); i++){
+			if(userID == _users.get(i).getUserID()){
+				break;
+			}
+		}
+		
+		if(i == _users.size()){
+			return new User();
+		}
+		else{
+			_users.remove(i);
+			
+			return _users.get(i);
+		}
+	}
+	
 	@Override
 	public String toString(){
 		String result = "";
@@ -301,4 +339,41 @@ public class Users {
 		
 		return result;
 	}
+	
+	/*
+	public static void main(String[] args) {
+		Users test = new Users();
+		
+		test.createNewUser("Donald",
+	            			"Trump",
+	            			"makeThisProjectGreatAgain",
+	            			"america",
+	            			"trump@trump.com",
+	            			"666-666-6666");
+		
+		test.createNewUser("Nate",
+    			"Matsunaga",
+    			"nmat",
+    			"n",
+    			"n@gmail.com",
+    			"503-000-1111");
+		
+		test.createNewUser("Elizabeth",
+    			"Sweeny",
+    			"esweeny",
+    			"e",
+    			"e@gmail.com",
+    			"111-111-1111");
+		
+		System.out.println(test);
+		
+		test.removeUser(2);
+		
+		System.out.println(test);
+		
+		User user = test.getUserByID(1);
+		
+		System.out.println(user);
+	}
+	*/
 }
