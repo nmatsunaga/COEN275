@@ -158,6 +158,7 @@ public class createaccount extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
+        this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
@@ -283,6 +284,10 @@ public class createaccount extends javax.swing.JDialog {
 	        else{
 	        	Component frame = null;
 	            JOptionPane.showMessageDialog(frame, "Successfully created new account!");
+                    this.dispose();
+                    loginpage loginPage = new loginpage(new javax.swing.JFrame(), true);
+                    loginPage.setSize(800,620);
+                    loginPage.setVisible(true);
 	        }
         
 	        System.out.println("added " + username);

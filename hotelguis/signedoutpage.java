@@ -51,6 +51,7 @@ public class signedoutpage extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
+        this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
