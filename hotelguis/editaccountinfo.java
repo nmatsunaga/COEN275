@@ -252,21 +252,25 @@ public class editaccountinfo extends javax.swing.JDialog {
     private void FNbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FNbuttonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 0, FNtextfield.getText());
         updateUserInfoText();
+        hotelsystemMAIN.reportError("First Name Changed!");
     }//GEN-LAST:event_FNbuttonActionPerformed
 
     private void LNbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNbuttonActionPerformed
          hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, LNtextfield.getText());
          updateUserInfoText();
+         hotelsystemMAIN.reportError("Last Name Changed!");
     }//GEN-LAST:event_LNbuttonActionPerformed
 
     private void passwordbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordbuttonActionPerformed
          hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, passwordtextfield.getText());
          updateUserInfoText();
+         hotelsystemMAIN.reportError("Password Changed!");
     }//GEN-LAST:event_passwordbuttonActionPerformed
 
     private void emailbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailbuttonActionPerformed
          hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, emailtextfield.getText());
          updateUserInfoText();
+         hotelsystemMAIN.reportError("Email Changed!");
     }//GEN-LAST:event_emailbuttonActionPerformed
 
     private void backtouseroptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtouseroptionsActionPerformed
@@ -279,6 +283,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     private void phonenumberbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumberbuttonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, phonenumtextfield.getText());
         updateUserInfoText();
+        hotelsystemMAIN.reportError("Phone Number Changed!");
     }//GEN-LAST:event_phonenumberbuttonActionPerformed
 
     public static void main(String args[]) {
