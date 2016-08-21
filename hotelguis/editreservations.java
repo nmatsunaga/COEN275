@@ -66,7 +66,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(confirmchangesbutton);
-        confirmchangesbutton.setBounds(530, 350, 150, 29);
+        confirmchangesbutton.setBounds(530, 460, 160, 29);
 
         cancelbutton.setText("Cancel Reservation");
         cancelbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +75,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancelbutton);
-        cancelbutton.setBounds(520, 390, 163, 29);
+        cancelbutton.setBounds(530, 490, 163, 29);
 
         editreservationtitle.setFont(new java.awt.Font("Oriya MN", 1, 36)); // NOI18N
         editreservationtitle.setForeground(new java.awt.Color(255, 51, 51));
@@ -91,6 +91,7 @@ public class editreservations extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
+        this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
@@ -98,7 +99,14 @@ public class editreservations extends javax.swing.JDialog {
 
     private void reservationIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationIDtextfieldActionPerformed
         reservationID = reservationIDtextfield.getText();
-        hotelsystemMAIN.systemReservationList.checkReservationByRid(Integer.parseInt(reservationID));
+        boolean validReservation = hotelsystemMAIN.systemReservationList.checkReservationByRid(Integer.parseInt(reservationID));
+        if (validReservation == false){
+            hotelsystemMAIN.reportError("Cannot find reservation!");
+        }
+        else {
+            hotelsystemMAIN.reportError("Reservation Found!");
+            
+        }
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
     private void confirmchangesbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmchangesbuttonActionPerformed
@@ -143,7 +151,6 @@ public class editreservations extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 editreservations dialog = new editreservations(new javax.swing.JFrame(), true);
