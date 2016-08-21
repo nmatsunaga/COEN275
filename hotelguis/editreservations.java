@@ -1,20 +1,33 @@
 package hotelguis;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 public class editreservations extends javax.swing.JDialog {
+
+    private final DefaultTableModel model;
 
     public editreservations(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        reservationTableList.setRowSelectionAllowed(true);
+        model = (DefaultTableModel) reservationTableList.getModel();
     }
 
     public String reservationID;
     User user = new User();
-    
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        reservationTableList = new javax.swing.JTable();
         reservationlist = new javax.swing.JLabel();
+        listResrButton = new javax.swing.JButton();
         reservationIDtextfield = new javax.swing.JTextField();
         homebutton = new javax.swing.JButton();
         backbutton = new javax.swing.JButton();
@@ -26,11 +39,41 @@ public class editreservations extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        reservationTableList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Reservation ID", "Start Date", "End Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(reservationTableList);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(80, 390, 650, 170);
+
         reservationlist.setFont(new java.awt.Font("Oriya MN", 0, 18)); // NOI18N
         reservationlist.setForeground(new java.awt.Color(255, 255, 255));
         reservationlist.setText("Enter the Reservation ID of the reservation you'd like to edit:");
         getContentPane().add(reservationlist);
-        reservationlist.setBounds(30, 170, 550, 22);
+        reservationlist.setBounds(30, 150, 550, 22);
+
+        listResrButton.setText("List Your Reservations");
+        listResrButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listResrButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(listResrButton);
+        listResrButton.setBounds(510, 350, 210, 29);
 
         reservationIDtextfield.setToolTipText("");
         reservationIDtextfield.addActionListener(new java.awt.event.ActionListener() {
@@ -39,7 +82,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(reservationIDtextfield);
-        reservationIDtextfield.setBounds(550, 170, 170, 26);
+        reservationIDtextfield.setBounds(270, 180, 170, 26);
 
         homebutton.setText("HOME");
         homebutton.addActionListener(new java.awt.event.ActionListener() {
@@ -66,7 +109,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(confirmchangesbutton);
-        confirmchangesbutton.setBounds(530, 460, 160, 29);
+        confirmchangesbutton.setBounds(450, 180, 160, 29);
 
         cancelbutton.setText("Cancel Reservation");
         cancelbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,7 +118,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancelbutton);
-        cancelbutton.setBounds(530, 490, 163, 29);
+        cancelbutton.setBounds(610, 180, 163, 29);
 
         editreservationtitle.setFont(new java.awt.Font("Oriya MN", 1, 36)); // NOI18N
         editreservationtitle.setForeground(new java.awt.Color(255, 51, 51));
@@ -104,8 +147,7 @@ public class editreservations extends javax.swing.JDialog {
             hotelsystemMAIN.reportError("Cannot find reservation!");
         }
         else {
-            hotelsystemMAIN.reportError("Reservation Found!");
-            
+            hotelsystemMAIN.reportError("Reservation Found!"); 
         }
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
@@ -117,7 +159,8 @@ public class editreservations extends javax.swing.JDialog {
 
     private void cancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbuttonActionPerformed
         reservationID = reservationIDtextfield.getText();
-       //hotelsystemMAIN.systemReservationList.cancelReservation(reservationID, user.getUserID()); //need to cast as INT
+        hotelsystemMAIN.systemReservationList.cancelReservation(Integer.parseInt(reservationID));
+        hotelsystemMAIN.reportError("Reservation has been cancelled!");
     }//GEN-LAST:event_cancelbuttonActionPerformed
 
     private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
@@ -126,6 +169,22 @@ public class editreservations extends javax.swing.JDialog {
         userpage.setSize(800,620);
         userpage.setVisible(true);
     }//GEN-LAST:event_backbuttonActionPerformed
+
+    private void listResrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listResrButtonActionPerformed
+        int size = hotelsystemMAIN.systemReservationList.adminReservationCount();
+        
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        for (int i = 0; i < size; i++) {
+            reservationProcess.Entry e = hotelsystemMAIN.systemReservationList.entries.get(i); //NEED TO set to ONLY one user's reservations.
+            Vector<String> resv = new Vector<>();
+            
+            resv.add(Integer.toString(e.getReservId()));
+            resv.add(df.format(e.getStartDate()));
+            resv.add(df.format(e.getEndDate()));
+              
+            model.addRow(resv);            
+        }
+    }//GEN-LAST:event_listResrButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -173,7 +232,10 @@ public class editreservations extends javax.swing.JDialog {
     private javax.swing.JLabel editreservationsbackground;
     private javax.swing.JLabel editreservationtitle;
     private javax.swing.JButton homebutton;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton listResrButton;
     private javax.swing.JTextField reservationIDtextfield;
+    private javax.swing.JTable reservationTableList;
     private javax.swing.JLabel reservationlist;
     // End of variables declaration//GEN-END:variables
 }

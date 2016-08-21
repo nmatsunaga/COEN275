@@ -25,11 +25,11 @@ public class editaccountinfo extends javax.swing.JDialog {
     	}
     	else{
     		String s = hotelsystemMAIN.user.getFirstName() + "\n" +
-    					hotelsystemMAIN.user.getLastName() + "\n" +
-    					hotelsystemMAIN.user.getUserName() + "\n" +
-    					hotelsystemMAIN.user.getPassWord() + "\n" +
-    					hotelsystemMAIN.user.getEmail() + "\n" +
-    					hotelsystemMAIN.user.getPhoneNumber();
+                    hotelsystemMAIN.user.getLastName() + "\n" +
+                    hotelsystemMAIN.user.getUserName() + "\n" +
+                    hotelsystemMAIN.user.getPassWord() + "\n" +
+                    hotelsystemMAIN.user.getEmail() + "\n" +
+                    hotelsystemMAIN.user.getPhoneNumber();
     		
     		return s;
     	}
