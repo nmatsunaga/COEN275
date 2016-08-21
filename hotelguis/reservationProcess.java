@@ -75,13 +75,14 @@ public class reservationProcess {
 	private int pushEntry(int roomNum, Date startDate, Date endDate, int userId)
 	{
 		Date current = new Date();
+		
 		if(userId < 0)
 			return -1;
 		if ((startDate.before(current))||(endDate.before(startDate)))
 		{
 			return -2;
 		}
-		if (roomNum < 0)
+		if (roomNum == 999) //hotel room mgr returns 999 if no available room
 			return -3;
 		Entry createRentry = new Entry(roomNum, startDate, endDate, userId);
 		entries.add(createRentry);

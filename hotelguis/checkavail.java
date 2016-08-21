@@ -242,6 +242,7 @@ public class checkavail extends javax.swing.JDialog {
 	public int SwitchMonth(String monthString)
 	{
 		int month;
+		System.out.println("monthString = " + monthString);
 	    switch (monthString) {
 	        case "January":  month = 1;
 	                 break;
@@ -270,6 +271,7 @@ public class checkavail extends javax.swing.JDialog {
 	        default: month = -1;
 	                 break;
 	    }
+	    System.out.println("month = " + month);
 	    return month;
 	}    
     
@@ -296,40 +298,40 @@ public class checkavail extends javax.swing.JDialog {
     
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
         /*get the user's date input*/
-    	String dayStart = daychoice.getSelectedItem();
-    	String dayEnd = daychoice1.getSelectedItem();
-    	String monthStart = monthchoice.getSelectedItem();
-    	String monthEnd = monthchoice1.getSelectedItem();
-    	String yearStart = yearchoice.getSelectedItem();
-    	String yearEnd = yearchoice1.getSelectedItem();
+    	String dayStart = daychoice1.getSelectedItem();
+    	String dayEnd = daychoice.getSelectedItem();
+    	String monthStart = monthchoice1.getSelectedItem();
+    	String monthEnd = monthchoice.getSelectedItem();
+    	String yearStart = yearchoice1.getSelectedItem();
+    	String yearEnd = yearchoice.getSelectedItem();
     	String roomTypeSelected = roomtypechoice.getSelectedItem();
     	
         int startMonth = SwitchMonth(monthStart);
-        int startDay = Integer.valueOf((String)daychoice.getSelectedItem());
-        int startYear = Integer.valueOf((String)yearchoice.getSelectedItem());
+        int startDay = Integer.valueOf((String)daychoice1.getSelectedItem());
+        int startYear = Integer.valueOf((String)yearchoice1.getSelectedItem());
         
         Calendar startDate = Calendar.getInstance();
         startDate.set(Calendar.MONTH, startMonth);
         startDate.set(Calendar.DAY_OF_MONTH, startDay);
-        startDate.set(Calendar.YEAR, (startYear+1900));//The calendar.year gets the year-1900, so I added 1900 back for hotel_room_manager
-        //if input year is only 116, it would cause the hotel room to be unavailable
+        startDate.set(Calendar.YEAR, (startYear + 1900));
         
         Date sD = startDate.getTime();
         
         int endMonth = SwitchMonth(monthEnd);
-        int endDay = Integer.valueOf((String)daychoice1.getSelectedItem());
-        int endYear = Integer.valueOf((String)yearchoice1.getSelectedItem());
-        System.out.println("startYear = " + startYear + ", and endYear =  "+ endYear);
+        int endDay = Integer.valueOf((String)daychoice.getSelectedItem());
+        int endYear = Integer.valueOf((String)yearchoice.getSelectedItem());
+        
         Calendar endDate = Calendar.getInstance();
         endDate.set(Calendar.MONTH, endMonth);
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
         endDate.set(Calendar.YEAR, (endYear + 1900));
         
         Date eD = endDate.getTime();
-    	
+
     	int roomType = GetRoomType(roomTypeSelected);
     	
     	int roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, sD, eD);
+    	System.out.println("returned available room number is "+ roomNumber);
     	
     	/*the following boolean value is to indicate if an available room is found in the date specified*/
     	boolean roomFound = false;
@@ -352,13 +354,13 @@ public class checkavail extends javax.swing.JDialog {
 				{
                     //this.dispose();
 					int reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNumber, sD, eD, hotelsystemMAIN.user.getUserID());
-					if (reservationReturn == -1){
+					if (reservationReturn < 0){
 			            Component reservationConfirmFrame = null;
-			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Reservation unsuccessful!");
+			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Reservation unsuccessful!  Return code = " + reservationReturn);
 			        }
-			        if (reservationReturn != -1){
+					else if (reservationReturn >= 0){
 			            Component reservationConfirmFrame = null;
-			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
+			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Successfully made reservation.  Your reservation ID # is " + reservationReturn);
 			        }    
 				}
 				else
