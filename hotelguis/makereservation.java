@@ -217,6 +217,7 @@ public class makereservation extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
+        this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
@@ -309,9 +310,6 @@ public class makereservation extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_confirmbuttonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

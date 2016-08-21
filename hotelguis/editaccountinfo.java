@@ -45,12 +45,12 @@ public class editaccountinfo extends javax.swing.JDialog {
     	}
     	else{
     		String list[] = {hotelsystemMAIN.user.getFirstName(),
-    							hotelsystemMAIN.user.getLastName(),
-    							hotelsystemMAIN.user.getFirstName(),
-    							hotelsystemMAIN.user.getFirstName(),
-    							hotelsystemMAIN.user.getFirstName(),
-    							hotelsystemMAIN.user.getPhoneNumber()
-    						};
+                    hotelsystemMAIN.user.getLastName(),
+                    hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getFirstName(),
+                    hotelsystemMAIN.user.getPhoneNumber()
+    		};
     		String a = list[0];
     		
     		for(int i = 1; i < list.length; i++){
@@ -252,6 +252,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
+        this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
@@ -278,6 +279,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     }//GEN-LAST:event_emailbuttonActionPerformed
 
     private void backtouseroptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtouseroptionsActionPerformed
+        this.dispose();
         useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
              optwin.setSize(800,620);
              optwin.setVisible(true);
@@ -289,28 +291,6 @@ public class editaccountinfo extends javax.swing.JDialog {
     }//GEN-LAST:event_phonenumberbuttonActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(editaccountinfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(editaccountinfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(editaccountinfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(editaccountinfo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
