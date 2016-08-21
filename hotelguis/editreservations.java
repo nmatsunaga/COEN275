@@ -28,6 +28,10 @@ public class editreservations extends javax.swing.JDialog {
         reservationTableList = new javax.swing.JTable();
         reservationlist = new javax.swing.JLabel();
         listResrButton = new javax.swing.JButton();
+        newEndDateLabel = new javax.swing.JLabel();
+        newEndDateTXT = new javax.swing.JTextField();
+        newStartDateLabel = new javax.swing.JLabel();
+        newStartDateTXT = new javax.swing.JTextField();
         reservationIDtextfield = new javax.swing.JTextField();
         homebutton = new javax.swing.JButton();
         backbutton = new javax.swing.JButton();
@@ -64,7 +68,7 @@ public class editreservations extends javax.swing.JDialog {
         reservationlist.setForeground(new java.awt.Color(255, 255, 255));
         reservationlist.setText("Enter the Reservation ID of the reservation you'd like to edit:");
         getContentPane().add(reservationlist);
-        reservationlist.setBounds(30, 150, 550, 22);
+        reservationlist.setBounds(20, 80, 500, 22);
 
         listResrButton.setText("List Your Reservations");
         listResrButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +79,26 @@ public class editreservations extends javax.swing.JDialog {
         getContentPane().add(listResrButton);
         listResrButton.setBounds(510, 350, 210, 29);
 
+        newEndDateLabel.setForeground(new java.awt.Color(255, 255, 255));
+        newEndDateLabel.setText("Enter New End Date:");
+        getContentPane().add(newEndDateLabel);
+        newEndDateLabel.setBounds(400, 150, 130, 16);
+        getContentPane().add(newEndDateTXT);
+        newEndDateTXT.setBounds(540, 150, 170, 26);
+
+        newStartDateLabel.setForeground(new java.awt.Color(255, 255, 255));
+        newStartDateLabel.setText("Enter New Start Date:");
+        getContentPane().add(newStartDateLabel);
+        newStartDateLabel.setBounds(390, 120, 140, 16);
+
+        newStartDateTXT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newStartDateTXTActionPerformed(evt);
+            }
+        });
+        getContentPane().add(newStartDateTXT);
+        newStartDateTXT.setBounds(540, 120, 170, 26);
+
         reservationIDtextfield.setToolTipText("");
         reservationIDtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +106,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(reservationIDtextfield);
-        reservationIDtextfield.setBounds(270, 180, 170, 26);
+        reservationIDtextfield.setBounds(540, 80, 170, 26);
 
         homebutton.setText("HOME");
         homebutton.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +133,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(confirmchangesbutton);
-        confirmchangesbutton.setBounds(450, 180, 160, 29);
+        confirmchangesbutton.setBounds(550, 180, 160, 29);
 
         cancelbutton.setText("Cancel Reservation");
         cancelbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +142,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancelbutton);
-        cancelbutton.setBounds(610, 180, 163, 29);
+        cancelbutton.setBounds(550, 210, 163, 29);
 
         editreservationtitle.setFont(new java.awt.Font("Oriya MN", 1, 36)); // NOI18N
         editreservationtitle.setForeground(new java.awt.Color(255, 51, 51));
@@ -187,6 +211,10 @@ public class editreservations extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_listResrButtonActionPerformed
 
+    private void newStartDateTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newStartDateTXTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newStartDateTXTActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -235,6 +263,10 @@ public class editreservations extends javax.swing.JDialog {
     private javax.swing.JButton homebutton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listResrButton;
+    private javax.swing.JLabel newEndDateLabel;
+    private javax.swing.JTextField newEndDateTXT;
+    private javax.swing.JLabel newStartDateLabel;
+    private javax.swing.JTextField newStartDateTXT;
     private javax.swing.JTextField reservationIDtextfield;
     private javax.swing.JTable reservationTableList;
     private javax.swing.JLabel reservationlist;

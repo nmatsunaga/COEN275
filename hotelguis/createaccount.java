@@ -2,6 +2,7 @@ package hotelguis;
 
 import java.awt.Component;
 import java.lang.String;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
@@ -54,6 +55,11 @@ public class createaccount extends javax.swing.JDialog {
         getContentPane().add(homebutton);
         homebutton.setBounds(700, 10, 97, 29);
 
+        lastname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastnameActionPerformed(evt);
+            }
+        });
         getContentPane().add(lastname);
         lastname.setBounds(430, 40, 200, 26);
 
@@ -78,58 +84,49 @@ public class createaccount extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        
+        phonenumbertextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                phonenumbertextfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(phonenumbertextfield);
         phonenumbertextfield.setBounds(430, 160, 200, 26);
-        getContentPane().add(passwordtextfield);
-        passwordtextfield.setBounds(430, 130, 200, 26);
-        namelabel.setText("First Name");
-        getContentPane().add(namelabel);
-        namelabel.setBounds(340, 10, 70, 20);
-        getContentPane().add(emailtextfield);
-        emailtextfield.setBounds(430, 70, 200, 26);
-        getContentPane().add(usernametextfield);
-        usernametextfield.setBounds(430, 100, 200, 26);
-        getContentPane().add(firstname);
-        firstname.setBounds(430, 10, 200, 26);
 
-        /*
-        firstname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstnameActionPerformed(evt);
-        	}
-        });
-        
-        lastname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lastnameActionPerformed(evt);
-            }
-        });
-                
-        usernametextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernametextfieldActionPerformed(evt);
-            }
-        });
-        
         passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordtextfieldActionPerformed(evt);
             }
         });
-        
+        getContentPane().add(passwordtextfield);
+        passwordtextfield.setBounds(430, 130, 200, 26);
+
+        namelabel.setText("First Name");
+        getContentPane().add(namelabel);
+        namelabel.setBounds(340, 10, 70, 20);
+
         emailtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 emailtextfieldActionPerformed(evt);
             }
         });
-                
-        phonenumbertextfield.addActionListener(new java.awt.event.ActionListener() {
+        getContentPane().add(emailtextfield);
+        emailtextfield.setBounds(430, 70, 200, 26);
+
+        usernametextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phonenumbertextfieldActionPerformed(evt);
+                usernametextfieldActionPerformed(evt);
             }
-        });  
-        */
+        });
+        getContentPane().add(usernametextfield);
+        usernametextfield.setBounds(430, 100, 200, 26);
+
+        firstname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstnameActionPerformed(evt);
+            }
+        });
+        getContentPane().add(firstname);
+        firstname.setBounds(430, 10, 200, 26);
 
         jLabel1.setText("Last Name");
         getContentPane().add(jLabel1);
@@ -164,7 +161,6 @@ public class createaccount extends javax.swing.JDialog {
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
     
-    /*
     private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
         userfirstname = firstname.getText(); 
     }//GEN-LAST:event_firstnameActionPerformed
@@ -180,16 +176,16 @@ public class createaccount extends javax.swing.JDialog {
     private void usernametextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametextfieldActionPerformed
         username = usernametextfield.getText();
     }//GEN-LAST:event_usernametextfieldActionPerformed
-
+/*
     private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
         userpassword = passwordtextfield.getText();
     }//GEN-LAST:event_passwordtextfieldActionPerformed
-
+*/
     private void phonenumbertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumbertextfieldActionPerformed
         userphonenum = phonenumbertextfield.getText();
     }//GEN-LAST:event_phonenumbertextfieldActionPerformed
-	*/
-    
+
+   
     /*
     private boolean emailIsValid(String s){
     	boolean firstEmpty = true;
@@ -276,6 +272,7 @@ public class createaccount extends javax.swing.JDialog {
         }
         */
         
+       
         if(valid){
 	        if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
 	        	Component frame = null;
@@ -296,18 +293,16 @@ public class createaccount extends javax.swing.JDialog {
     }//GEN-LAST:event_createaccountbuttonActionPerformed
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                createaccount dialog = new createaccount(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setSize(800,620);
-                dialog.setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            createaccount dialog = new createaccount(new javax.swing.JFrame(), true);
+            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    System.exit(0);
+                }
+            });
+            dialog.setSize(800,620);
+            dialog.setVisible(true);
         });
     }
 
