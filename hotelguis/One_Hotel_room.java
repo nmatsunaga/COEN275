@@ -20,10 +20,10 @@ private int Number_of_Reservations ;
 public One_Hotel_room () {
     Date local_date = new Date() ; 
     Date local_date_1 = new Date() ;
-    local_date.setYear(1900);
+    local_date.setYear(0);// 0 means year 1900
     local_date.setMonth(0);
     local_date.setDate(12);
-    local_date_1.setYear(2200);
+    local_date_1.setYear(300);// year 300 means year 2200
     local_date_1.setMonth(0);
     local_date_1.setDate(12);
 
@@ -92,7 +92,7 @@ public void Occupy_Hotel_room ( Date Start_date , Date End_date, int room_number
     for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
         start_when = Reservation_Date.get(counter) ;
         end_when   = Reservation_Date.get(counter+1) ;
-        if ( start_when.getYear() == 1900 ){ 
+        if ( start_when.getYear() == 0 ){ 
             Reservation_Date.set(counter,Start_date) ; 
             Reservation_Date.set(counter+1,End_date) ; 
             Number_of_Reservations++ ;
@@ -119,10 +119,10 @@ public void free_room ( Date free_room_1 ){
     Date end_when = new Date();
     Date local_date = new Date() ; 
     Date local_date_1 = new Date() ; 
-    local_date.setYear(1900);
+    local_date.setYear(0);
     local_date.setMonth(0);
     local_date.setDate(12);
-    local_date_1.setYear(2200);
+    local_date_1.setYear(300);
     local_date_1.setMonth(0);
     local_date_1.setDate(12);
 		
@@ -141,10 +141,10 @@ public void free_room_exact_date ( Date Start_date_1 , Date End_date_1){
 	 Date end_when   = new Date();
 	 Date local_date = new Date() ; 
 	    Date local_date_1 = new Date() ; 
-	    local_date.setYear(1900);
+	    local_date.setYear(0);
 	    local_date.setMonth(0);
 	    local_date.setDate(12);
-	    local_date_1.setYear(2200);
+	    local_date_1.setYear(300);
 	    local_date_1.setMonth(0);
 	    local_date_1.setDate(12);
 	for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
