@@ -49,6 +49,22 @@ public boolean check_Hotel_room ( Date Start_date , Date End_date ){
     int temp_55 = 0 ;
     Date start_when = new Date();
     Date end_when = new Date();
+    start_when = Reservation_Date.get(0) ;
+	end_when   = Reservation_Date.get(1) ;
+    System.out.printf("Printing temp_55 value .... %d. %n ", temp_55  );
+    System.out.printf("Status of Start_when year %d. %n ",  start_when.getYear()  ); 
+	  System.out.printf("Status of Start_when  month %d. %n ", start_when.getMonth()  );
+	  System.out.printf("Status of Start_when day %d. %n ",   start_when.getDate()  );
+	  System.out.printf("Status of End_when  %d. %n ",     end_when.getYear()  ); 
+	   System.out.printf("Status of End_when  %d. %n ",    end_when.getMonth()  );
+	   System.out.printf("Status of End_when  %d. %n ",      end_when.getDate()  );
+    
+	   System.out.printf("Status of Start_date year %d. %n ",  Start_date.getYear()  ); 
+	   System.out.printf("Status of Start_date  month %d. %n ", Start_date.getMonth()  );
+	   System.out.printf("Status of Start_date day %d. %n ",   Start_date.getDate()  );
+	   System.out.printf("Status of End_date  %d. %n ",     End_date.getYear()  ); 
+	   System.out.printf("Status of End_date  %d. %n ",    End_date.getMonth()  );
+	   System.out.printf("Status of End_date  %d. %n ",      End_date.getDate()  );
 		   
     for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
         start_when = Reservation_Date.get(counter) ;
@@ -119,4 +135,33 @@ for ( int counter = 0; counter < 99; counter= counter + 2 ){
 	} 
     }
 }
+
+public void free_room_exact_date ( Date Start_date_1 , Date End_date_1){ 
+	 Date start_when = new Date();
+	 Date end_when   = new Date();
+	 Date local_date = new Date() ; 
+	    Date local_date_1 = new Date() ; 
+	    local_date.setYear(1900);
+	    local_date.setMonth(0);
+	    local_date.setDate(12);
+	    local_date_1.setYear(2200);
+	    local_date_1.setMonth(0);
+	    local_date_1.setDate(12);
+	for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
+	    start_when = Reservation_Date.get(counter) ;
+		end_when   = Reservation_Date.get(counter+1) ;
+	    if  ( ( Start_date_1.equals(start_when)  ) && ( End_date_1.equals(end_when)  )  ){    
+		Reservation_Date.set(counter,local_date) ; 
+		Reservation_Date.set(counter+1,local_date_1) ; 
+		Number_of_Reservations-- ;
+		} 
+	    }
+	
+	
+	
+}
+
+
+
+
 }

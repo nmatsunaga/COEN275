@@ -26,7 +26,14 @@ public  ArrayList<Date> get_each_Hotel_room_reservation_list ( int room_number){
 public  void Occupy_Hotel_room ( Date Start_Date_1 , Date End_Date_1 , int room_number ) { 	
     Hotel_room_manager_object[room_number].Occupy_Hotel_room(Start_Date_1 , End_Date_1 , room_number ) ;
 }
-		
+
+
+public void cancel_room ( Date Start_Date_1 , Date End_Date_1, int room_number) {
+	Hotel_room_manager_object[room_number].free_room_exact_date(Start_Date_1 , End_Date_1 ) ;
+	
+}
+
+
 public  void free_expired_rooms ( Date free_room_1 ) {
     for ( int counter = 0; counter < 5; counter++){ 
 	Hotel_room_manager_object[counter].free_room(free_room_1) ;
@@ -57,7 +64,10 @@ public int check_availability (int type_of_the_room_requsted , Date Start_Date_1
 		   
     for ( int counter = 0; counter < 5; counter++ ){ 
 	local_variable_integer = Hotel_room_manager_object[counter].Get_Hotel_room_type() ;
-        if ( local_variable_integer == type_of_the_room_requsted){ 
+        
+	System.out.printf("Printing local_variable_integer .... %d. %n ", local_variable_integer  );
+	System.out.printf("Printing Type of the room requested .... %d. %n ", type_of_the_room_requsted  );
+	if ( local_variable_integer == type_of_the_room_requsted){ 
             local_variable_boolean = Hotel_room_manager_object[counter].check_Hotel_room(Start_Date_1 , End_Date_1) ; 
             if ( local_variable_boolean == false ){
                 room_number = Hotel_room_manager_object[counter].Get_Hotel_room_number() ;//return room_number ;
