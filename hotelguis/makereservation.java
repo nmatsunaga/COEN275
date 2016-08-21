@@ -300,11 +300,11 @@ public class makereservation extends javax.swing.JDialog {
         
         reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum, sD, eD, userID);
         
-        if (reservationReturn == -1){
+        if (reservationReturn < 0 ){
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "Reservation unsuccessful!");
         }
-        if (reservationReturn != -1){
+        if (reservationReturn >= 0){
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
         }
