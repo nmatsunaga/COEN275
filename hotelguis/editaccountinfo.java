@@ -3,7 +3,6 @@ package hotelguis;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.lang.String;
-
 import javax.swing.JTextArea;
 
 public class editaccountinfo extends javax.swing.JDialog {
@@ -15,6 +14,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     String newphonenumber;
     //User user = new User();
     //Users users = new Users();
+    private Object userHeader;
     
     public editaccountinfo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -96,7 +96,6 @@ public class editaccountinfo extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        welcomelabel = new javax.swing.JLabel();
         instructions = new javax.swing.JLabel();
         LNtextfield = new javax.swing.JTextField();
         phonenumtextfield = new javax.swing.JFormattedTextField();
@@ -107,9 +106,7 @@ public class editaccountinfo extends javax.swing.JDialog {
         emailbutton = new javax.swing.JButton();
         passwordtextfield = new javax.swing.JTextField();
         LNbutton = new javax.swing.JButton();
-        userHeader = new javax.swing.JTextArea();
-        userLabels = new javax.swing.JTextArea();
-        userInfo = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
         pagetitle = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
         editaccountinfobackground = new javax.swing.JLabel();
@@ -120,17 +117,16 @@ public class editaccountinfo extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        welcomelabel.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
-        welcomelabel.setText("Welcome");
-        welcomelabel.setToolTipText("");
-        getContentPane().add(welcomelabel);
-        welcomelabel.setBounds(110, 70, 410, 22);
-
         instructions.setFont(new java.awt.Font("Lucida Grande", 2, 13)); // NOI18N
         instructions.setText("Enter updated information, and click the adjacent 'change' button.");
         getContentPane().add(instructions);
         instructions.setBounds(130, 300, 440, 16);
 
+        LNtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LNtextfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(LNtextfield);
         LNtextfield.setBounds(130, 350, 200, 26);
 
@@ -139,12 +135,20 @@ public class editaccountinfo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        
+        phonenumtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                phonenumtextfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(phonenumtextfield);
         phonenumtextfield.setBounds(130, 440, 200, 26);
 
         FNtextfield.setToolTipText("");
-
+        FNtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FNtextfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(FNtextfield);
         FNtextfield.setBounds(130, 320, 200, 30);
 
@@ -171,7 +175,11 @@ public class editaccountinfo extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        
+        emailtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailtextfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(emailtextfield);
         emailtextfield.setBounds(130, 410, 200, 26);
 
@@ -184,6 +192,11 @@ public class editaccountinfo extends javax.swing.JDialog {
         getContentPane().add(emailbutton);
         emailbutton.setBounds(340, 410, 170, 29);
 
+        passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordtextfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(passwordtextfield);
         passwordtextfield.setBounds(130, 380, 200, 26);
 
@@ -196,14 +209,9 @@ public class editaccountinfo extends javax.swing.JDialog {
         getContentPane().add(LNbutton);
         LNbutton.setBounds(340, 350, 170, 29);
 
-        setUserHeader();
-        getContentPane().add(userHeader);
-        
-        setUserLabels();
-        getContentPane().add(userLabels);
-        
-        updateUserInfoText();
-        getContentPane().add(userInfo);
+        jLabel3.setText("Current Information:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(30, 90, 140, 20);
 
         pagetitle.setFont(new java.awt.Font("Oriya MN", 0, 24)); // NOI18N
         pagetitle.setText("Edit User Account Information");
@@ -311,28 +319,20 @@ public class editaccountinfo extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton FNbutton;
     private javax.swing.JTextField FNtextfield;
-    
     private javax.swing.JButton LNbutton;
     private javax.swing.JTextField LNtextfield;
-    
-    private javax.swing.JButton passwordbutton;
-    private javax.swing.JTextField passwordtextfield;
-    
-    private javax.swing.JButton emailbutton;
-    private javax.swing.JFormattedTextField emailtextfield;
-    
-    private javax.swing.JButton phonenumberbutton;
-    private javax.swing.JFormattedTextField phonenumtextfield;
-    
     private javax.swing.JButton backtouseroptions;
     private javax.swing.JLabel editaccountinfobackground;
+    private javax.swing.JButton emailbutton;
+    private javax.swing.JFormattedTextField emailtextfield;
     private javax.swing.JButton homebutton;
     private javax.swing.JLabel instructions;
-    private javax.swing.JTextArea userHeader;
-    private javax.swing.JTextArea userLabels;
-    private javax.swing.JTextArea userInfo;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel pagetitle;
-    private javax.swing.JLabel welcomelabel;
+    private javax.swing.JButton passwordbutton;
+    private javax.swing.JTextField passwordtextfield;
+    private javax.swing.JButton phonenumberbutton;
+    private javax.swing.JFormattedTextField phonenumtextfield;
     private javax.swing.JLabel whiteboxbackground;
     // End of variables declaration//GEN-END:variables
 }
