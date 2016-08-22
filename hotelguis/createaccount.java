@@ -173,11 +173,11 @@ public class createaccount extends javax.swing.JDialog {
     private void usernametextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametextfieldActionPerformed
         username = usernametextfield.getText();
     }//GEN-LAST:event_usernametextfieldActionPerformed
-/*
+
     private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
         userpassword = passwordtextfield.getText();
     }//GEN-LAST:event_passwordtextfieldActionPerformed
-*/
+
     private void phonenumbertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumbertextfieldActionPerformed
         userphonenum = phonenumbertextfield.getText();
     }//GEN-LAST:event_phonenumbertextfieldActionPerformed

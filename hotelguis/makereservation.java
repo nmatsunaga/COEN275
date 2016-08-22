@@ -64,7 +64,7 @@ public class makereservation extends javax.swing.JDialog {
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(usernameLabel);
         usernameLabel.setBounds(110, 570, 100, 0);
-        usernameLabel.setText(String.valueOf(user._userID));
+        usernameLabel.setText(String.valueOf(hotelsystemMAIN.user._userID));
 
         monthlabel.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         monthlabel.setForeground(new java.awt.Color(255, 255, 255));
