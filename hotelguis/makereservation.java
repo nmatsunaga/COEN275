@@ -64,7 +64,7 @@ public class makereservation extends javax.swing.JDialog {
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(usernameLabel);
         usernameLabel.setBounds(110, 570, 100, 0);
-        usernameLabel.setText(String.valueOf(hotelsystemMAIN.user._userID));
+        usernameLabel.setText(String.valueOf(user._userID));
 
         monthlabel.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         monthlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -95,6 +95,11 @@ public class makereservation extends javax.swing.JDialog {
         Month.setBounds(300, 200, 120, 30);
 
         backbutton.setText("BACK");
+        backbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backbuttonActionPerformed(evt);
+            }
+        });
         getContentPane().add(backbutton);
         backbutton.setBounds(720, 30, 80, 29);
 
@@ -324,6 +329,13 @@ public class makereservation extends javax.swing.JDialog {
 	        }
         }
     }//GEN-LAST:event_confirmbuttonActionPerformed
+
+    private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
+        this.dispose();
+        useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
+        optwin.setSize(800,620);
+        optwin.setVisible(true);
+    }//GEN-LAST:event_backbuttonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

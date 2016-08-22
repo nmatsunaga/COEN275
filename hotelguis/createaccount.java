@@ -1,9 +1,6 @@
 package hotelguis;
 
 import java.awt.Component;
-import java.lang.String;
-import java.util.Arrays;
-
 import javax.swing.JOptionPane;
 
 public class createaccount extends javax.swing.JDialog {
@@ -293,16 +290,19 @@ public class createaccount extends javax.swing.JDialog {
     }//GEN-LAST:event_createaccountbuttonActionPerformed
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> {
-            createaccount dialog = new createaccount(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setSize(800,620);
-            dialog.setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createaccount dialog = new createaccount(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setSize(800,620);
+                dialog.setVisible(true);
+            }
         });
     }
 
