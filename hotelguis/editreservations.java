@@ -28,10 +28,16 @@ public class editreservations extends javax.swing.JDialog {
         reservationTableList = new javax.swing.JTable();
         reservationlist = new javax.swing.JLabel();
         listResrButton = new javax.swing.JButton();
-        newEndDateLabel = new javax.swing.JLabel();
-        newEndDateTXT = new javax.swing.JTextField();
-        newStartDateLabel = new javax.swing.JLabel();
-        newStartDateTXT = new javax.swing.JTextField();
+        checkindate = new javax.swing.JLabel();
+        startmonthchoice = new java.awt.Choice();
+        startdaychoice1 = new java.awt.Choice();
+        startyearchoice1 = new java.awt.Choice();
+        roomtypelabel = new javax.swing.JLabel();
+        roomtypechoice = new java.awt.Choice();
+        checkoutdate = new javax.swing.JLabel();
+        endmonthchoice = new java.awt.Choice();
+        enddaychoice = new java.awt.Choice();
+        endyearchoice = new java.awt.Choice();
         reservationIDtextfield = new javax.swing.JTextField();
         homebutton = new javax.swing.JButton();
         backbutton = new javax.swing.JButton();
@@ -62,7 +68,7 @@ public class editreservations extends javax.swing.JDialog {
         jScrollPane1.setViewportView(reservationTableList);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(80, 390, 650, 170);
+        jScrollPane1.setBounds(70, 420, 650, 170);
 
         reservationlist.setFont(new java.awt.Font("Oriya MN", 0, 18)); // NOI18N
         reservationlist.setForeground(new java.awt.Color(255, 255, 255));
@@ -77,27 +83,144 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(listResrButton);
-        listResrButton.setBounds(510, 350, 210, 29);
+        listResrButton.setBounds(510, 390, 210, 29);
 
-        newEndDateLabel.setForeground(new java.awt.Color(255, 255, 255));
-        newEndDateLabel.setText("Enter New End Date:");
-        getContentPane().add(newEndDateLabel);
-        newEndDateLabel.setBounds(400, 150, 130, 16);
-        getContentPane().add(newEndDateTXT);
-        newEndDateTXT.setBounds(540, 150, 170, 26);
+        checkindate.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
+        checkindate.setForeground(new java.awt.Color(255, 255, 255));
+        checkindate.setText("New Check-In Date");
+        getContentPane().add(checkindate);
+        checkindate.setBounds(110, 160, 180, 22);
 
-        newStartDateLabel.setForeground(new java.awt.Color(255, 255, 255));
-        newStartDateLabel.setText("Enter New Start Date:");
-        getContentPane().add(newStartDateLabel);
-        newStartDateLabel.setBounds(390, 120, 140, 16);
+        startmonthchoice.add("January");
+        startmonthchoice.add("February");
+        startmonthchoice.add("March");
+        startmonthchoice.add("April");
+        startmonthchoice.add("May");
+        startmonthchoice.add("June");
+        startmonthchoice.add("July");
+        startmonthchoice.add("August");
+        startmonthchoice.add("September");
+        startmonthchoice.add("October");
+        startmonthchoice.add("November");
+        startmonthchoice.add("December");
+        getContentPane().add(startmonthchoice);
+        startmonthchoice.setBounds(310, 160, 179, 20);
 
-        newStartDateTXT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newStartDateTXTActionPerformed(evt);
-            }
-        });
-        getContentPane().add(newStartDateTXT);
-        newStartDateTXT.setBounds(540, 120, 170, 26);
+        startdaychoice1.add("1");
+        startdaychoice1.add("2");
+        startdaychoice1.add("3");
+        startdaychoice1.add("4");
+        startdaychoice1.add("5");
+        startdaychoice1.add("6");
+        startdaychoice1.add("7");
+        startdaychoice1.add("8");
+        startdaychoice1.add("9");
+        startdaychoice1.add("10");
+        startdaychoice1.add("11");
+        startdaychoice1.add("12");
+        startdaychoice1.add("13");
+        startdaychoice1.add("14");
+        startdaychoice1.add("15");
+        startdaychoice1.add("16");
+        startdaychoice1.add("17");
+        startdaychoice1.add("18");
+        startdaychoice1.add("19");
+        startdaychoice1.add("20");
+        startdaychoice1.add("21");
+        startdaychoice1.add("22");
+        startdaychoice1.add("23");
+        startdaychoice1.add("24");
+        startdaychoice1.add("25");
+        startdaychoice1.add("26");
+        startdaychoice1.add("27");
+        startdaychoice1.add("28");
+        startdaychoice1.add("29");
+        startdaychoice1.add("30");
+        startdaychoice1.add("31");
+        enddaychoice.add("1");
+        enddaychoice.add("1");
+        getContentPane().add(startdaychoice1);
+        startdaychoice1.setBounds(500, 160, 70, 20);
+
+        startyearchoice1.add("2016");
+        startyearchoice1.add("2017");
+        startyearchoice1.add("2018");
+        getContentPane().add(startyearchoice1);
+        startyearchoice1.setBounds(580, 160, 98, 20);
+
+        roomtypelabel.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
+        roomtypelabel.setForeground(new java.awt.Color(255, 255, 255));
+        roomtypelabel.setText("Room Type");
+        getContentPane().add(roomtypelabel);
+        roomtypelabel.setBounds(180, 220, 120, 20);
+
+        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two Queen Beds");
+        getContentPane().add(roomtypechoice);
+        roomtypechoice.setBounds(310, 220, 280, 20);
+
+        checkoutdate.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
+        checkoutdate.setForeground(new java.awt.Color(255, 255, 255));
+        checkoutdate.setText("New Check-Out Date");
+        getContentPane().add(checkoutdate);
+        checkoutdate.setBounds(100, 190, 210, 22);
+
+        endmonthchoice.add("January");
+        endmonthchoice.add("February");
+        endmonthchoice.add("March");
+        endmonthchoice.add("April");
+        endmonthchoice.add("May");
+        endmonthchoice.add("June");
+        endmonthchoice.add("July");
+        endmonthchoice.add("August");
+        endmonthchoice.add("September");
+        endmonthchoice.add("October");
+        endmonthchoice.add("November");
+        endmonthchoice.add("December");
+        getContentPane().add(endmonthchoice);
+        endmonthchoice.setBounds(310, 190, 179, 20);
+
+        enddaychoice.add("1");
+        enddaychoice.add("2");
+        enddaychoice.add("3");
+        enddaychoice.add("4");
+        enddaychoice.add("5");
+        enddaychoice.add("6");
+        enddaychoice.add("7");
+        enddaychoice.add("8");
+        enddaychoice.add("9");
+        enddaychoice.add("10");
+        enddaychoice.add("11");
+        enddaychoice.add("12");
+        enddaychoice.add("13");
+        enddaychoice.add("14");
+        enddaychoice.add("15");
+        enddaychoice.add("16");
+        enddaychoice.add("17");
+        enddaychoice.add("18");
+        enddaychoice.add("19");
+        enddaychoice.add("20");
+        enddaychoice.add("21");
+        enddaychoice.add("22");
+        enddaychoice.add("23");
+        enddaychoice.add("24");
+        enddaychoice.add("25");
+        enddaychoice.add("26");
+        enddaychoice.add("27");
+        enddaychoice.add("28");
+        enddaychoice.add("29");
+        enddaychoice.add("30");
+        enddaychoice.add("31");
+        enddaychoice.add("1");
+        enddaychoice.add("1");
+        getContentPane().add(enddaychoice);
+        enddaychoice.setBounds(500, 190, 70, 20);
+
+        endyearchoice.add("2016");
+        endyearchoice.add("2017");
+        endyearchoice.add("2018");
+        getContentPane().add(endyearchoice);
+        endyearchoice.setBounds(580, 190, 98, 20);
 
         reservationIDtextfield.setToolTipText("");
         reservationIDtextfield.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +256,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(confirmchangesbutton);
-        confirmchangesbutton.setBounds(550, 180, 160, 29);
+        confirmchangesbutton.setBounds(530, 250, 160, 29);
 
         cancelbutton.setText("Cancel Reservation");
         cancelbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +265,7 @@ public class editreservations extends javax.swing.JDialog {
             }
         });
         getContentPane().add(cancelbutton);
-        cancelbutton.setBounds(550, 210, 163, 29);
+        cancelbutton.setBounds(540, 110, 163, 29);
 
         editreservationtitle.setFont(new java.awt.Font("Oriya MN", 1, 36)); // NOI18N
         editreservationtitle.setForeground(new java.awt.Color(255, 51, 51));
@@ -211,10 +334,6 @@ public class editreservations extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_listResrButtonActionPerformed
 
-    private void newStartDateTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newStartDateTXTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newStartDateTXTActionPerformed
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -257,18 +376,24 @@ public class editreservations extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backbutton;
     private javax.swing.JButton cancelbutton;
+    private javax.swing.JLabel checkindate;
+    private javax.swing.JLabel checkoutdate;
     private javax.swing.JButton confirmchangesbutton;
     private javax.swing.JLabel editreservationsbackground;
     private javax.swing.JLabel editreservationtitle;
+    public java.awt.Choice enddaychoice;
+    public java.awt.Choice endmonthchoice;
+    public java.awt.Choice endyearchoice;
     private javax.swing.JButton homebutton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton listResrButton;
-    private javax.swing.JLabel newEndDateLabel;
-    private javax.swing.JTextField newEndDateTXT;
-    private javax.swing.JLabel newStartDateLabel;
-    private javax.swing.JTextField newStartDateTXT;
     private javax.swing.JTextField reservationIDtextfield;
     private javax.swing.JTable reservationTableList;
     private javax.swing.JLabel reservationlist;
+    private java.awt.Choice roomtypechoice;
+    private javax.swing.JLabel roomtypelabel;
+    public java.awt.Choice startdaychoice1;
+    public java.awt.Choice startmonthchoice;
+    public java.awt.Choice startyearchoice1;
     // End of variables declaration//GEN-END:variables
 }
