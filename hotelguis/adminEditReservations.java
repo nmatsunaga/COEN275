@@ -30,8 +30,6 @@ public class adminEditReservations extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         reservationDisplayTable.setRowSelectionAllowed(true);
-        //reservationDisplayTable.getRowSelectionAllowed();
-        //reservationDisplayTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         model = (DefaultTableModel) reservationDisplayTable.getModel();
     }
 
@@ -295,8 +293,6 @@ public class adminEditReservations extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listAllReservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAllReservationsActionPerformed
-        System.out.println(hotelsystemMAIN.systemReservationList.createReservation(5, new Date(), new Date(), 6)); //testing
-        System.out.println(hotelsystemMAIN.systemReservationList.createReservation(2, new Date(), new Date(), 2));  //testing
         int size = hotelsystemMAIN.systemReservationList.adminReservationCount();
         
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
