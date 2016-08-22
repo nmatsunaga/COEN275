@@ -52,7 +52,6 @@ public class makereservation extends javax.swing.JDialog {
         checkinlabel = new javax.swing.JLabel();
         checkoutdatelabel = new javax.swing.JLabel();
         makereservationlabel = new javax.swing.JLabel();
-        username = new javax.swing.JLabel();
         roomrequestedlabel = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
         confirmbutton = new javax.swing.JButton();
@@ -174,11 +173,6 @@ public class makereservation extends javax.swing.JDialog {
         getContentPane().add(makereservationlabel);
         makereservationlabel.setBounds(30, 20, 310, 30);
 
-        username.setForeground(new java.awt.Color(255, 255, 255));
-        username.setText("Logged In As:");
-        getContentPane().add(username);
-        username.setBounds(10, 570, 90, 16);
-
         roomrequestedlabel.setFont(new java.awt.Font("Oriya MN", 0, 18)); // NOI18N
         roomrequestedlabel.setForeground(new java.awt.Color(255, 255, 255));
         roomrequestedlabel.setText("Room Type");
@@ -258,9 +252,12 @@ public class makereservation extends javax.swing.JDialog {
         startDay = Integer.valueOf((String)day.getSelectedItem());
         startYear = Integer.valueOf((String)year.getSelectedItem());
         
-        startDate.set(Calendar.MONTH, startMonth);
+        startDate.set(Calendar.MONTH, (startMonth - 1));
         startDate.set(Calendar.DAY_OF_MONTH, startDay);
         startDate.set(Calendar.YEAR, startYear);
+        startDate.set(Calendar.HOUR_OF_DAY, 15);
+        startDate.set(Calendar.MINUTE, 0);
+        startDate.set(Calendar.SECOND, 0);
         
         Date sD = startDate.getTime();
         
@@ -268,9 +265,12 @@ public class makereservation extends javax.swing.JDialog {
         endDay = Integer.valueOf((String)day2.getSelectedItem());
         endYear = Integer.valueOf((String)year2.getSelectedItem());
         
-        endDate.set(Calendar.MONTH, endMonth);
+        endDate.set(Calendar.MONTH, (endMonth - 1));
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
         endDate.set(Calendar.YEAR, endYear);
+        endDate.set(Calendar.HOUR_OF_DAY, 11);
+        endDate.set(Calendar.MINUTE, 0);
+        endDate.set(Calendar.SECOND, 0);
         
         Date eD = endDate.getTime();
         
@@ -278,35 +278,50 @@ public class makereservation extends javax.swing.JDialog {
         
         if (roomSelection == "2 King Beds"){
             roomType = 0;
-            roomNum = 0;
+            //roomNum = 0;
         }
         if (roomSelection == "2 Queen Beds"){
             roomType = 1;
-            roomNum = 1;
+            //roomNum = 1;
         }
         if (roomSelection == "2 Double Beds"){
             roomType = 2;
-            roomNum = 2;
+            //roomNum = 2;
         }
         if (roomSelection == "1 Queen Bed"){
             roomType = 3;
-            roomNum = 3;
+            //roomNum = 3;
         }
         if (roomSelection == "1 King Bed"){
             roomType = 4;
-            roomNum = 4;
+            //roomNum = 4;
         }
         System.out.println("room num" + roomNum + "startdate" + sD + "enddate" + eD + "userID" + userID);//testing
         
-        reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum, sD, eD, userID);
-        
-        if (reservationReturn == -1){
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Reservation unsuccessful!");
+        roomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, sD, eD);
+        if (roomNum == 999)
+        {
+        	Component frame = null;
+            JOptionPane.showMessageDialog(frame, roomSelection + " room is not available in the dates specified.");
         }
-        if (reservationReturn != -1){
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
+        else
+        {
+        	reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum, sD, eD, userID);
+        
+	        if (reservationReturn < 0 ){
+	            Component frame = null;
+	            String errorMessage = "Reservation unsuccessful!";
+	            if (reservationReturn == -2)
+	            	errorMessage+= "  Invalid dates.";
+	            else if (reservationReturn == -1)
+	            	errorMessage+= "  The user ID is not valid.";
+	            
+	            JOptionPane.showMessageDialog(frame, errorMessage);
+	        }
+	        if (reservationReturn >= 0){
+	            Component frame = null;
+	            JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
+	        }
         }
     }//GEN-LAST:event_confirmbuttonActionPerformed
 
@@ -367,7 +382,6 @@ public class makereservation extends javax.swing.JDialog {
     private javax.swing.JLabel reservationbackground;
     private javax.swing.JLabel roomrequestedlabel;
     private javax.swing.JComboBox<String> roomtype;
-    private javax.swing.JLabel username;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JComboBox<String> year;
     private javax.swing.JComboBox<String> year2;

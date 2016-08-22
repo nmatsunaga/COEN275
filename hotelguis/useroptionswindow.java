@@ -103,6 +103,8 @@ public class useroptionswindow extends javax.swing.JDialog {
 
     private void signoutbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutbuttonActionPerformed
         this.dispose();
+        String currentUserName = hotelsystemMAIN.user.getUserName();
+        hotelsystemMAIN.systemUserList.logout(currentUserName);
         signedoutpage signoutwindow = new signedoutpage(new javax.swing.JFrame(), true);
         signoutwindow.setSize(800,620);
         signoutwindow.setVisible(true);
