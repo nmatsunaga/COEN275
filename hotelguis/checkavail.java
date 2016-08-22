@@ -365,8 +365,8 @@ public class checkavail extends javax.swing.JDialog {
 				}
 				else
 				{
+                    hotelsystemMAIN.reportError("You must log-in first to make a reservation.");                
                     this.dispose();
-                    hotelsystemMAIN.reportError("You must log-in first to make a reservation.");
                     loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
                     loginwindow.setSize(800,620);
                     loginwindow.setVisible(true);
