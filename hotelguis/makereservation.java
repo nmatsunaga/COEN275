@@ -284,43 +284,50 @@ public class makereservation extends javax.swing.JDialog {
         
         if (roomSelection == "2 King Beds"){
             roomType = 0;
-            roomNum = 0;
+            //roomNum = 0;
         }
         if (roomSelection == "2 Queen Beds"){
             roomType = 1;
-            roomNum = 1;
+            //roomNum = 1;
         }
         if (roomSelection == "2 Double Beds"){
             roomType = 2;
-            roomNum = 2;
+            //roomNum = 2;
         }
         if (roomSelection == "1 Queen Bed"){
             roomType = 3;
-            roomNum = 3;
+            //roomNum = 3;
         }
         if (roomSelection == "1 King Bed"){
             roomType = 4;
-            roomNum = 4;
+            //roomNum = 4;
         }
         System.out.println("room num" + roomNum + "startdate" + sD + "enddate" + eD + "userID" + userID);//testing
         
-        reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum, sD, eD, userID);
-        
-        if (reservationReturn < 0 ){
-            Component frame = null;
-            String errorMessage = "Reservation unsuccessful!";
-            if (reservationReturn == -2)
-            	errorMessage+= "  Invalid dates.";
-            else if (reservationReturn == -3)
-            	errorMessage+= "  The specified room is not available.";
-            else if (reservationReturn == -1)
-            	errorMessage+= "  The user ID is not valid.";
-            
-            JOptionPane.showMessageDialog(frame, errorMessage);
+        roomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, sD, eD);
+        if (roomNum == 999)
+        {
+        	Component frame = null;
+            JOptionPane.showMessageDialog(frame, roomSelection + " room is not available in the dates specified.");
         }
-        if (reservationReturn >= 0){
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
+        else
+        {
+        	reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum, sD, eD, userID);
+        
+	        if (reservationReturn < 0 ){
+	            Component frame = null;
+	            String errorMessage = "Reservation unsuccessful!";
+	            if (reservationReturn == -2)
+	            	errorMessage+= "  Invalid dates.";
+	            else if (reservationReturn == -1)
+	            	errorMessage+= "  The user ID is not valid.";
+	            
+	            JOptionPane.showMessageDialog(frame, errorMessage);
+	        }
+	        if (reservationReturn >= 0){
+	            Component frame = null;
+	            JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
+	        }
         }
     }//GEN-LAST:event_confirmbuttonActionPerformed
 
