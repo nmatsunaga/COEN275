@@ -100,6 +100,8 @@ public class administratoroptions extends javax.swing.JDialog {
 
     private void signoutbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutbuttonActionPerformed
         this.dispose();
+        String currentUserName = hotelsystemMAIN.user.getUserName();
+        hotelsystemMAIN.systemUserList.logout(currentUserName);
         signedoutpage signout = new signedoutpage(new javax.swing.JFrame(),true);
         signout.setSize(800,620);
         signout.setVisible(true);

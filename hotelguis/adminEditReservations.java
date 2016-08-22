@@ -56,10 +56,12 @@ public class adminEditReservations extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         pagetitle.setFont(new java.awt.Font("Oriya MN", 1, 24)); // NOI18N
+        pagetitle.setForeground(new java.awt.Color(255, 255, 255));
         pagetitle.setText("Admin: Edit Reservations");
         getContentPane().add(pagetitle);
         pagetitle.setBounds(10, 10, 320, 50);
 
+        listResLabel.setForeground(new java.awt.Color(255, 255, 255));
         listResLabel.setText("List all reservations currently in the system:");
         getContentPane().add(listResLabel);
         listResLabel.setBounds(40, 180, 280, 16);
@@ -132,9 +134,12 @@ public class adminEditReservations extends javax.swing.JDialog {
         getContentPane().add(reservationIDtextfield);
         reservationIDtextfield.setBounds(340, 130, 160, 26);
 
+        searchforreservation.setForeground(new java.awt.Color(255, 255, 255));
         searchforreservation.setText("Enter the Reservation ID # you'd like to edit:");
         getContentPane().add(searchforreservation);
         searchforreservation.setBounds(40, 130, 290, 16);
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelguis/newpackage/resizedblackbackground.jpg"))); // NOI18N
         getContentPane().add(background);
         background.setBounds(0, 0, 800, 600);
 
