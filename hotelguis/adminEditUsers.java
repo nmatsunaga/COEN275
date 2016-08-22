@@ -11,13 +11,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class adminEditUsers extends javax.swing.JDialog {
 
-    private final DefaultTableModel model;
+    private DefaultTableModel model;
 
     public adminEditUsers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        userListTable.setRowSelectionAllowed(true);
+        userListTable.setRowSelectionAllowed(false);
         model = (DefaultTableModel) userListTable.getModel();
+        setTableContent();
     }
     
     public JTextArea userHeader;
@@ -30,6 +31,23 @@ public class adminEditUsers extends javax.swing.JDialog {
     String newphonenumber;
     int searchedUserID;
     
+    private void setTableContent(){
+        Users.Iterator uIter = hotelsystemMAIN.systemUserList.getUserIter();
+        
+        for (uIter.rewind(); uIter.isValid(); uIter.next()) {
+            User u = uIter.getValue();
+            Vector<String> usr = new Vector<>();
+            
+            usr.add(Integer.toString(u.getUserID()));
+            usr.add((u.getFirstName()));
+            usr.add((u.getLastName()));
+            usr.add((u.getPhoneNumber()));
+            usr.add((u.getUserName()));
+            usr.add((u.getEmail()));
+              
+            model.addRow(usr);            
+        }
+    }
 
     private String getUserInfo(){
     	if(!hotelsystemMAIN.user.getLoggedIn()){
@@ -48,57 +66,17 @@ public class adminEditUsers extends javax.swing.JDialog {
     	}
     }
     
-    private void setUserHeader(){
-    	userHeader.setText("Account information for User ID#: " + searchedUserID);
-    	FontMetrics fm = userHeader.getFontMetrics(userHeader.getFont());
-        userHeader.setBounds(20, 120, fm.stringWidth("Current user information"), 20);
-    }
-    
-    private void setUserLabels(){
-    	String s = "First Name:\n" +
-    				"Last Name:\n" +
-    				"Username:\n" +
-    				"Password:\n" +
-    				"E-mail:\n" +
-    				"Phone Number:";
-    	
-    	userLabels.setText(s);
-    	FontMetrics fm = userLabels.getFontMetrics(userLabels.getFont());
-    	userLabels.setBounds(20, 120 + userHeader.getHeight() + 15, fm.stringWidth("Phone Number:"), 100);
-    }
-    
-    private void updateUserInfoText(){
-    	userInfo.setEnabled(false);
-    	userInfo.setText(getUserInfo());
-        FontMetrics fm = userInfo.getFontMetrics(userInfo.getFont());
-        userInfo.setBounds(20 + userLabels.getWidth() + 10, 120 + userHeader.getHeight() + 15, fm.stringWidth(getStringWidth(fm)), 100);
-        userInfo.setEnabled(true);
-        
-        System.out.println(userInfo.getText());
-    }
-    
-     private String getStringWidth(FontMetrics fm){
-    	if(!hotelsystemMAIN.user.getLoggedIn()){
-    		System.out.println("Current user is not logged in!");
-    		return "";
+    private int checkAndGetInput(){
+    	int userID = Integer.parseInt(UserIDSearch.getText());
+    	User user = hotelsystemMAIN.systemUserList.getUserByID(userID);
+    	 
+    	if(user.getUserID() > 0){
+    		return userID;
     	}
     	else{
-    		String list[] = {hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getLastName(),
-                    hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getFirstName(),
-                    hotelsystemMAIN.user.getPhoneNumber()
-    		};
-    		String a = list[0];
-    		
-    		for(int i = 1; i < list.length; i++){
-    			if(fm.stringWidth(list[i]) > fm.stringWidth(a)){
-    				a = list[i];
-    			}
-    		}
-    		
-    		return a;
+    		hotelsystemMAIN.reportError("Invalid user ID!");
+    		 
+    		return -1;
     	}
     }
      
@@ -108,7 +86,6 @@ public class adminEditUsers extends javax.swing.JDialog {
 
         backButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
-        userIDSearchButton = new javax.swing.JButton();
         instructionsLabel = new javax.swing.JLabel();
         changeFirstNameButton = new javax.swing.JButton();
         changeEmailButton = new javax.swing.JButton();
@@ -119,7 +96,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         changeLastNameButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         userListTable = new javax.swing.JTable();
-        listAllButton = new javax.swing.JButton();
         changeFirstNameTXT = new javax.swing.JTextField();
         changeEmailTXT = new javax.swing.JTextField();
         changePhoneNumTXT = new javax.swing.JTextField();
@@ -131,7 +107,7 @@ public class adminEditUsers extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-
+        
         backButton.setText("BACK");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,15 +121,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         titleLabel.setText("Administrator: Edit Users");
         getContentPane().add(titleLabel);
         titleLabel.setBounds(10, 10, 320, 70);
-
-        userIDSearchButton.setText("Search");
-        userIDSearchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userIDSearchButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(userIDSearchButton);
-        userIDSearchButton.setBounds(510, 160, 85, 29);
 
         instructionsLabel.setText("Enter a User ID to edit account information:");
         getContentPane().add(instructionsLabel);
@@ -238,18 +205,8 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(userListTable);
-
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(30, 200, 750, 160);
-
-        listAllButton.setText("List All Users");
-        listAllButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listAllButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(listAllButton);
-        listAllButton.setBounds(610, 160, 140, 29);
 
         changeFirstNameTXT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -309,98 +266,95 @@ public class adminEditUsers extends javax.swing.JDialog {
 
     private void changeFirstNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameTXTActionPerformed
         //Doesn't change full name, just the first name.
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeFirstNameTXT.getText());
-        updateUserInfoText();
     }//GEN-LAST:event_changeFirstNameTXTActionPerformed
 
     private void changeEmailTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailTXTActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, changeEmailTXT.getText());
-         updateUserInfoText();
     }//GEN-LAST:event_changeEmailTXTActionPerformed
 
     private void changeFirstNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameButtonActionPerformed
         //Doesn't change full name, just the last name.
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeFirstNameTXT.getText());
-        updateUserInfoText();
+    	int userID = checkAndGetInput();
+    	
+    	if(userID > 0){
+    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 0, changeFirstNameTXT.getText());
+    		//Update table
+    		model = (DefaultTableModel) userListTable.getModel();
+            setTableContent();
+    	}
+    	
         hotelsystemMAIN.reportError("Changed First Name");
     }//GEN-LAST:event_changeFirstNameButtonActionPerformed
 
     private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, changeEmailTXT.getText());
-         updateUserInfoText();
+    	int userID = checkAndGetInput();
+    	
+    	if(userID > 0){
+    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 4, changeEmailTXT.getText());
+    		//Update table
+    		model = (DefaultTableModel) userListTable.getModel();
+            setTableContent();
+    	}
     }//GEN-LAST:event_changeEmailButtonActionPerformed
 
     private void changePhoneNumTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhoneNumTXTActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, changePhoneNumTXT.getText());
-        updateUserInfoText();
+       
     }//GEN-LAST:event_changePhoneNumTXTActionPerformed
 
     private void changePhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhoneButtonActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, changePhoneNumTXT.getText());
-        updateUserInfoText();
+    	int userID = checkAndGetInput();
+    	
+    	if(userID > 0){
+    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 5, changePhoneNumTXT.getText());
+    		//Update table
+    		model = (DefaultTableModel) userListTable.getModel();
+            setTableContent();
+    	}
     }//GEN-LAST:event_changePhoneButtonActionPerformed
 
     private void changePasswordTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordTXTActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, changePasswordTXT.getText());
-        updateUserInfoText();
+        
     }//GEN-LAST:event_changePasswordTXTActionPerformed
 
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, changePasswordTXT.getText());
-        updateUserInfoText();
+    	int userID = checkAndGetInput();
+    	
+    	if(userID > 0){
+    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 3, changePasswordTXT.getText());
+    		//Update table
+    		model = (DefaultTableModel) userListTable.getModel();
+            setTableContent();
+    	}
         hotelsystemMAIN.reportError("Changed Password");
     }//GEN-LAST:event_changePasswordButtonActionPerformed
 
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
         //Is there a delete function in Users/User?
+    	int userID = checkAndGetInput();
+    	
+    	if(userID > 0){
+    		hotelsystemMAIN.systemUserList.removeUser(userID);
+    		//Update table
+    		model = (DefaultTableModel) userListTable.getModel();
+            setTableContent();
+    	}
+    	
         hotelsystemMAIN.reportError("User Deleted!");
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
-    private void userIDSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDSearchButtonActionPerformed
-        int size = 100; //needs to be size of Users List
-
-        for(int i = 0; i < size; i++){
-            if((hotelsystemMAIN.systemUserList._users.get(i).getUserID()) == searchedUserID){
-                //User s = hotelsystemMAIN.user NEED TO SET TO SEARCHED USER
-                Vector<String> usr = new Vector<>();
-
-                usr.add(Integer.toString(s.getUserID()));
-                usr.add((s.getFirstName()));
-                usr.add((s.getLastName()));
-                usr.add((s.getPhoneNumber()));
-                usr.add((s.getUserName()));
-                usr.add((s.getEmail()));
-
-                model.addRow(usr);   
-            }
-    }//GEN-LAST:event_userIDSearchButtonActionPerformed
-
-    private void listAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listAllButtonActionPerformed
-        int size = 100; //needs to be size of Users list
-        
-        for (int i = 0; i < size; i++) {
-            User e = hotelsystemMAIN.systemUserList._users.get(i);
-            Vector<String> usr = new Vector<>();
-            
-            usr.add(Integer.toString(e.getUserID()));
-            usr.add((e.getFirstName()));
-            usr.add((e.getLastName()));
-            usr.add((e.getPhoneNumber()));
-            usr.add((e.getUserName()));
-            usr.add((e.getEmail()));
-              
-            model.addRow(usr);            
-        }
-    }//GEN-LAST:event_listAllButtonActionPerformed
-
+    
     private void changeLastNameTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameTXTActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeLastNameTXT.getText());
-        updateUserInfoText();
+        
     }//GEN-LAST:event_changeLastNameTXTActionPerformed
 
     private void changeLastNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameButtonActionPerformed
-        hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, changeLastNameTXT.getText());
-        updateUserInfoText();
+    	int userID = checkAndGetInput();
+    	
+    	if(userID > 0){
+    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 1, changeLastNameTXT.getText());
+    		//Update table
+    		model = (DefaultTableModel) userListTable.getModel();
+            setTableContent();
+    	}
         hotelsystemMAIN.reportError("Changed Last Name");
     }//GEN-LAST:event_changeLastNameButtonActionPerformed
 
@@ -475,9 +429,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     private javax.swing.JLabel instructions;
     private javax.swing.JLabel instructionsLabel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton listAllButton;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JButton userIDSearchButton;
     private javax.swing.JTable userListTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,8 +25,38 @@ import java.util.ArrayList;
 public class Users {
 	
 	//DATA
-	public ArrayList<User> _users; //List of users in the system
+	private ArrayList<User> _users; //List of users in the system
 	private int _listID; //Unique ID given to each user of the system
+	
+	//ITERATORS
+	class Iterator {
+		int index;
+		
+		public Iterator()
+		{
+			rewind();
+		}
+		
+		public void rewind()
+		{
+			index = 0;
+		}
+		
+		public void next()
+		{
+			index++;
+		}
+		
+		public boolean isValid()
+		{
+			return index < _users.size();
+		}
+		
+		public User getValue()
+		{
+			return _users.get(index);
+		}
+	}
 	
 	//CONSTRUCTORS
 	public Users()
@@ -39,6 +69,10 @@ public class Users {
 	//ACCESSORS
 	
 	//METHODS
+	public Iterator getUserIter(){
+		return new Iterator();
+	}
+	
 	public boolean createNewUser(String firstName,
             String lastName,
             String userName,
@@ -321,8 +355,6 @@ public class Users {
 			return new User();
 		}
 		else{
-			_users.remove(i);
-			
 			return _users.get(i);
 		}
 	}
