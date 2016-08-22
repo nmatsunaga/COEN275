@@ -7,11 +7,11 @@ import java.util.Calendar;
 
 public class One_Hotel_room {
 	
-private int Type_of_the_room;            // 0 :  2 king size bed , most expensive 
+private int Type_of_the_room;        // 0 :  2 king size bed , most expensive 
 	                                 // 1 :  1 king size bed , 1 queen size bed second most expensive
 	                                 // 2 :  2 queen size bed , third most expensive
 	                                 // 3 :  1 king size bed 
-                                         // 4 :  1 queen size bed 	
+                                     // 4 :  1 queen size bed 	
 private int room_number;    	
 private ArrayList<Date> Reservation_Date;
 private int Number_of_Reservations ;

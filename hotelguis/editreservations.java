@@ -4,21 +4,39 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import java.util.Date;
 
 public class editreservations extends javax.swing.JDialog {
 
-    private final DefaultTableModel model;
+    private DefaultTableModel model;
 
     public editreservations(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        reservationTableList.setRowSelectionAllowed(true);
+        reservationTableList.setEnabled(false);
         model = (DefaultTableModel) reservationTableList.getModel();
+        setTableContent();
     }
 
     public String reservationID;
     User user = new User();
+    
+    private void setTableContent(){
+        int size = hotelsystemMAIN.systemReservationList.adminReservationCount();
+        
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        for (int i = 0; i < size; i++) {
+            reservationProcess.Entry e = hotelsystemMAIN.systemReservationList.entries.get(i); //NEED TO set to ONLY one user's reservations.
+            Vector<String> resv = new Vector<>();
+            
+            resv.add(Integer.toString(e.getReservId()));
+            resv.add(df.format(e.getStartDate()));
+            resv.add(df.format(e.getEndDate()));
+              
+            model.addRow(resv);            
+        }
+    }
         
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -27,11 +45,10 @@ public class editreservations extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationTableList = new javax.swing.JTable();
         reservationlist = new javax.swing.JLabel();
-        listResrButton = new javax.swing.JButton();
         checkindate = new javax.swing.JLabel();
         startmonthchoice = new java.awt.Choice();
-        startdaychoice1 = new java.awt.Choice();
-        startyearchoice1 = new java.awt.Choice();
+        startdaychoice = new java.awt.Choice();
+        startyearchoice = new java.awt.Choice();
         roomtypelabel = new javax.swing.JLabel();
         roomtypechoice = new java.awt.Choice();
         checkoutdate = new javax.swing.JLabel();
@@ -50,13 +67,11 @@ public class editreservations extends javax.swing.JDialog {
         getContentPane().setLayout(null);
 
         reservationTableList.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
+            new Object [][] {},
             new String [] {
                 "Reservation ID", "Start Date", "End Date", "Room Number"
-            }
-        ) {
+            })
+        {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
@@ -75,15 +90,6 @@ public class editreservations extends javax.swing.JDialog {
         reservationlist.setText("Enter the Reservation ID of the reservation you'd like to edit:");
         getContentPane().add(reservationlist);
         reservationlist.setBounds(20, 80, 500, 22);
-
-        listResrButton.setText("List Your Reservations");
-        listResrButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                listResrButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(listResrButton);
-        listResrButton.setBounds(510, 390, 210, 29);
 
         checkindate.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
         checkindate.setForeground(new java.awt.Color(255, 255, 255));
@@ -106,47 +112,46 @@ public class editreservations extends javax.swing.JDialog {
         getContentPane().add(startmonthchoice);
         startmonthchoice.setBounds(310, 160, 179, 20);
 
-        startdaychoice1.add("1");
-        startdaychoice1.add("2");
-        startdaychoice1.add("3");
-        startdaychoice1.add("4");
-        startdaychoice1.add("5");
-        startdaychoice1.add("6");
-        startdaychoice1.add("7");
-        startdaychoice1.add("8");
-        startdaychoice1.add("9");
-        startdaychoice1.add("10");
-        startdaychoice1.add("11");
-        startdaychoice1.add("12");
-        startdaychoice1.add("13");
-        startdaychoice1.add("14");
-        startdaychoice1.add("15");
-        startdaychoice1.add("16");
-        startdaychoice1.add("17");
-        startdaychoice1.add("18");
-        startdaychoice1.add("19");
-        startdaychoice1.add("20");
-        startdaychoice1.add("21");
-        startdaychoice1.add("22");
-        startdaychoice1.add("23");
-        startdaychoice1.add("24");
-        startdaychoice1.add("25");
-        startdaychoice1.add("26");
-        startdaychoice1.add("27");
-        startdaychoice1.add("28");
-        startdaychoice1.add("29");
-        startdaychoice1.add("30");
-        startdaychoice1.add("31");
-        enddaychoice.add("1");
-        enddaychoice.add("1");
-        getContentPane().add(startdaychoice1);
-        startdaychoice1.setBounds(500, 160, 70, 20);
+        startdaychoice.add("1");
+        startdaychoice.add("2");
+        startdaychoice.add("3");
+        startdaychoice.add("4");
+        startdaychoice.add("5");
+        startdaychoice.add("6");
+        startdaychoice.add("7");
+        startdaychoice.add("8");
+        startdaychoice.add("9");
+        startdaychoice.add("10");
+        startdaychoice.add("11");
+        startdaychoice.add("12");
+        startdaychoice.add("13");
+        startdaychoice.add("14");
+        startdaychoice.add("15");
+        startdaychoice.add("16");
+        startdaychoice.add("17");
+        startdaychoice.add("18");
+        startdaychoice.add("19");
+        startdaychoice.add("20");
+        startdaychoice.add("21");
+        startdaychoice.add("22");
+        startdaychoice.add("23");
+        startdaychoice.add("24");
+        startdaychoice.add("25");
+        startdaychoice.add("26");
+        startdaychoice.add("27");
+        startdaychoice.add("28");
+        startdaychoice.add("29");
+        startdaychoice.add("30");
+        startdaychoice.add("31");
+        
+        getContentPane().add(startdaychoice);
+        startdaychoice.setBounds(500, 160, 70, 20);
 
-        startyearchoice1.add("2016");
-        startyearchoice1.add("2017");
-        startyearchoice1.add("2018");
-        getContentPane().add(startyearchoice1);
-        startyearchoice1.setBounds(580, 160, 98, 20);
+        startyearchoice.add("2016");
+        startyearchoice.add("2017");
+        startyearchoice.add("2018");
+        getContentPane().add(startyearchoice);
+        startyearchoice.setBounds(580, 160, 98, 20);
 
         roomtypelabel.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
         roomtypelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -154,8 +159,12 @@ public class editreservations extends javax.swing.JDialog {
         getContentPane().add(roomtypelabel);
         roomtypelabel.setBounds(180, 220, 120, 20);
 
-        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two King Beds");
+        roomtypechoice.add("One King Bed, One Queen Bed");
         roomtypechoice.add("Two Queen Beds");
+        roomtypechoice.add("One King Bed");
+        roomtypechoice.add("One Queen Bed");
+        
         getContentPane().add(roomtypechoice);
         roomtypechoice.setBounds(310, 220, 280, 20);
 
@@ -211,8 +220,7 @@ public class editreservations extends javax.swing.JDialog {
         enddaychoice.add("29");
         enddaychoice.add("30");
         enddaychoice.add("31");
-        enddaychoice.add("1");
-        enddaychoice.add("1");
+
         getContentPane().add(enddaychoice);
         enddaychoice.setBounds(500, 190, 70, 20);
 
@@ -288,7 +296,8 @@ public class editreservations extends javax.swing.JDialog {
     }//GEN-LAST:event_homebuttonActionPerformed
 
     private void reservationIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationIDtextfieldActionPerformed
-        reservationID = reservationIDtextfield.getText();
+        /*
+    	reservationID = reservationIDtextfield.getText();
         boolean validReservation = hotelsystemMAIN.systemReservationList.checkReservationByRid(Integer.parseInt(reservationID));
         if (validReservation == false){
             hotelsystemMAIN.reportError("Cannot find reservation!");
@@ -296,12 +305,60 @@ public class editreservations extends javax.swing.JDialog {
         else {
             hotelsystemMAIN.reportError("Reservation Found!"); 
         }
+        */
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
-    private void confirmchangesbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmchangesbuttonActionPerformed
-        reservationID = reservationIDtextfield.getText();
-       // hotelsystemMAIN.systemReservationList.changeReservation(PROPERTIES, ERROR, startDate, endDate, ERROR);
-       //need to only input reservation ID, not other parameters.
+    private void confirmchangesbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmchangesbuttonActionPerformed 	
+    	int reserveID = Integer.parseInt(reservationIDtextfield.getText());
+    	int roomType = roomtypechoice.getSelectedIndex();
+    	int oldRoomNum = hotelsystemMAIN.systemReservationList.getReservationRoomNum(reserveID);
+        
+        //For now assume that the ID is valid...
+    	int newStartDay = Integer.parseInt(startdaychoice.getSelectedItem());
+    	int newStartMonth = startmonthchoice.getSelectedIndex();
+    	int newStartYear = Integer.parseInt(startyearchoice.getSelectedItem());
+    	
+    	int newEndDay = Integer.parseInt(enddaychoice.getSelectedItem());
+    	int newEndMonth = endmonthchoice.getSelectedIndex();
+    	int newEndYear = Integer.parseInt(endyearchoice.getSelectedItem());
+    	
+    	Date newStartDate = new Date(newStartYear, newStartMonth, newStartDay);
+    	Date newEndDate = new Date(newEndYear, newEndMonth, newEndDay);
+    	
+    	Date oldStartDate = hotelsystemMAIN.systemReservationList.getReservationStartDate(reserveID);
+    	Date oldEndDate = hotelsystemMAIN.systemReservationList.getReservationEndDate(reserveID);
+    	
+    	hotelsystemMAIN.hotelRoomList.cancel_room(oldStartDate, oldEndDate, oldRoomNum);
+    	
+    	int newRoomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, newStartDate, newEndDate);
+    	
+    	if(newRoomNum == 999){
+    		hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(oldStartDate, oldEndDate, oldRoomNum);
+    		hotelsystemMAIN.reportError("Requested change is unavailable!");
+    	}
+    	else{
+    		reservationProcess.Entry r = hotelsystemMAIN.systemReservationList.checkReservationByRid(reserveID);
+    		
+    		if(r != null){
+    			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    			int i;
+    			
+    			r.setRoomId(newRoomNum);
+    			r.setStartDate(newStartDate);
+    			r.setEndDate(newEndDate);
+    			hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(newStartDate, newEndDate, newRoomNum);
+    			
+    			for(i = 0; i < model.getRowCount(); i++){
+    				if(reserveID == Integer.parseInt((String) model.getValueAt(i, 0))){
+    					break;
+    				}
+    			}
+    			
+    			model.setValueAt(df.format(newRoomNum), i, 1);
+    			model.setValueAt(df.format(newStartDate), i, 2);
+    			model.setValueAt(df.format(newEndDate), i, 3);
+    		}
+    	}
     }//GEN-LAST:event_confirmchangesbuttonActionPerformed
 
     private void cancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbuttonActionPerformed
@@ -317,22 +374,6 @@ public class editreservations extends javax.swing.JDialog {
         userpage.setSize(800,620);
         userpage.setVisible(true);
     }//GEN-LAST:event_backbuttonActionPerformed
-
-    private void listResrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listResrButtonActionPerformed
-        int size = hotelsystemMAIN.systemReservationList.adminReservationCount();
-        
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        for (int i = 0; i < size; i++) {
-            reservationProcess.Entry e = hotelsystemMAIN.systemReservationList.entries.get(i); //NEED TO set to ONLY one user's reservations.
-            Vector<String> resv = new Vector<>();
-            
-            resv.add(Integer.toString(e.getReservId()));
-            resv.add(df.format(e.getStartDate()));
-            resv.add(df.format(e.getEndDate()));
-              
-            model.addRow(resv);            
-        }
-    }//GEN-LAST:event_listResrButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -386,14 +427,13 @@ public class editreservations extends javax.swing.JDialog {
     public java.awt.Choice endyearchoice;
     private javax.swing.JButton homebutton;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton listResrButton;
     private javax.swing.JTextField reservationIDtextfield;
     private javax.swing.JTable reservationTableList;
     private javax.swing.JLabel reservationlist;
     private java.awt.Choice roomtypechoice;
     private javax.swing.JLabel roomtypelabel;
-    public java.awt.Choice startdaychoice1;
+    public java.awt.Choice startdaychoice;
     public java.awt.Choice startmonthchoice;
-    public java.awt.Choice startyearchoice1;
+    public java.awt.Choice startyearchoice;
     // End of variables declaration//GEN-END:variables
 }

@@ -105,16 +105,16 @@ public class reservationProcess {
 		return false;
 	}
 	
-	boolean checkReservationByRid(int reservationId)
+	Entry checkReservationByRid(int reservationId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
 			if ((entries.get(i).getReservId() == reservationId))
 			{
-				return true;
+				return entries.get(i);
 			}
 		}
-		return false; // reservation not found!
+		return null; // reservation not found!
 	}
 	
 	int getReservationUserId(int reservationId)
@@ -124,6 +124,18 @@ public class reservationProcess {
 			if ((entries.get(i).getReservId() == reservationId))
 			{
 				return entries.get(i).getUserId();
+			}
+		}
+		return -1; // reservation not found!
+	}
+	
+	int getReservationRoomNum(int reservationId)
+	{
+		int searchLength = entries.size();
+		for (int i = 0; i < searchLength; i++) {
+			if ((entries.get(i).getReservId() == reservationId))
+			{
+				return entries.get(i).getRoomId();
 			}
 		}
 		return -1; // reservation not found!
