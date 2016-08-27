@@ -3,9 +3,6 @@ package hotelguis;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import java.lang.String;
 
@@ -21,7 +18,6 @@ public class makereservation extends javax.swing.JDialog {
     Calendar endDate = Calendar.getInstance();
     String roomSelection;
     int roomType;
-    int roomNum;
     int userID;
     int reservationReturn;
     
@@ -251,7 +247,8 @@ public class makereservation extends javax.swing.JDialog {
     }//GEN-LAST:event_roomtypeActionPerformed
 
     private void confirmbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmbuttonActionPerformed
-        userID = hotelsystemMAIN.user.getUserID(); 
+        ArrayList<Integer> roomNum;
+    	userID = hotelsystemMAIN.user.getUserID(); 
         
         startMonth = Integer.valueOf((String)Month.getSelectedItem());
         startDay = Integer.valueOf((String)day.getSelectedItem());
@@ -264,8 +261,6 @@ public class makereservation extends javax.swing.JDialog {
         startDate.set(Calendar.MINUTE, 0);
         startDate.set(Calendar.SECOND, 0);
         
-        Date sD = startDate.getTime();
-        
         endMonth = Integer.valueOf((String)Month2.getSelectedItem());
         endDay = Integer.valueOf((String)day2.getSelectedItem());
         endYear = Integer.valueOf((String)year2.getSelectedItem());
@@ -276,8 +271,6 @@ public class makereservation extends javax.swing.JDialog {
         endDate.set(Calendar.HOUR_OF_DAY, 11);
         endDate.set(Calendar.MINUTE, 0);
         endDate.set(Calendar.SECOND, 0);
-        
-        Date eD = endDate.getTime();
         
         roomSelection = (String) roomtype.getSelectedItem();
         
@@ -301,17 +294,24 @@ public class makereservation extends javax.swing.JDialog {
             roomType = 4;
             //roomNum = 4;
         }
-        System.out.println("room num" + roomNum + "startdate" + sD + "enddate" + eD + "userID" + userID);//testing
         
-        roomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, sD, eD);
-        if (roomNum == 999)
+        if(!hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)){
+    		hotelsystemMAIN.reportError("Dates given are invalid");
+    		
+    		return;
+    	}
+        
+        roomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
+        
+        System.out.println("room num" + roomNum.get(0) + "startdate" + startDate + "enddate" + endDate + "userID" + userID);//testing
+        
+        if (roomNum.size() == 0)
         {
-        	Component frame = null;
-            JOptionPane.showMessageDialog(frame, roomSelection + " room is not available in the dates specified.");
+        	hotelsystemMAIN.reportError(roomSelection + " room is not available in the dates specified.");	
         }
         else
         {
-        	reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum, sD, eD, userID);
+        	reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum.get(0), startDate, endDate, userID);
         
 	        if (reservationReturn < 0 ){
 	            Component frame = null;

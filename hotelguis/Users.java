@@ -140,13 +140,13 @@ public class Users {
 				}
 				else{
 					System.out.println("Error: Incorrect password!");
-					return new User();
+					return null;
 				}
 			}
 		}
 		
 		System.out.println("Error: Username not found!");
-		return new User();
+		return null;
 	}
 	
 	public boolean logout(String userName){

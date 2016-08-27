@@ -1,167 +1,239 @@
 package hotelguis;
 
-import java.util.*;
-import java.text.*;
-import java.util.Date;
+
 import java.util.Calendar;
+import java.util.ArrayList;
 
 public class One_Hotel_room {
 	
-private int Type_of_the_room;        // 0 :  2 king size bed , most expensive 
-	                                 // 1 :  1 king size bed , 1 queen size bed second most expensive
-	                                 // 2 :  2 queen size bed , third most expensive
-	                                 // 3 :  1 king size bed 
-                                     // 4 :  1 queen size bed 	
-private int room_number;    	
-private ArrayList<Date> Reservation_Date;
-private int Number_of_Reservations ;
- 
-@SuppressWarnings("deprecation")
-public One_Hotel_room () {
-    Date local_date = new Date() ; 
-    Date local_date_1 = new Date() ;
-    local_date.setYear(0);// 0 means year 1900
-    local_date.setMonth(0);
-    local_date.setDate(12);
-    local_date_1.setYear(300);// year 300 means year 2200
-    local_date_1.setMonth(0);
-    local_date_1.setDate(12);
-
-    this.Type_of_the_room = 99 ;
-    this.room_number = 5555 ;
-    this.Number_of_Reservations = 0 ;
-    this.Reservation_Date = new ArrayList<Date>();
-         
-    for ( int counter = 0; counter < 100; counter= counter + 1 ){
-        Reservation_Date.add(local_date) ;  
-        Reservation_Date.add(local_date_1) ;  
-    }       	  
- }
-
-public void Set_Hotel_room ( int Type_of_the_room ,  int room_number  ){
-    this.Type_of_the_room = Type_of_the_room ;
-    this.room_number = room_number ;
-}
-
-@SuppressWarnings("deprecation")
-public boolean check_Hotel_room ( Date Start_date , Date End_date ){ 
-    boolean local_variable_1 ;
-    int temp_55 = 0 ;
-    Date start_when = new Date();
-    Date end_when = new Date();
-    start_when = Reservation_Date.get(0) ;
-	end_when   = Reservation_Date.get(1) ;
-    System.out.printf("Printing temp_55 value .... %d. %n ", temp_55  );
-    System.out.printf("Status of Start_when year %d. %n ",  start_when.getYear()  ); 
-	  System.out.printf("Status of Start_when  month %d. %n ", start_when.getMonth()  );
-	  System.out.printf("Status of Start_when day %d. %n ",   start_when.getDate()  );
-	  System.out.printf("Status of End_when  %d. %n ",     end_when.getYear()  ); 
-	   System.out.printf("Status of End_when  %d. %n ",    end_when.getMonth()  );
-	   System.out.printf("Status of End_when  %d. %n ",      end_when.getDate()  );
-    
-	   System.out.printf("Status of Start_date year %d. %n ",  Start_date.getYear()  ); 
-	   System.out.printf("Status of Start_date  month %d. %n ", Start_date.getMonth()  );
-	   System.out.printf("Status of Start_date day %d. %n ",   Start_date.getDate()  );
-	   System.out.printf("Status of End_date  %d. %n ",     End_date.getYear()  ); 
-	   System.out.printf("Status of End_date  %d. %n ",    End_date.getMonth()  );
-	   System.out.printf("Status of End_date  %d. %n ",      End_date.getDate()  );
-		   
-    for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
-        start_when = Reservation_Date.get(counter) ;
-	end_when   = Reservation_Date.get(counter+1) ;
-			     
-    if   (  ( End_date.before(start_when) ) || ( Start_date.after(end_when)  )  ) { 
-        temp_55 = temp_55 + 1 ;
-        }
-    }
-    if ( temp_55 == Number_of_Reservations  ){ 
-        local_variable_1 = false ;
+	private int Type_of_the_room;       // 0 :  2 king size bed , most expensive 
+	                                 	// 1 :  1 king size bed , 1 queen size bed second most expensive
+	                                 	// 2 :  2 queen size bed , third most expensive
+	                                 	// 3 :  1 king size bed 
+                                     	// 4 :  1 queen size bed 	
+	private int room_number;
+	//private ArrayList<Date> Reservation_Date;
+	private ArrayList<Calendar> Reservation_Date;
+	private int Number_of_Reservations;
+	
+	public One_Hotel_room () {
+		this.Type_of_the_room = -1;
+		this.room_number = -1;
+		this.Number_of_Reservations = 0;
+		//this.Reservation_Date = new ArrayList<Date>();   
+		this.Reservation_Date = new ArrayList<Calendar>();
 	}
-    else {
-	local_variable_1 = true  ;	
-    }
-    return local_variable_1 ;
-}
+	
+	public One_Hotel_room (int number, int type) {
+		this.Type_of_the_room = type;
+		this.room_number = number;
+		this.Number_of_Reservations = 0;
+		//this.Reservation_Date = new ArrayList<Date>();
+		this.Reservation_Date = new ArrayList<Calendar>();
+	}
+	
+	public int Get_Hotel_room_type () { 
+		return Type_of_the_room;
+	}
+	
+	public int Get_Hotel_room_number() { 
+		return room_number;
+	}
+   
+	//public ArrayList<Date> Get_Hotel_room_Reservation_list() {
+	public ArrayList<Calendar> Get_Hotel_room_Reservation_list() {
+		return Reservation_Date;
+	}
 
-@SuppressWarnings("deprecation")
-public void Occupy_Hotel_room ( Date Start_date , Date End_date, int room_number  ){
+	public void Set_Hotel_room (int Type_of_the_room , int room_number){
+		this.Type_of_the_room = Type_of_the_room;
+		this.room_number = room_number;
+	}
+
+	//public int check_Hotel_room (Date Start_date, Date End_date) {
+	public int check_Hotel_room (Calendar Start_date, Calendar End_date) {
+		int datesRemaining = 0;
+		
+		if (Reservation_Date.size() == 0) {
+			return 0;
+		}
+		
+		if (Start_date.before(Reservation_Date.get(0))) {	
+			if (!End_date.after(Reservation_Date.get(0))) {
+				return 0;
+			}
+			else {
+				return -1;
+			}
+		}
+		
+		if (End_date.after(Reservation_Date.get(Reservation_Date.size() - 1))) {
+			if (!Start_date.before(Reservation_Date.get(Reservation_Date.size() - 1))) {
+				return Reservation_Date.size();
+			}
+			else {
+				return -1;
+			}
+		}
+		
+		//Hmmmmm...
+		while (datesRemaining < Reservation_Date.size()) {
+			//Date d = Reservation_Date.get(datesRemaining);
+			Calendar d = Reservation_Date.get(datesRemaining);
 			
-    Date start_when = new Date();
-    Date end_when = new Date();
-		
-    for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
-        start_when = Reservation_Date.get(counter) ;
-        end_when   = Reservation_Date.get(counter+1) ;
-        if ( start_when.getYear() == 0 ){ 
-            Reservation_Date.set(counter,Start_date) ; 
-            Reservation_Date.set(counter+1,End_date) ; 
-            Number_of_Reservations++ ;
-            this.room_number = room_number ;
-            break ;
-        }
-    }
-}
+			if(!End_date.after(d)) {
+				break;
+			}
+			
+			datesRemaining = datesRemaining + 2;
+		}
 	
-public int Get_Hotel_room_type () { 
-    return Type_of_the_room ;
-}
-	
-public int Get_Hotel_room_number() { 
-    return room_number ;
-}
-   
-public ArrayList<Date> Get_Hotel_room_Reservation_list() { 
-    return Reservation_Date ;
-}
-   
-@SuppressWarnings("deprecation")
-public void free_room ( Date free_room_1 ){ 
-    Date end_when = new Date();
-    Date local_date = new Date() ; 
-    Date local_date_1 = new Date() ; 
-    local_date.setYear(0);
-    local_date.setMonth(0);
-    local_date.setDate(12);
-    local_date_1.setYear(300);
-    local_date_1.setMonth(0);
-    local_date_1.setDate(12);
+		if (!Start_date.before(Reservation_Date.get(datesRemaining - 1))) {
+			return datesRemaining;
+		}
 		
-for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
-    end_when   = Reservation_Date.get(counter+1) ;
-    if  ( ( free_room_1.after(end_when)  ) ){    
-	Reservation_Date.set(counter,local_date) ; 
-	Reservation_Date.set(counter+1,local_date_1) ; 
-	Number_of_Reservations-- ;
-	} 
-    }
-}
+		return -1;
+	}
 
-public void free_room_exact_date ( Date Start_date_1 , Date End_date_1){ 
-	 Date start_when = new Date();
-	 Date end_when   = new Date();
-	 Date local_date = new Date() ; 
-	    Date local_date_1 = new Date() ; 
-	    local_date.setYear(0);
-	    local_date.setMonth(0);
-	    local_date.setDate(12);
-	    local_date_1.setYear(300);
-	    local_date_1.setMonth(0);
-	    local_date_1.setDate(12);
-	for ( int counter = 0; counter < 99; counter= counter + 2 ){ 
-	    start_when = Reservation_Date.get(counter) ;
-		end_when   = Reservation_Date.get(counter+1) ;
-	    if  ( ( Start_date_1.equals(start_when)  ) && ( End_date_1.equals(end_when)  )  ){    
-		Reservation_Date.set(counter,local_date) ; 
-		Reservation_Date.set(counter+1,local_date_1) ; 
-		Number_of_Reservations-- ;
-		} 
+	//public void Occupy_Hotel_room (Date Start_date, Date End_date) {
+	public void Occupy_Hotel_room (Calendar Start_date, Calendar End_date) {
+		int index = check_Hotel_room (Start_date, End_date);
+		
+		if (index >= 0) {
+			Reservation_Date.add(index, End_date);
+			Reservation_Date.add(index, Start_date);
+			
+			Number_of_Reservations++;
+			
+			System.out.println("Did occupy room");
+			
+			return;
+		}
+		
+		System.out.println("Did not occupy room");
+	}
+
+	//public void free_room (Date free_room_1) {
+	public void free_room (Calendar free_room_1) {
+		int numReservationsToDelete = 0;
+		
+	    for (int counter = 0; counter < Reservation_Date.size(); counter = counter + 2) { 
+	    	if ((free_room_1.after(Reservation_Date.get(counter + 1)))) {    
+	    		numReservationsToDelete++;
+	    	}
 	    }
+	    
+	    for (int counter = 0; counter < numReservationsToDelete; counter++) {
+	    	Reservation_Date.remove(0);
+	    	Reservation_Date.remove(0);
+	    }
+	    
+	    Number_of_Reservations = Number_of_Reservations - numReservationsToDelete;
+	    
+	    System.out.printf("Removed %d dates\n", numReservationsToDelete);
+	}
+
+	//public void free_room_exact_date (Date Start_date_1, Date End_date_1) {
+	public void free_room_exact_date (Calendar Start_date_1, Calendar End_date_1) {
+		//Date start_when;
+		//Date end_when;
+		Calendar start_when;
+		Calendar end_when;
+			    
+	    for (int counter = 0; counter < Reservation_Date.size(); counter = counter + 2) { 
+	    	start_when = Reservation_Date.get(counter);
+	    	end_when = Reservation_Date.get(counter + 1);
+	    	
+	    	if ((Start_date_1.equals(start_when)) && (End_date_1.equals(end_when))) {
+	    		System.out.println("Found date to remove");
+	    		Reservation_Date.remove(counter);
+	    		Reservation_Date.remove(counter); 
+	    		Number_of_Reservations--;
+	    		return;
+			} 
+	    }
+	    
+	    System.out.println("Did not find date to remove");
+	}
 	
+	@Override
+	public String toString() {
+		String result = "";
+		
+		result += "Room number: " + room_number + "\n";
+		result += "Room type: " + Type_of_the_room + "\n";
+		result += "Dates occupied:\n";
+		
+		for(int i = 0; i < Reservation_Date.size(); i = i + 2){
+			//Date d1 = Reservation_Date.get(i);
+			//Date d2 = Reservation_Date.get(i + 1);
+			Calendar d1 = Reservation_Date.get(i);
+			Calendar d2 = Reservation_Date.get(i + 1);
+			//result += "\t" + d1.getMonth() + "/" + d1.getDay() + "/" + d1.getYear() + " - " + d2.getMonth() + "/" + d2.getDay() + "/" + d2.getYear() + "\n"; 
+			result += "\t" + d1.get(Calendar.MONTH) + "/" + d1.get(Calendar.DAY_OF_MONTH) + "/" + d1.get(Calendar.YEAR) + " - " + d2.get(Calendar.MONTH) + "/" + d2.get(Calendar.DAY_OF_MONTH) + "/" + d2.get(Calendar.YEAR) + "\n"; 
+		}
+		
+		return result;
+	}
 	
-	
-}
-
-
-
-
+	public static void main(String[] args) {
+		One_Hotel_room room1 = new One_Hotel_room(0, 1);
+		Calendar start, end;
+		
+		System.out.println(room1);
+		
+		start = Calendar.getInstance();
+		end = Calendar.getInstance();
+		start.set(2016, 10, 3);
+		end.set(2016, 11, 2);
+		
+		room1.Occupy_Hotel_room(start, end);
+		
+		System.out.println(room1);
+		
+		start = Calendar.getInstance();
+		end = Calendar.getInstance();
+		start.set(2016, 11, 2);
+		end.set(2016, 11, 4);
+		
+		room1.Occupy_Hotel_room(start, end);
+		
+		System.out.println(room1);
+		
+		start = Calendar.getInstance();
+		end = Calendar.getInstance();
+		start.set(2016, 8, 4);
+		end.set(2016, 8, 7);
+		
+		room1.Occupy_Hotel_room(start, end);
+		
+		System.out.println(room1);
+		
+		start = Calendar.getInstance();
+		end = Calendar.getInstance();
+		start.set(2016, 8, 4);
+		end.set(2016, 10, 17);
+		
+		room1.Occupy_Hotel_room(start, end);
+		
+		System.out.println(room1);
+		
+		start = Calendar.getInstance();
+		end = Calendar.getInstance();
+		start.set(2016, 10, 4);
+		end.set(2016, 10, 17);
+		
+		room1.Occupy_Hotel_room(start, end);
+		
+		System.out.println(room1);
+		
+		start = Calendar.getInstance();
+		end = Calendar.getInstance();
+		start.set(2016, 9, 4);
+		end.set(2016, 9, 17);
+		
+		room1.Occupy_Hotel_room(start, end);
+		
+		System.out.println(room1);
+	}
 }

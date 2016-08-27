@@ -115,33 +115,33 @@ public class loginpage extends javax.swing.JDialog {
     }//GEN-LAST:event_newuserbuttonActionPerformed
 
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
-        this.dispose();
         username = usernametextfield.getText();    
         pwd = passwordtextfield.getText();
         //users.login(username, pwd);
         hotelsystemMAIN.user = hotelsystemMAIN.systemUserList.login(username, pwd);
+        
+        if (hotelsystemMAIN.user == null){
+        	hotelsystemMAIN.reportError("Login invalid");
+        	
+        	return;
+        }
         
         if (hotelsystemMAIN.user.getLoggedIn()==true && hotelsystemMAIN.user.getAdmin()==true){
         	dispose();
         	administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(),true);
         	adminwindow.setSize(800,620);
         	adminwindow.setVisible(true);
-             
-             
-             return;
+                    
+        	return;
         }
         
         if (hotelsystemMAIN.user.getLoggedIn()==true){
-                useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
-                optwin.setSize(800,620);
-                optwin.setVisible(true);
+        	dispose();
+            useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
+            optwin.setSize(800,620);
+            optwin.setVisible(true);
                 
-                return;
-        }
-        
-        if (hotelsystemMAIN.user.getLoggedIn()==false){
-        	Component frame = null;
-            JOptionPane.showMessageDialog(frame, "Login invalid.");
+            return;
         }
     }//GEN-LAST:event_submitbuttonActionPerformed
         

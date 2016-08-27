@@ -1,82 +1,94 @@
 package hotelguis;
 
-import java.util.*;
-import java.text.*;
+
+import java.util.Calendar;
+import java.util.ArrayList;
+
 
 public class Hotel_room_manager {
 
-public One_Hotel_room[] Hotel_room_manager_object  ; 
+	public One_Hotel_room[] Hotel_room_manager_object; 
 	
-public Hotel_room_manager() 
-{
-	Hotel_room_manager_object = new One_Hotel_room[5] ; 
-for ( int i=0; i<5; i++) {
-	Hotel_room_manager_object[i]=new One_Hotel_room();
+	public Hotel_room_manager() 
+	{
+		Hotel_room_manager_object = new One_Hotel_room[100]; 
+		
+		configure_hotel_room(0);
+	}
+	
+	public boolean Are_Valid_Dates (Calendar Start_Date_1, Calendar End_Date_1) {
+		if (!End_Date_1.after(Start_Date_1)) {
+			return false;
+		}
+		
+		if (Start_Date_1.before(Calendar.getInstance())) {
+			return false;
+		}
+		
+		return true;
+	}
+		
+	public ArrayList<Calendar> get_each_Hotel_room_reservation_list (int room_number) {
+		return Hotel_room_manager_object[room_number].Get_Hotel_room_Reservation_list();
+    }
+		
+	public void Occupy_Hotel_room (Calendar Start_Date_1, Calendar End_Date_1, int room_number) { 	
+		for(int i = 0; i < Hotel_room_manager_object.length; i++){
+			if(room_number == Hotel_room_manager_object[i].Get_Hotel_room_number()){
+				Hotel_room_manager_object[i].Occupy_Hotel_room(Start_Date_1, End_Date_1);
+			}
+		}
 	}
 
-}
+	public void cancel_room (Calendar Start_Date_1, Calendar End_Date_1, int room_number) {
+		for(int i = 0; i < Hotel_room_manager_object.length; i++){
+			if(room_number == Hotel_room_manager_object[i].Get_Hotel_room_number()){
+				Hotel_room_manager_object[i].free_room_exact_date(Start_Date_1, End_Date_1);
+			}
+		}
+	}
 
-
-@SuppressWarnings("deprecation")
+	public void free_expired_rooms (Calendar free_room_1) {
+		for (int counter = 0; counter < Hotel_room_manager_object.length; counter++) { 
+			Hotel_room_manager_object[counter].free_room(free_room_1);
+		}
+	}
 		
-public  ArrayList<Date> get_each_Hotel_room_reservation_list ( int room_number){
-    return Hotel_room_manager_object[room_number].Get_Hotel_room_Reservation_list() ;
-    }
-		
-public  void Occupy_Hotel_room ( Date Start_Date_1 , Date End_Date_1 , int room_number ) { 	
-    Hotel_room_manager_object[room_number].Occupy_Hotel_room(Start_Date_1 , End_Date_1 , room_number ) ;
-}
+	public void configure_hotel_room (int configuration_1) {
+		if (configuration_1 == 0) {
+			for (int counter = 0; counter < Hotel_room_manager_object.length; counter++) {
+				Hotel_room_manager_object[counter] = new One_Hotel_room(((100 * ((counter / 25) + 1)) + counter % 25), (counter % 5));
+				System.out.println("Room Number: " + ((100 * ((counter / 25) + 1)) + counter % 25) + "\t\tRoom Type: " + (counter % 5));
+			}
+		}
+		else {
+			for (int counter = 0; counter < Hotel_room_manager_object.length; counter++) {
+				Hotel_room_manager_object[counter] = new One_Hotel_room(((100 * ((counter % 25) + 1)) + counter), (counter % 5));
+			}
+		}
+	}
 
-
-public void cancel_room ( Date Start_Date_1 , Date End_Date_1, int room_number) {
-	Hotel_room_manager_object[room_number].free_room_exact_date(Start_Date_1 , End_Date_1 ) ;
-	
-}
-
-
-public  void free_expired_rooms ( Date free_room_1 ) {
-    for ( int counter = 0; counter < 5; counter++){ 
-	Hotel_room_manager_object[counter].free_room(free_room_1) ;
-    }
-}
-		
-public  void configure_hotel_room ( int configuration_1   ) {
-    if ( configuration_1 == 0 ){
-	Hotel_room_manager_object[0].Set_Hotel_room(0 , 0) ;          // configuring Hotel room number 0 to 2 King size bed 
-        Hotel_room_manager_object[1].Set_Hotel_room(2 , 1) ;          // configuring Hotel room number 1 to 2 queen size bed 
-	Hotel_room_manager_object[2].Set_Hotel_room(2 , 2) ;          // configuring Hotel room number 2 to 2 queen size bed 
-	Hotel_room_manager_object[3].Set_Hotel_room(3 , 3) ;          // configuring Hotel number 3 to 1 King size bed 
-	Hotel_room_manager_object[4].Set_Hotel_room(4 , 4) ;          // configuring Hotel number 4 to 1 queen size bed 
-    }
-    else {
-	Hotel_room_manager_object[0].Set_Hotel_room(0 , 0) ;   // configuring Hotel number 0 to 2 King size bed 
-        Hotel_room_manager_object[1].Set_Hotel_room(0 , 1) ;   // configuring Hotel number 1 to 2 King size bed
-	Hotel_room_manager_object[2].Set_Hotel_room(0 , 2) ;   // configuring Hotel number 2 to 2 King size bed
-	Hotel_room_manager_object[3].Set_Hotel_room(0 , 3) ;  // configuring Hotel number 3 to 2 King size bed
-	Hotel_room_manager_object[4].Set_Hotel_room(0 , 4) ;  // configuring Hotel number 4 to 2 King size bed
-    }   
-}
-
-public int check_availability (int type_of_the_room_requsted , Date Start_Date_1 , Date End_Date_1   ) {
-    int local_variable_integer ;
-    boolean local_variable_boolean ;
-    int room_number = 0 ;
+	public ArrayList<Integer> check_availability (int type_of_the_room_requsted, Calendar Start_Date_1, Calendar End_Date_1) {
+		int local_variable_integer;
+		int check_result;
+		ArrayList<Integer> room_numbers = new ArrayList<Integer>();
 		   
-    for ( int counter = 0; counter < 5; counter++ ){ 
-	local_variable_integer = Hotel_room_manager_object[counter].Get_Hotel_room_type() ;
+		for (int counter = 0; counter < Hotel_room_manager_object.length; counter++ ) { 
+			local_variable_integer = Hotel_room_manager_object[counter].Get_Hotel_room_type();
         
-	System.out.printf("Printing local_variable_integer .... %d. %n ", local_variable_integer  );
-	System.out.printf("Printing Type of the room requested .... %d. %n ", type_of_the_room_requsted  );
-	if ( local_variable_integer == type_of_the_room_requsted){ 
-            local_variable_boolean = Hotel_room_manager_object[counter].check_Hotel_room(Start_Date_1 , End_Date_1) ; 
-            if ( local_variable_boolean == false ){
-                room_number = Hotel_room_manager_object[counter].Get_Hotel_room_number() ;//return room_number ;
-                break ;
-            }
-            else { room_number = 999 ;} //return room_number ;
-        }      
-        else {room_number = 999; }
-    }
-    return room_number;
-}
+			System.out.printf("Printing hotel room type .... %d. %n ", local_variable_integer);
+			System.out.printf("Printing type of the room requested .... %d. %n ", type_of_the_room_requsted);
+			
+			if (local_variable_integer == type_of_the_room_requsted) { 
+				check_result = Hotel_room_manager_object[counter].check_Hotel_room(Start_Date_1 , End_Date_1);
+				
+				if (check_result >= 0) {
+					room_numbers.add(Hotel_room_manager_object[counter].Get_Hotel_room_number());
+					break;
+				}
+			}
+		}
+		
+		return room_numbers;
+	}
 }

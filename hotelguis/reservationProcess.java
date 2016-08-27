@@ -9,10 +9,10 @@ public class reservationProcess {
 	public class Entry{
 		private int rId;
 		private int roomNum;
-		private Date startDate;
-		private Date endDate;
+		private Calendar startDate;
+		private Calendar endDate;
 		private int userId;
-		public Entry(int roomN, Date startD, Date endD, int user) {
+		public Entry(int roomN, Calendar startD, Calendar endD, int user) {
 			this.rId = nextRid;
 		    this.roomNum = roomN;
 		    this.startDate = startD;
@@ -33,11 +33,11 @@ public class reservationProcess {
 			return this.roomNum;
 		}
 		
-		public Date getStartDate(){
+		public Calendar getStartDate(){
 			return this.startDate;
 		}
 		
-		public Date getEndDate(){
+		public Calendar getEndDate(){
 			return this.endDate;
 		}
 		
@@ -45,11 +45,11 @@ public class reservationProcess {
 			this.roomNum = roomId;
 		}
 		
-		public void setStartDate(Date startDate){
+		public void setStartDate(Calendar startDate){
 			this.startDate = startDate;
 		}
 		
-		public void setEndDate(Date endDate){
+		public void setEndDate(Calendar endDate){
 			this.endDate = endDate;
 		}
 		
@@ -72,7 +72,7 @@ public class reservationProcess {
 	 * -2 -> invalid date, no change made
 	 * -3 -> invalid roomNum
 	 */
-	private int pushEntry(int roomNum, Date startDate, Date endDate, int userId)
+	private int pushEntry(int roomNum, Calendar startDate, Calendar endDate, int userId)
 	{
 		Date current = new Date();
 		
@@ -90,7 +90,7 @@ public class reservationProcess {
 		return reservId;
 	}
 	
-	private boolean checkEntry(int reservId, int roomNum, Date startDate, Date endDate, int userId)
+	private boolean checkEntry(int reservId, int roomNum, Calendar startDate, Calendar endDate, int userId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
@@ -141,7 +141,7 @@ public class reservationProcess {
 		return -1; // reservation not found!
 	}
 
-	Date getReservationStartDate(int reservationId)
+	Calendar getReservationStartDate(int reservationId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
@@ -150,10 +150,10 @@ public class reservationProcess {
 				return entries.get(i).getStartDate();
 			}
 		}
-		return (new Date((0), Calendar.JANUARY, 1)); //reservation not found!
+		return null; //reservation not found!
 	}
 	
-	Date getReservationEndDate(int reservationId)
+	Calendar getReservationEndDate(int reservationId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
@@ -162,20 +162,20 @@ public class reservationProcess {
 				return entries.get(i).getEndDate();
 			}
 		}
-		return (new Date((0), Calendar.JANUARY, 1)); //reservation not found!
+		return null; //reservation not found!
 	}
 
 	/************************************************ 
 	 * Functions for user reservation Related changes
 	 ***********************************************/
 	
-	int createReservation(int roomNum, Date startDate, Date endDate, int userId)
+	int createReservation(int roomNum, Calendar startDate, Calendar endDate, int userId)
 	{
 		boolean bookSuccessful = false;
 		//entries.add(new Entry(roomNum, startDate, endDate, userId));
 		
 		//reserve the room first
-		hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(startDate , endDate, roomNum);
+		hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(startDate, endDate, roomNum);
 		
 		//add entry
 		int reservId = pushEntry(roomNum, startDate, endDate, userId);
@@ -200,7 +200,7 @@ public class reservationProcess {
 	 * -2 -> invalid date, no change made
 	 * -3 -> invalid roomNum
 	 */
-	int changeReservation(int reservationId, int roomNum, Date startDate, Date endDate, int userId)
+	int changeReservation(int reservationId, int roomNum, Calendar startDate, Calendar endDate, int userId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
@@ -208,8 +208,8 @@ public class reservationProcess {
 			{
 				if (entries.get(i).getUserId() == userId) 
 				{
-					Date current = new Date();
-					Date start = entries.get(i).getStartDate();
+					Calendar current = Calendar.getInstance();
+					Calendar start = entries.get(i).getStartDate();
 					if ((start.before(current))||(entries.get(i).getEndDate().before(start)))
 					{
 						return -2;
@@ -255,17 +255,16 @@ public class reservationProcess {
 		}
 		return -1;
 	}
-	
+
+	public int reservationCount()
+	{
+		return entries.size();
+	}
 	
 	/**************************************************************
 	 * Admin Functions
 	 *
 	 **************************************************************/
-	
-	int adminReservationCount()
-	{
-		return entries.size();
-	}
 	
 	int adminReturnFirstReservation()
 	{
@@ -367,7 +366,7 @@ public class reservationProcess {
 	 * the general changeReservation function cannot change userId.  
 	 */
         //int roomNum taken out as a parameter temporarily for testing of adminEditReservations
-	int adminChangeReservation (int reservationId, Date startDate, Date endDate, int userId)
+	int adminChangeReservation (int reservationId, Calendar startDate, Calendar endDate, int userId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
@@ -444,8 +443,8 @@ public class reservationProcess {
 	{
 		 int[] roomArray = new int[10];
 		 int[] userArray = new int[10];
-		 Date[] startDateArray = new Date[10];
-		 Date[] endDateArray = new Date[10];
+		 Calendar[] startDateArray = new Calendar[10];
+		 Calendar[] endDateArray = new Calendar[10];
 		 int reservationId;
 		 reservationProcess newReservations = new reservationProcess(); 
 		 for (int i = 0; i < 10; i++)

@@ -1,12 +1,12 @@
 package hotelguis;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class reservationEntryPublic {
    	public int rId;
 	public int roomNum;
-	public Date startDate;
-	public Date endDate;
+	public Calendar startDate;
+	public Calendar endDate;
 	public int userId;
 	reservationEntryPublic(){};
 }

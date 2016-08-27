@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.ArrayList;
 //import java.awt.Component;
 //import javax.swing.JOptionPane;
 
@@ -306,36 +307,60 @@ public class checkavail extends javax.swing.JDialog {
     	String yearEnd = yearchoice.getSelectedItem();
     	String roomTypeSelected = roomtypechoice.getSelectedItem();
     	
+    	/*
         int startMonth = SwitchMonth(monthStart);
         int startDay = Integer.valueOf((String)daychoice1.getSelectedItem());
         int startYear = Integer.valueOf((String)yearchoice1.getSelectedItem());
+        */
         
+    	int startDay = daychoice1.getSelectedIndex() + 1;
+        int startMonth = monthchoice1.getSelectedIndex();
+        int startYear = yearchoice1.getSelectedIndex() + 2016;
+        
+        /*
         Calendar startDate = Calendar.getInstance();
         startDate.set(Calendar.MONTH, (startMonth-1));
         startDate.set(Calendar.DAY_OF_MONTH, startDay);
         startDate.set(Calendar.YEAR, (startYear));
+        */
         
-        Date sD = startDate.getTime();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(startYear, startMonth, startDay);
         
+        /*
         int endMonth = SwitchMonth(monthEnd);
         int endDay = Integer.valueOf((String)daychoice.getSelectedItem());
         int endYear = Integer.valueOf((String)yearchoice.getSelectedItem());
+        */
         
+        int endDay = daychoice.getSelectedIndex() + 1;
+        int endMonth = monthchoice.getSelectedIndex();
+        int endYear = yearchoice.getSelectedIndex() + 2016;
+        
+        /*
         Calendar endDate = Calendar.getInstance();
         endDate.set(Calendar.MONTH, (endMonth - 1));
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
         endDate.set(Calendar.YEAR, (endYear));
+		*/
         
-        Date eD = endDate.getTime();
-
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(endYear, endMonth, endDay);
+        
     	int roomType = GetRoomType(roomTypeSelected);
     	
-    	int roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, sD, eD);
+    	if(!hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)){
+    		hotelsystemMAIN.reportError("Dates given are invalid");
+    		
+    		return;
+    	}
+    	
+    	ArrayList<Integer> roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
     	System.out.println("returned available room number is "+ roomNumber);
     	
     	/*the following boolean value is to indicate if an available room is found in the date specified*/
     	boolean roomFound = false;
-    	if (roomNumber < 999)
+    	if (roomNumber.size() > 0)
     		roomFound = true;
     	
     	if (roomFound == true)
@@ -345,7 +370,11 @@ public class checkavail extends javax.swing.JDialog {
 			/*message is for displaying to user when a room is available, if the user wants to make a reservation*/
     		/*currently the hotel room mgr only returns one available room number, so the code below only display that single room*/
 		    String message = "The following rooms are available that match your desired dates and room type.  Would you like to make a reservation?\n";
-		    message += "Room Number: " + roomNumber + "\n";
+		    message += "Room Number: ";
+		    for(int i = 0; i < roomNumber.size() - 1; i++){
+		    	message += roomNumber.get(i) + ", ";
+		    }
+		    message += roomNumber.get(roomNumber.size() - 1) + "\n";
 		    int answer = JOptionPane.showConfirmDialog(frame, message);
 		    if (answer == JOptionPane.YES_OPTION) {
 		      // User clicked YES.
@@ -353,7 +382,7 @@ public class checkavail extends javax.swing.JDialog {
 				if (loggedInStatus) //if user already logged in
 				{
                     //this.dispose();
-					int reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNumber, sD, eD, hotelsystemMAIN.user.getUserID());
+					int reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNumber.get(0), startDate, endDate, hotelsystemMAIN.user.getUserID());
 					if (reservationReturn < 0){
 			            Component reservationConfirmFrame = null;
 			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Reservation unsuccessful!  Return code = " + reservationReturn);

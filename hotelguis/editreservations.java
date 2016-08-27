@@ -4,7 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class editreservations extends javax.swing.JDialog {
 
@@ -22,19 +23,24 @@ public class editreservations extends javax.swing.JDialog {
     public String reservationID;
     User user = new User();
     
+    private String getDateString(Calendar date){
+    	return (date.get(Calendar.MONTH) + 1) + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + date.get(Calendar.YEAR);
+    }
+    
     private void setTableContent(){
-        int size = hotelsystemMAIN.systemReservationList.adminReservationCount();
-        
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < hotelsystemMAIN.systemReservationList.reservationCount(); i++) {
             reservationProcess.Entry e = hotelsystemMAIN.systemReservationList.entries.get(i); //NEED TO set to ONLY one user's reservations.
-            Vector<String> resv = new Vector<>();
             
-            resv.add(Integer.toString(e.getReservId()));
-            resv.add(df.format(e.getStartDate()));
-            resv.add(df.format(e.getEndDate()));
+            if(e.getUserId() == hotelsystemMAIN.user.getUserID()){
+            	Vector<String> resv = new Vector<>();
+            
+            	resv.add(Integer.toString(e.getReservId()));
+            	resv.add(getDateString(e.getStartDate()));
+            	resv.add(getDateString(e.getEndDate()));
+            	resv.add(Integer.toString(e.getRoomId()));
               
-            model.addRow(resv);            
+            	model.addRow(resv);
+            }
         }
     }
         
@@ -145,8 +151,7 @@ public class editreservations extends javax.swing.JDialog {
         startdaychoice1.add("29");
         startdaychoice1.add("30");
         startdaychoice1.add("31");
-        enddaychoice.add("1");
-        enddaychoice.add("1");
+        
         getContentPane().add(startdaychoice1);
         startdaychoice1.setBounds(500, 160, 70, 20);
 
@@ -219,8 +224,7 @@ public class editreservations extends javax.swing.JDialog {
         enddaychoice.add("29");
         enddaychoice.add("30");
         enddaychoice.add("31");
-        enddaychoice.add("1");
-        enddaychoice.add("1");
+        
         getContentPane().add(enddaychoice);
         enddaychoice.setBounds(500, 190, 70, 20);
 
@@ -312,6 +316,7 @@ public class editreservations extends javax.swing.JDialog {
     	int reserveID = Integer.parseInt(reservationIDtextfield.getText());
     	int roomType = roomtypechoice.getSelectedIndex();
     	int oldRoomNum = hotelsystemMAIN.systemReservationList.getReservationRoomNum(reserveID);
+    	boolean valid = false;
         
         //For now assume that the ID is valid...
     	int newStartDay = Integer.parseInt(startdaychoice1.getSelectedItem());
@@ -322,17 +327,26 @@ public class editreservations extends javax.swing.JDialog {
     	int newEndMonth = endmonthchoice.getSelectedIndex();
     	int newEndYear = Integer.parseInt(endyearchoice.getSelectedItem());
     	
-    	Date newStartDate = new Date(newStartYear, newStartMonth, newStartDay);
-    	Date newEndDate = new Date(newEndYear, newEndMonth, newEndDay);
+    	Calendar newStartDate = Calendar.getInstance();
+    	newStartDate.set(newStartYear, newStartMonth, newStartDay);
+    	Calendar newEndDate = Calendar.getInstance();
+    	newEndDate.set(newEndYear, newEndMonth, newEndDay);
     	
-    	Date oldStartDate = hotelsystemMAIN.systemReservationList.getReservationStartDate(reserveID);
-    	Date oldEndDate = hotelsystemMAIN.systemReservationList.getReservationEndDate(reserveID);
+    	Calendar oldStartDate = hotelsystemMAIN.systemReservationList.getReservationStartDate(reserveID);
+    	Calendar oldEndDate = hotelsystemMAIN.systemReservationList.getReservationEndDate(reserveID);
     	
     	hotelsystemMAIN.hotelRoomList.cancel_room(oldStartDate, oldEndDate, oldRoomNum);
     	
-    	int newRoomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, newStartDate, newEndDate);
+    	ArrayList<Integer> newAvailableRooms = hotelsystemMAIN.hotelRoomList.check_availability(roomType, newStartDate, newEndDate);
     	
-    	if(newRoomNum == 999){
+    	for(int i = 0; i < newAvailableRooms.size(); i++){
+    		if(newAvailableRooms.get(i) == oldRoomNum){
+    			valid = true;
+    			break;
+    		}
+    	}
+    	
+    	if(!valid){
     		hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(oldStartDate, oldEndDate, oldRoomNum);
     		hotelsystemMAIN.reportError("Requested change is unavailable!");
     	}
@@ -343,10 +357,10 @@ public class editreservations extends javax.swing.JDialog {
     			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     			int i;
     			
-    			r.setRoomId(newRoomNum);
+    			r.setRoomId(oldRoomNum);
     			r.setStartDate(newStartDate);
     			r.setEndDate(newEndDate);
-    			hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(newStartDate, newEndDate, newRoomNum);
+    			hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(newStartDate, newEndDate, oldRoomNum);
     			
     			for(i = 0; i < model.getRowCount(); i++){
     				if(reserveID == Integer.parseInt((String) model.getValueAt(i, 0))){
@@ -354,9 +368,9 @@ public class editreservations extends javax.swing.JDialog {
     				}
     			}
     			
-    			model.setValueAt(df.format(newRoomNum), i, 1);
-    			model.setValueAt(df.format(newStartDate), i, 2);
-    			model.setValueAt(df.format(newEndDate), i, 3);
+    			model.setValueAt(getDateString(newStartDate), i, 1);
+    			model.setValueAt(getDateString(newEndDate), i, 2);
+    			model.setValueAt(oldRoomNum, i, 3);
     		}
     	}
     }                                                    
