@@ -32,6 +32,11 @@ public class checkavail extends javax.swing.JDialog {
         checkindate = new javax.swing.JLabel();
         checkoutdate = new javax.swing.JLabel();
         roomtypelabel = new javax.swing.JLabel();
+        roomMatchLabel = new javax.swing.JLabel();
+        roomResLabel = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        roomNumTable = new javax.swing.JTable();
+        reserveRoomButton = new javax.swing.JButton();
         monthchoice = new java.awt.Choice();
         monthchoice1 = new java.awt.Choice();
         daychoice = new java.awt.Choice();
@@ -65,19 +70,64 @@ public class checkavail extends javax.swing.JDialog {
         checkindate.setForeground(new java.awt.Color(255, 255, 255));
         checkindate.setText("Check-In Date");
         checkavailabilitypanel.add(checkindate);
-        checkindate.setBounds(220, 430, 140, 22);
+        checkindate.setBounds(70, 60, 140, 22);
 
         checkoutdate.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
         checkoutdate.setForeground(new java.awt.Color(255, 255, 255));
         checkoutdate.setText("Check-Out Date");
         checkavailabilitypanel.add(checkoutdate);
-        checkoutdate.setBounds(200, 480, 148, 22);
+        checkoutdate.setBounds(50, 90, 148, 22);
 
         roomtypelabel.setFont(new java.awt.Font("Oriya MN", 1, 18)); // NOI18N
         roomtypelabel.setForeground(new java.awt.Color(255, 255, 255));
         roomtypelabel.setText("Room Type");
         checkavailabilitypanel.add(roomtypelabel);
-        roomtypelabel.setBounds(240, 520, 120, 30);
+        roomtypelabel.setBounds(90, 120, 110, 20);
+
+        roomMatchLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        roomMatchLabel.setForeground(new java.awt.Color(255, 255, 255));
+        roomMatchLabel.setText("Here are the rooms that match your search:");
+        checkavailabilitypanel.add(roomMatchLabel);
+        roomMatchLabel.setBounds(40, 170, 330, 50);
+
+        roomResLabel.setFont(new java.awt.Font("Oriya MN", 1, 14)); // NOI18N
+        roomResLabel.setForeground(new java.awt.Color(255, 255, 255));
+        roomResLabel.setText("Please select the room that you'd like to reserve.");
+        checkavailabilitypanel.add(roomResLabel);
+        roomResLabel.setBounds(160, 520, 360, 20);
+
+        roomNumTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Room Number"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(roomNumTable);
+
+        checkavailabilitypanel.add(jScrollPane1);
+        jScrollPane1.setBounds(380, 190, 130, 320);
+
+        reserveRoomButton.setText("Reserve Room");
+        reserveRoomButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reserveRoomButtonActionPerformed(evt);
+            }
+        });
+        checkavailabilitypanel.add(reserveRoomButton);
+        reserveRoomButton.setBounds(520, 520, 140, 29);
 
         monthchoice.add("January");
         monthchoice.add("February");
@@ -92,7 +142,7 @@ public class checkavail extends javax.swing.JDialog {
         monthchoice.add("November");
         monthchoice.add("December");
         checkavailabilitypanel.add(monthchoice);
-        monthchoice.setBounds(370, 480, 179, 20);
+        monthchoice.setBounds(210, 90, 179, 20);
 
         monthchoice1.add("January");
         monthchoice1.add("February");
@@ -107,7 +157,7 @@ public class checkavail extends javax.swing.JDialog {
         monthchoice1.add("November");
         monthchoice1.add("December");
         checkavailabilitypanel.add(monthchoice1);
-        monthchoice1.setBounds(370, 430, 179, 20);
+        monthchoice1.setBounds(210, 60, 179, 20);
 
         daychoice.add("1");
         daychoice.add("2");
@@ -143,7 +193,7 @@ public class checkavail extends javax.swing.JDialog {
         daychoice.add("1");
         daychoice.add("1");
         checkavailabilitypanel.add(daychoice);
-        daychoice.setBounds(577, 480, 70, 20);
+        daychoice.setBounds(410, 90, 70, 20);
 
         daychoice1.add("1");
         daychoice1.add("2");
@@ -179,28 +229,24 @@ public class checkavail extends javax.swing.JDialog {
         daychoice.add("1");
         daychoice.add("1");
         checkavailabilitypanel.add(daychoice1);
-        daychoice1.setBounds(577, 430, 70, 20);
+        daychoice1.setBounds(410, 60, 70, 20);
 
-        roomtypechoice.add("Two King Beds");
+        roomtypechoice.add("Two Double Beds");
         roomtypechoice.add("Two Queen Beds");
-        roomtypechoice.add("One King Bed");
-        roomtypechoice.add("One Queen Bed");
-        roomtypechoice.add("One King Bed and One Queen Bed");
-
         checkavailabilitypanel.add(roomtypechoice);
-        roomtypechoice.setBounds(370, 530, 280, 20);
+        roomtypechoice.setBounds(210, 120, 280, 20);
 
         yearchoice.add("2016");
         yearchoice.add("2017");
         yearchoice.add("2018");
         checkavailabilitypanel.add(yearchoice);
-        yearchoice.setBounds(670, 480, 98, 20);
+        yearchoice.setBounds(500, 90, 98, 20);
 
         yearchoice1.add("2016");
         yearchoice1.add("2017");
         yearchoice1.add("2018");
         checkavailabilitypanel.add(yearchoice1);
-        yearchoice1.setBounds(670, 430, 98, 20);
+        yearchoice1.setBounds(500, 60, 98, 20);
 
         submitbutton.setFont(new java.awt.Font("Oriya MN", 0, 14)); // NOI18N
         submitbutton.setText("Submit");
@@ -210,7 +256,7 @@ public class checkavail extends javax.swing.JDialog {
             }
         });
         checkavailabilitypanel.add(submitbutton);
-        submitbutton.setBounds(670, 560, 89, 29);
+        submitbutton.setBounds(500, 120, 89, 29);
 
         checkavailbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelguis/newpackage/resizedhotelroom.jpeg"))); // NOI18N
         checkavailabilitypanel.add(checkavailbackground);
@@ -410,6 +456,10 @@ public class checkavail extends javax.swing.JDialog {
     
     }//GEN-LAST:event_submitbuttonActionPerformed
 
+    private void reserveRoomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveRoomButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reserveRoomButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -461,9 +511,14 @@ public class checkavail extends javax.swing.JDialog {
     public java.awt.Choice daychoice;
     public java.awt.Choice daychoice1;
     private javax.swing.JButton homebutton;
+    private javax.swing.JScrollPane jScrollPane1;
     public java.awt.Choice monthchoice;
     public java.awt.Choice monthchoice1;
     private javax.swing.JLabel pagetitle;
+    private javax.swing.JButton reserveRoomButton;
+    private javax.swing.JLabel roomMatchLabel;
+    private javax.swing.JTable roomNumTable;
+    private javax.swing.JLabel roomResLabel;
     private java.awt.Choice roomtypechoice;
     private javax.swing.JLabel roomtypelabel;
     private javax.swing.JButton submitbutton;
