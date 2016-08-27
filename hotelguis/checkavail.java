@@ -8,20 +8,100 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 //import java.awt.Component;
 //import javax.swing.JOptionPane;
 
 public class checkavail extends javax.swing.JDialog {
 
+    private DefaultTableModel model;
+    public Calendar startDate = Calendar.getInstance();
+    public Calendar endDate = Calendar.getInstance();
+    public int roomType;
+    
     public checkavail(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        roomNumTable.setEnabled(false);
+        model = (DefaultTableModel) roomNumTable.getModel();
     }
 
+     private void setTableContent(){
+        for (int i = 0; i < 1000; i++) { //arbitrary iteration max
+        ArrayList<Integer> room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomtypechoice.getSelectedItem()), startDate, endDate);
+            	if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
+                    Vector<String> roomNums = new Vector<>();
+                    roomNums.add(Integer.toString(room_List.get(i)));
+                    model.addRow(roomNums);
+            }
+                else {
+                    hotelsystemMAIN.reportError("No rooms found with your desired dates!");
+                }
+        }
+    }
+     
+      /*utility for converting read in month from user to int format*/
+	public int SwitchMonth(String monthString)
+	{
+		int month;
+		System.out.println("monthString = " + monthString);
+	    switch (monthString) {
+	        case "January":  month = 1;
+	                 break;
+	        case "February":  month = 2;
+	                 break;
+	        case "March": month = 3;
+	                 break;
+	        case "April": month = 4;
+	                 break;
+	        case "May": month = 5;
+	                 break;
+	        case "June": month = 6;
+	                 break;
+	        case "July": month = 7;
+	                 break;
+	        case "August": month = 8;
+	                 break;
+	        case "September": month = 9;
+	                 break;
+	        case "October": month = 10;
+	                 break;
+	        case "November": month = 11;
+	                 break;
+	        case "December": month = 12;
+	                 break;
+	        default: month = -1;
+	                 break;
+            }
+	    return month;
+	}    
+    
+	/* The function below is utility to convert room type input from user to integer matching the hotel room def*/    
+	public int GetRoomType(String roomTypeFromUser)
+	{	
+	    switch (roomTypeFromUser) {
+	    	case "Two King Beds":  roomType = 0;
+	    		break;
+	    	case "One King Bed and One Queen Bed":  roomType = 1;
+	    		break;
+	        case "Two Queen Beds":  roomType = 2;
+	        	break;
+	        case "One King Bed":  roomType = 3;
+        		break;
+	        case "One Queen Bed": roomType = 4;
+	        	break;
+	        default: roomType = -1;
+	        	break;
+	    }
+	    return roomType;
+	}
+     
     checkavail() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -285,64 +365,6 @@ public class checkavail extends javax.swing.JDialog {
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
 
-    /*utility for converting read in month from user to int format*/
-	public int SwitchMonth(String monthString)
-	{
-		int month;
-		System.out.println("monthString = " + monthString);
-	    switch (monthString) {
-	        case "January":  month = 1;
-	                 break;
-	        case "February":  month = 2;
-	                 break;
-	        case "March": month = 3;
-	                 break;
-	        case "April": month = 4;
-	                 break;
-	        case "May": month = 5;
-	                 break;
-	        case "June": month = 6;
-	                 break;
-	        case "July": month = 7;
-	                 break;
-	        case "August": month = 8;
-	                 break;
-	        case "September": month = 9;
-	                 break;
-	        case "October": month = 10;
-	                 break;
-	        case "November": month = 11;
-	                 break;
-	        case "December": month = 12;
-	                 break;
-	        default: month = -1;
-	                 break;
-	    }
-	    System.out.println("month = " + month);
-	    return month;
-	}    
-    
-	/* The function below is utility to convert room type input from user to integer matching the hotel room def*/    
-	public int GetRoomType(String roomTypeFromUser)
-	{	
-		int roomType;
-	    switch (roomTypeFromUser) {
-	    	case "Two King Beds":  roomType = 0;
-	    		break;
-	    	case "One King Bed and One Queen Bed":  roomType = 1;
-	    		break;
-	        case "Two Queen Beds":  roomType = 2;
-	        	break;
-	        case "One King Bed":  roomType = 3;
-        		break;
-	        case "One Queen Bed": roomType = 4;
-	        	break;
-	        default: roomType = -1;
-	        	break;
-	    }
-	    return roomType;
-	}
-    
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
         /*get the user's date input*/
     	String dayStart = daychoice1.getSelectedItem();
@@ -370,7 +392,7 @@ public class checkavail extends javax.swing.JDialog {
         startDate.set(Calendar.YEAR, (startYear));
         */
         
-        Calendar startDate = Calendar.getInstance();
+      //  startDate = Calendar.getInstance();
         startDate.set(startYear, startMonth, startDay);
         
         /*
@@ -390,21 +412,19 @@ public class checkavail extends javax.swing.JDialog {
         endDate.set(Calendar.YEAR, (endYear));
 		*/
         
-        Calendar endDate = Calendar.getInstance();
+       // endDate = Calendar.getInstance();
         endDate.set(endYear, endMonth, endDay);
-        
-    	int roomType = GetRoomType(roomTypeSelected);
     	
     	if(!hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)){
     		hotelsystemMAIN.reportError("Dates given are invalid");
     		
     		return;
     	}
-    	
-    	ArrayList<Integer> roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
-    	System.out.println("returned available room number is "+ roomNumber);
-    	
-    	/*the following boolean value is to indicate if an available room is found in the date specified*/
+        
+    	//ArrayList<Integer> roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
+    	setTableContent();
+  /*  	
+    	//the following boolean value is to indicate if an available room is found in the date specified
     	boolean roomFound = false;
     	if (roomNumber.size() > 0)
     		roomFound = true;
@@ -413,8 +433,8 @@ public class checkavail extends javax.swing.JDialog {
     	{
     		JFrame frame = new JFrame();
 			
-			/*message is for displaying to user when a room is available, if the user wants to make a reservation*/
-    		/*currently the hotel room mgr only returns one available room number, so the code below only display that single room*/
+                //message is for displaying to user when a room is available, if the user wants to make a reservation
+    		//currently the hotel room mgr only returns one available room number, so the code below only display that single room
 		    String message = "The following rooms are available that match your desired dates and room type.  Would you like to make a reservation?\n";
 		    message += "Room Number: ";
 		    for(int i = 0; i < roomNumber.size() - 1; i++){
@@ -453,16 +473,13 @@ public class checkavail extends javax.swing.JDialog {
     		Component roomUnavailableFrame = null;
             JOptionPane.showMessageDialog(roomUnavailableFrame, "Sorry, " + roomTypeSelected + " room is not available in the date range specified!");
     	}
-    
+    */
     }//GEN-LAST:event_submitbuttonActionPerformed
-
+    
     private void reserveRoomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveRoomButtonActionPerformed
-        // TODO add your handling code here:
+        roomNumTable.getValueAt(roomNumTable.getSelectedRow(),0);
     }//GEN-LAST:event_reserveRoomButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
