@@ -67,6 +67,7 @@ public class Users {
 	}
 	
 	//ACCESSORS
+	//None
 	
 	//METHODS
 	public Iterator getUserIter(){
