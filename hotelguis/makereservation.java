@@ -8,14 +8,6 @@ import java.lang.String;
 
 public class makereservation extends javax.swing.JDialog {
 
-    int startMonth;
-    int startDay;
-    int startYear;
-    Calendar startDate = Calendar.getInstance();
-    int endMonth;
-    int endDay;
-    int endYear;
-    Calendar endDate = Calendar.getInstance();
     String roomSelection;
     int roomType;
     int userID;
@@ -82,11 +74,7 @@ public class makereservation extends javax.swing.JDialog {
 
         Month.setMaximumRowCount(12);
         Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        Month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MonthActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(Month);
         Month.setBounds(300, 200, 120, 30);
 
@@ -101,58 +89,34 @@ public class makereservation extends javax.swing.JDialog {
 
         Month2.setMaximumRowCount(12);
         Month2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        Month2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Month2ActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(Month2);
         Month2.setBounds(300, 240, 120, 27);
 
         day.setMaximumRowCount(31);
         day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(day);
         day.setBounds(450, 200, 100, 27);
 
         day2.setMaximumRowCount(31);
         day2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        day2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                day2ActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(day2);
         day2.setBounds(450, 240, 100, 27);
 
         year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017", "2018" }));
-        year.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(year);
         year.setBounds(580, 200, 88, 27);
 
         year2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017", "2018" }));
-        year2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                year2ActionPerformed(evt);
-            }
-        });
+        
         getContentPane().add(year2);
         year2.setBounds(580, 240, 90, 27);
 
         roomtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Two Double Beds", "1 Queen Bed", "1 King Bed", "2 Queen Beds", "2 King Beds" }));
-        roomtype.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roomtypeActionPerformed(evt);
-            }
-        });
+       
         getContentPane().add(roomtype);
         roomtype.setBounds(300, 280, 250, 27);
 
@@ -218,38 +182,21 @@ public class makereservation extends javax.swing.JDialog {
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
 
-    private void MonthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MonthActionPerformed
-        startMonth = Integer.valueOf((String)Month.getSelectedItem());
-    }//GEN-LAST:event_MonthActionPerformed
-
-    private void dayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayActionPerformed
-        startDay = Integer.valueOf((String)day.getSelectedItem());
-    }//GEN-LAST:event_dayActionPerformed
-
-    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
-        startYear = Integer.valueOf((String)year.getSelectedItem());
-    }//GEN-LAST:event_yearActionPerformed
-
-    private void Month2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Month2ActionPerformed
-        endMonth = Integer.valueOf((String)Month2.getSelectedItem());
-    }//GEN-LAST:event_Month2ActionPerformed
-
-    private void day2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_day2ActionPerformed
-        endDay = Integer.valueOf((String)day2.getSelectedItem());
-    }//GEN-LAST:event_day2ActionPerformed
-
-    private void year2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year2ActionPerformed
-        endYear = Integer.valueOf((String)year2.getSelectedItem());
-    }//GEN-LAST:event_year2ActionPerformed
-
-    private void roomtypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomtypeActionPerformed
-        roomSelection = (String) roomtype.getSelectedItem();
-    }//GEN-LAST:event_roomtypeActionPerformed
-
     private void confirmbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmbuttonActionPerformed
         ArrayList<Integer> roomNum;
-    	userID = hotelsystemMAIN.user.getUserID(); 
+    	userID = hotelsystemMAIN.user.getUserID();
         
+    	int startDay;
+    	int startMonth;
+    	int startYear;
+    	
+    	int endDay;
+    	int endMonth;
+    	int endYear;
+    	
+    	Calendar startDate = Calendar.getInstance();
+    	Calendar endDate = Calendar.getInstance();
+    	
         startMonth = Integer.valueOf((String)Month.getSelectedItem());
         startDay = Integer.valueOf((String)day.getSelectedItem());
         startYear = Integer.valueOf((String)year.getSelectedItem());
@@ -257,9 +204,6 @@ public class makereservation extends javax.swing.JDialog {
         startDate.set(Calendar.MONTH, (startMonth - 1));
         startDate.set(Calendar.DAY_OF_MONTH, startDay);
         startDate.set(Calendar.YEAR, startYear);
-        startDate.set(Calendar.HOUR_OF_DAY, 15);
-        startDate.set(Calendar.MINUTE, 0);
-        startDate.set(Calendar.SECOND, 0);
         
         endMonth = Integer.valueOf((String)Month2.getSelectedItem());
         endDay = Integer.valueOf((String)day2.getSelectedItem());
@@ -268,9 +212,6 @@ public class makereservation extends javax.swing.JDialog {
         endDate.set(Calendar.MONTH, (endMonth - 1));
         endDate.set(Calendar.DAY_OF_MONTH, endDay);
         endDate.set(Calendar.YEAR, endYear);
-        endDate.set(Calendar.HOUR_OF_DAY, 11);
-        endDate.set(Calendar.MINUTE, 0);
-        endDate.set(Calendar.SECOND, 0);
         
         roomSelection = (String) roomtype.getSelectedItem();
         
