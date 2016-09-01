@@ -151,7 +151,8 @@ public class editreservations extends javax.swing.JDialog {
         startdaychoice1.add("29");
         startdaychoice1.add("30");
         startdaychoice1.add("31");
-        
+        enddaychoice.add("1");
+        enddaychoice.add("1");
         getContentPane().add(startdaychoice1);
         startdaychoice1.setBounds(500, 160, 70, 20);
 
@@ -167,8 +168,11 @@ public class editreservations extends javax.swing.JDialog {
         getContentPane().add(roomtypelabel);
         roomtypelabel.setBounds(180, 220, 120, 20);
 
-        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two King Beds");
         roomtypechoice.add("Two Queen Beds");
+        roomtypechoice.add("One King Bed, One Queen Bed");
+        roomtypechoice.add("One King Bed");
+        roomtypechoice.add("One Queen Bed");
         getContentPane().add(roomtypechoice);
         roomtypechoice.setBounds(310, 220, 280, 20);
 
@@ -224,7 +228,8 @@ public class editreservations extends javax.swing.JDialog {
         enddaychoice.add("29");
         enddaychoice.add("30");
         enddaychoice.add("31");
-        
+        enddaychoice.add("1");
+        enddaychoice.add("1");
         getContentPane().add(enddaychoice);
         enddaychoice.setBounds(500, 190, 70, 20);
 

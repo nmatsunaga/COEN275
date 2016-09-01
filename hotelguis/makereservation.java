@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
-import java.lang.String;
 
 public class makereservation extends javax.swing.JDialog {
 
@@ -52,7 +51,7 @@ public class makereservation extends javax.swing.JDialog {
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(usernameLabel);
         usernameLabel.setBounds(110, 570, 100, 0);
-        usernameLabel.setText(String.valueOf(hotelsystemMAIN.user._userID));
+        usernameLabel.setText(String.valueOf(user._userID));
 
         monthlabel.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         monthlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,7 +73,11 @@ public class makereservation extends javax.swing.JDialog {
 
         Month.setMaximumRowCount(12);
         Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        
+        Month.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MonthActionPerformed(evt);
+            }
+        });
         getContentPane().add(Month);
         Month.setBounds(300, 200, 120, 30);
 
@@ -89,34 +92,58 @@ public class makereservation extends javax.swing.JDialog {
 
         Month2.setMaximumRowCount(12);
         Month2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        
+        Month2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Month2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(Month2);
         Month2.setBounds(300, 240, 120, 27);
 
         day.setMaximumRowCount(31);
         day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        
+        day.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayActionPerformed(evt);
+            }
+        });
         getContentPane().add(day);
         day.setBounds(450, 200, 100, 27);
 
         day2.setMaximumRowCount(31);
         day2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        
+        day2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                day2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(day2);
         day2.setBounds(450, 240, 100, 27);
 
         year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017", "2018" }));
-        
+        year.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearActionPerformed(evt);
+            }
+        });
         getContentPane().add(year);
         year.setBounds(580, 200, 88, 27);
 
         year2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017", "2018" }));
-        
+        year2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                year2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(year2);
         year2.setBounds(580, 240, 90, 27);
 
-        roomtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Two Double Beds", "1 Queen Bed", "1 King Bed", "2 Queen Beds", "2 King Beds" }));
-       
+        roomtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Two King Beds", "One King Bed & One Queen Bed", "Two Queen Beds", "One King Bed", "One Queen Bed" }));
+        roomtype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roomtypeActionPerformed(evt);
+            }
+        });
         getContentPane().add(roomtype);
         roomtype.setBounds(300, 280, 250, 27);
 
@@ -215,23 +242,23 @@ public class makereservation extends javax.swing.JDialog {
         
         roomSelection = (String) roomtype.getSelectedItem();
         
-        if (roomSelection == "2 King Beds"){
+        if ("Two King Beds".equals(roomSelection)){
             roomType = 0;
             //roomNum = 0;
         }
-        if (roomSelection == "2 Queen Beds"){
+        if ("One King & One Queen Bed".equals(roomSelection)){
             roomType = 1;
             //roomNum = 1;
         }
-        if (roomSelection == "2 Double Beds"){
+        if ("Two Queen Beds".equals(roomSelection)){
             roomType = 2;
             //roomNum = 2;
         }
-        if (roomSelection == "1 Queen Bed"){
+        if ("One King Bed".equals(roomSelection)){
             roomType = 3;
             //roomNum = 3;
         }
-        if (roomSelection == "1 King Bed"){
+        if ("One Queen Bed".equals(roomSelection)){
             roomType = 4;
             //roomNum = 4;
         }
@@ -246,7 +273,7 @@ public class makereservation extends javax.swing.JDialog {
         
         System.out.println("room num" + roomNum.get(0) + "startdate" + startDate + "enddate" + endDate + "userID" + userID);//testing
         
-        if (roomNum.size() == 0)
+        if (roomNum.isEmpty())
         {
         	hotelsystemMAIN.reportError(roomSelection + " room is not available in the dates specified.");	
         }
@@ -304,6 +331,7 @@ public class makereservation extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 makereservation dialog = new makereservation(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {

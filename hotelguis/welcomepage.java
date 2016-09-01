@@ -88,9 +88,24 @@ public class welcomepage extends javax.swing.JDialog {
 
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
         this.dispose();
+        if (hotelsystemMAIN.user.getLoggedIn()==true){
+            useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
+            optwin.setSize(800,620);
+            optwin.setVisible(true);
+        }
+        if (hotelsystemMAIN.user.getLoggedIn()==true && hotelsystemMAIN.user.getAdmin()==true){
+        	dispose();
+        	administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(),true);
+        	adminwindow.setSize(800,620);
+        	adminwindow.setVisible(true);
+                    
+        	return;
+        }
+        else {
         loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
         loginwindow.setSize(800,620);
         loginwindow.setVisible(true);
+        }
     }//GEN-LAST:event_loginbuttonActionPerformed
 
     public static void main(String args[]) {
