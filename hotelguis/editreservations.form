@@ -161,7 +161,7 @@
     </Component>
     <Component class="java.awt.Choice" name="roomtypechoice">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="roomtypechoice.add(&quot;Two Double Beds&quot;);&#xa;roomtypechoice.add(&quot;Two Queen Beds&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="roomtypechoice.add(&quot;Two King Beds&quot;);&#xa;roomtypechoice.add(&quot;Two Queen Beds&quot;);&#xa;roomtypechoice.add(&quot;One King Bed, One Queen Bed&quot;);&#xa;roomtypechoice.add(&quot;One King Bed&quot;);&#xa;roomtypechoice.add(&quot;One Queen Bed&quot;);"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

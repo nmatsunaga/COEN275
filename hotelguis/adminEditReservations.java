@@ -72,6 +72,7 @@ public class adminEditReservations extends javax.swing.JDialog {
         deleteResButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         reservationDisplayTable = new javax.swing.JTable();
+        listAllReservations = new javax.swing.JButton();
         reservationIDtextfield = new javax.swing.JTextField();
         searchforreservation = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
@@ -108,8 +109,11 @@ public class adminEditReservations extends javax.swing.JDialog {
         getContentPane().add(roomtypelabel);
         roomtypelabel.setBounds(170, 200, 120, 20);
 
-        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two King Beds");
         roomtypechoice.add("Two Queen Beds");
+        roomtypechoice.add("One King Bed, One Queen Bed");
+        roomtypechoice.add("One King Bed");
+        roomtypechoice.add("One Queen Bed");
         getContentPane().add(roomtypechoice);
         roomtypechoice.setBounds(300, 200, 370, 20);
 
@@ -174,7 +178,8 @@ public class adminEditReservations extends javax.swing.JDialog {
         startdaychoice1.add("29");
         startdaychoice1.add("30");
         startdaychoice1.add("31");
-
+        enddaychoice.add("1");
+        enddaychoice.add("1");
         getContentPane().add(startdaychoice1);
         startdaychoice1.setBounds(490, 140, 70, 20);
 
@@ -209,7 +214,8 @@ public class adminEditReservations extends javax.swing.JDialog {
         enddaychoice.add("29");
         enddaychoice.add("30");
         enddaychoice.add("31");
-        
+        enddaychoice.add("1");
+        enddaychoice.add("1");
         getContentPane().add(enddaychoice);
         enddaychoice.setBounds(490, 170, 70, 20);
 
@@ -262,13 +268,15 @@ public class adminEditReservations extends javax.swing.JDialog {
         deleteResButton.setBounds(470, 260, 200, 29);
 
         reservationDisplayTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
+            new Object [][] {
+
+            },
             new String [] {
-                "Reservation ID", "Start Date", "End Date", "Room Number"
+                "Reservation ID", "User ID", "Start Date", "End Date"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -281,6 +289,15 @@ public class adminEditReservations extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(40, 350, 690, 230);
+
+        listAllReservations.setText("List All Reservations");
+        listAllReservations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listAllReservationsActionPerformed(evt);
+            }
+        });
+        getContentPane().add(listAllReservations);
+        listAllReservations.setBounds(330, 320, 180, 29);
 
         reservationIDtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,6 +421,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     public java.awt.Choice endmonthchoice;
     public java.awt.Choice endyearchoice;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton listAllReservations;
     private javax.swing.JLabel listResLabel;
     private javax.swing.JLabel pagetitle;
     private javax.swing.JTable reservationDisplayTable;

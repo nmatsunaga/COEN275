@@ -311,8 +311,11 @@ public class checkavail extends javax.swing.JDialog {
         checkavailabilitypanel.add(daychoice1);
         daychoice1.setBounds(410, 60, 70, 20);
 
-        roomtypechoice.add("Two Double Beds");
+        roomtypechoice.add("Two King Beds");
         roomtypechoice.add("Two Queen Beds");
+        roomtypechoice.add("One King Bed, One Queen Bed");
+        roomtypechoice.add("One King Bed");
+        roomtypechoice.add("One Queen Bed");
         checkavailabilitypanel.add(roomtypechoice);
         roomtypechoice.setBounds(210, 120, 280, 20);
 
