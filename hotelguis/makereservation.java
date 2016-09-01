@@ -3,7 +3,9 @@ package hotelguis;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class makereservation extends javax.swing.JDialog {
 
@@ -12,12 +14,32 @@ public class makereservation extends javax.swing.JDialog {
     int userID;
     int reservationReturn;
     
+    private DefaultTableModel model;
+    public Calendar startDate = Calendar.getInstance();
+    public Calendar endDate = Calendar.getInstance();
+
+     private void setTableContent(){
+        for (int i = 0; i < 1000; i++) { //arbitrary iteration max
+        ArrayList<Integer> room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomtypechoice.getSelectedItem()), startDate, endDate);
+            	if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
+                    Vector<String> roomNums = new Vector<>();
+                    roomNums.add(Integer.toString(room_List.get(i)));
+                    model.addRow(roomNums);
+            }
+                else {
+                    hotelsystemMAIN.reportError("No rooms found with your desired dates!");
+                }
+        }
+    }
     //User user = new User();
     //Users users = new Users();
     
     public makereservation(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+    
+    roomNumTableEdit.setEnabled(false);
+    model = (DefaultTableModel) roomNumTableEdit.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -28,6 +50,10 @@ public class makereservation extends javax.swing.JDialog {
         monthlabel = new javax.swing.JLabel();
         dayLabel = new javax.swing.JLabel();
         yearLabel = new javax.swing.JLabel();
+        roomChoiceInstructionLabel = new javax.swing.JLabel();
+        roomChoiceInstructionLabel1 = new javax.swing.JLabel();
+        roomNumTable = new javax.swing.JScrollPane();
+        roomNumTableEdit = new javax.swing.JTable();
         Month = new javax.swing.JComboBox<>();
         backbutton = new javax.swing.JButton();
         Month2 = new javax.swing.JComboBox<>();
@@ -70,6 +96,42 @@ public class makereservation extends javax.swing.JDialog {
         yearLabel.setText("Year");
         getContentPane().add(yearLabel);
         yearLabel.setBounds(600, 180, 31, 17);
+
+        roomChoiceInstructionLabel.setFont(new java.awt.Font("Oriya MN", 1, 14)); // NOI18N
+        roomChoiceInstructionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        roomChoiceInstructionLabel.setText("Here are the rooms that match your search:");
+        getContentPane().add(roomChoiceInstructionLabel);
+        roomChoiceInstructionLabel.setBounds(140, 500, 320, 20);
+
+        roomChoiceInstructionLabel1.setFont(new java.awt.Font("Oriya MN", 1, 14)); // NOI18N
+        roomChoiceInstructionLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        roomChoiceInstructionLabel1.setText("Please select the room that you would like to reserve.");
+        getContentPane().add(roomChoiceInstructionLabel1);
+        roomChoiceInstructionLabel1.setBounds(70, 520, 390, 30);
+
+        roomNumTableEdit.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Room Number"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        roomNumTable.setViewportView(roomNumTableEdit);
+
+        getContentPane().add(roomNumTable);
+        roomNumTable.setBounds(460, 320, 90, 270);
 
         Month.setMaximumRowCount(12);
         Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
@@ -361,6 +423,10 @@ public class makereservation extends javax.swing.JDialog {
     private javax.swing.JLabel makereservationlabel;
     private javax.swing.JLabel monthlabel;
     private javax.swing.JLabel reservationbackground;
+    private javax.swing.JLabel roomChoiceInstructionLabel;
+    private javax.swing.JLabel roomChoiceInstructionLabel1;
+    private javax.swing.JScrollPane roomNumTable;
+    private javax.swing.JTable roomNumTableEdit;
     private javax.swing.JLabel roomrequestedlabel;
     private javax.swing.JComboBox<String> roomtype;
     private javax.swing.JLabel usernameLabel;
