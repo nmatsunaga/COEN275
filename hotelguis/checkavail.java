@@ -9,29 +9,39 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Vector;
+import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 //import java.awt.Component;
 //import javax.swing.JOptionPane;
 
 public class checkavail extends javax.swing.JDialog {
-
+    
+//Variable Declaration
     private DefaultTableModel model;
     public Calendar startDate = Calendar.getInstance();
     public Calendar endDate = Calendar.getInstance();
     public int roomType;
     
+//Initialization of GUI components.    
     public checkavail(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        roomNumTable.setEnabled(false);
+        roomNumTable.setEnabled(true);
+        roomNumTable.setRowSelectionAllowed(true);
+        roomNumTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         model = (DefaultTableModel) roomNumTable.getModel();
     }
-
-     private void setTableContent(){
-        for (int i = 0; i < 1000; i++) { //arbitrary iteration max
-        ArrayList<Integer> room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomtypechoice.getSelectedItem()), startDate, endDate);
-            	if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
+//Function to populate table with rooms that match the user's query.
+     private void setTableContent(){ 
+       ArrayList<Integer> room_List;
+       
+       room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomtypechoice.getSelectedItem()), startDate, endDate);
+       System.out.println("ArrayList Contents: " + room_List);
+       int arraySize = room_List.size();
+       for (int i = 0; i < arraySize; i++) {
+            if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
                     Vector<String> roomNums = new Vector<>();
                     roomNums.add(Integer.toString(room_List.get(i)));
                     model.addRow(roomNums);
@@ -178,10 +188,7 @@ public class checkavail extends javax.swing.JDialog {
 
         roomNumTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
                 "Room Number"
@@ -198,7 +205,7 @@ public class checkavail extends javax.swing.JDialog {
         jScrollPane1.setViewportView(roomNumTable);
 
         checkavailabilitypanel.add(jScrollPane1);
-        jScrollPane1.setBounds(380, 190, 130, 320);
+        jScrollPane1.setBounds(390, 190, 130, 320);
 
         reserveRoomButton.setText("Reserve Room");
         reserveRoomButton.addActionListener(new java.awt.event.ActionListener() {
@@ -360,14 +367,14 @@ public class checkavail extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Action listener for users to be returned to the welcome page of the system via button click.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
     	welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-
+//Action listener for the system to retrieve all of the information user has provided when submit button is clicked.
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
         /*get the user's date input*/
     	String dayStart = daychoice1.getSelectedItem();
@@ -478,9 +485,27 @@ public class checkavail extends javax.swing.JDialog {
     	}
     */
     }//GEN-LAST:event_submitbuttonActionPerformed
-    
+//Action Listener for room to be reserved.    
     private void reserveRoomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveRoomButtonActionPerformed
-        roomNumTable.getValueAt(roomNumTable.getSelectedRow(),0);
+        int selectedRoom = Integer.parseInt((String)roomNumTable.getValueAt(roomNumTable.getSelectedRow(),0));
+        System.out.println("Selected Room # = " + selectedRoom);
+        
+        if (hotelsystemMAIN.user.getLoggedIn()==true){
+            hotelsystemMAIN.systemReservationList.createReservation(selectedRoom, startDate, endDate, ERROR);
+            hotelsystemMAIN.reportError("Successfully made reservation for Room #:" + selectedRoom);
+            this.dispose();
+            useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
+            optwin.setSize(800,620);
+            optwin.setVisible(true);
+        }
+
+        else {
+        hotelsystemMAIN.reportError("Unable to make reservation, please login first!");
+        this.dispose();
+        loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
+        loginwindow.setSize(800,620);
+        loginwindow.setVisible(true);
+        }
     }//GEN-LAST:event_reserveRoomButtonActionPerformed
 
     public static void main(String args[]) {

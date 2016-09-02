@@ -6,18 +6,18 @@ import java.lang.String;
 import javax.swing.JTextArea;
 
 public class editaccountinfo extends javax.swing.JDialog {
-
+//Variable declaration.
     String newfirstname = "";
     String newlastname = "";
     String newpassword = "";
     String newemail = "";
     String newphonenumber;
-    
+//Initialization of GUI components.    
     public editaccountinfo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-
+//Function to retreive user information from system.
     private String getUserInfo(){
     	if(!hotelsystemMAIN.user.getLoggedIn()){
     		System.out.println("Current user is not logged in!");
@@ -34,7 +34,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     		return s;
     	}
     }
-    
+//Function to ensure user is currently logged in, and return current information to a listing in the GUI.  
     private String getStringWidth(FontMetrics fm){
     	if(!hotelsystemMAIN.user.getLoggedIn()){
     		System.out.println("Current user is not logged in!");
@@ -59,13 +59,13 @@ public class editaccountinfo extends javax.swing.JDialog {
     		return a;
     	}
     }
-    
+//Populating GUI with user information.    
     private void setUserHeader(){
     	userHeader.setText("Current user information");
     	FontMetrics fm = userHeader.getFontMetrics(userHeader.getFont());
         userHeader.setBounds(20, 120, fm.stringWidth("Current user information"), 20);
     }
-    
+//This function sets the labels for the user information that is populated with getStringWidth.    
     private void setUserLabels(){
     	String s = "First Name:\n" +
     				"Last Name:\n" +
@@ -78,7 +78,7 @@ public class editaccountinfo extends javax.swing.JDialog {
     	FontMetrics fm = userLabels.getFontMetrics(userLabels.getFont());
     	userLabels.setBounds(20, 120 + userHeader.getHeight() + 15, fm.stringWidth("Phone Number:"), 100);
     }
-    
+//Function to automatically update any edits to the user account information made by the user in real-time.    
     private void updateUserInfoText(){
     	userInfo.setEnabled(false);
     	userInfo.setText(getUserInfo());
@@ -241,45 +241,45 @@ public class editaccountinfo extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+//Action listener to return user to welcome page.    
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-
+//Action listener to retreive user input. 
     private void FNbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FNbuttonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 0, FNtextfield.getText());
         updateUserInfoText();
         hotelsystemMAIN.reportError("First Name Changed!");
     }//GEN-LAST:event_FNbuttonActionPerformed
-
+//Action listener to retreive user input. 
     private void LNbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LNbuttonActionPerformed
          hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 1, LNtextfield.getText());
          updateUserInfoText();
          hotelsystemMAIN.reportError("Last Name Changed!");
     }//GEN-LAST:event_LNbuttonActionPerformed
-
+//Action listener to retreive user input. 
     private void passwordbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordbuttonActionPerformed
          hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 3, passwordtextfield.getText());
          updateUserInfoText();
          hotelsystemMAIN.reportError("Password Changed!");
     }//GEN-LAST:event_passwordbuttonActionPerformed
-
+//Action listener to retreive user input. 
     private void emailbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailbuttonActionPerformed
          hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 4, emailtextfield.getText());
          updateUserInfoText();
          hotelsystemMAIN.reportError("Email Changed!");
     }//GEN-LAST:event_emailbuttonActionPerformed
-
+//Action listener to return user to user options window.
     private void backtouseroptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backtouseroptionsActionPerformed
         this.dispose();
         useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
-             optwin.setSize(800,620);
-             optwin.setVisible(true);
+        optwin.setSize(800,620);
+        optwin.setVisible(true);
     }//GEN-LAST:event_backtouseroptionsActionPerformed
-    
+//Action listener to retreive user input.     
     private void phonenumberbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumberbuttonActionPerformed
         hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.user.getUserName(), 5, phonenumtextfield.getText());
         updateUserInfoText();

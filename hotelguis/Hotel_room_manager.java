@@ -84,7 +84,7 @@ public class Hotel_room_manager {
 				
 				if (check_result >= 0) {
 					room_numbers.add(Hotel_room_manager_object[counter].Get_Hotel_room_number());
-					break;
+					//break;
 				}
 			}
 		}

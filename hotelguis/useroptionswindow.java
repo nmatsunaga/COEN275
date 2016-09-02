@@ -1,7 +1,7 @@
 package hotelguis;
 
 public class useroptionswindow extends javax.swing.JDialog {
-
+//Initialize GUI components.
     public useroptionswindow(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -79,28 +79,28 @@ public class useroptionswindow extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Takes user to edit reservations page when clicked.
     private void editreservationsbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editreservationsbuttonActionPerformed
         this.dispose();
         editreservations editingwindow = new editreservations(new javax.swing.JFrame(), true);
         editingwindow.setSize(800,620);
         editingwindow.setVisible(true);
     }//GEN-LAST:event_editreservationsbuttonActionPerformed
-
+//Takes user to make reservation page when clicked.
     private void makereservationbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makereservationbuttonActionPerformed
         this.dispose();
         makereservation reservationwindow = new makereservation(new javax.swing.JFrame(), true);
         reservationwindow.setSize(800,620);
         reservationwindow.setVisible(true);
     }//GEN-LAST:event_makereservationbuttonActionPerformed
-
+//Takes user to update account information page when clicked.
     private void updateaccountbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateaccountbuttonActionPerformed
         this.dispose();
         editaccountinfo usereditwindow = new editaccountinfo(new javax.swing.JFrame(), true);
         usereditwindow.setSize(800,620);
         usereditwindow.setVisible(true);
     }//GEN-LAST:event_updateaccountbuttonActionPerformed
-
+//Signs out user from system if clicked and takes them to the signedout page.
     private void signoutbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutbuttonActionPerformed
         this.dispose();
         String currentUserName = hotelsystemMAIN.user.getUserName();
@@ -109,7 +109,7 @@ public class useroptionswindow extends javax.swing.JDialog {
         signoutwindow.setSize(800,620);
         signoutwindow.setVisible(true);
     }//GEN-LAST:event_signoutbuttonActionPerformed
-
+//Takes user to welcomepage if clicked.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);

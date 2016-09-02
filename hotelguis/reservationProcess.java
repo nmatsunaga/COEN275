@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/*
+This class serves to manage all reservations held within the system at all times.
+*/
+
 public class reservationProcess {
-    
+//Creating local variables with ability to set reservation entries.    
 	public class Entry{
 		private int rId;
 		private int roomNum;
@@ -20,7 +24,7 @@ public class reservationProcess {
 		    this.userId = user;
 		    nextRid++;
 		}
-		
+		//Accessors
 		public int getReservId(){
 			return this.rId;
 		}
@@ -58,7 +62,7 @@ public class reservationProcess {
 			this.userId = userId;
 		}
 	}
-	
+	//ArrayList of all reservation entries.
 	static ArrayList<Entry> entries = new ArrayList<Entry>();
          
 	private static int nextRid = 0;
@@ -72,6 +76,8 @@ public class reservationProcess {
 	 * -2 -> invalid date, no change made
 	 * -3 -> invalid roomNum
 	 */
+        
+        //Function for assistance in editing of reservations.
 	private int pushEntry(int roomNum, Calendar startDate, Calendar endDate, int userId)
 	{
 		Date current = new Date();
@@ -90,6 +96,7 @@ public class reservationProcess {
 		return reservId;
 	}
 	
+        //Function to allow administrator to retrieve information about a particular entry.
 	private boolean checkEntry(int reservId, int roomNum, Calendar startDate, Calendar endDate, int userId)
 	{
 		int searchLength = entries.size();
@@ -105,6 +112,7 @@ public class reservationProcess {
 		return false;
 	}
 	
+        //Allow to check for a reservation by ID, returns entry information.
 	Entry checkReservationByRid(int reservationId)
 	{
 		int searchLength = entries.size();
@@ -116,7 +124,7 @@ public class reservationProcess {
 		}
 		return null; // reservation not found!
 	}
-	
+	//Returns userID based on reservation ID.
 	int getReservationUserId(int reservationId)
 	{
 		int searchLength = entries.size();
@@ -128,7 +136,7 @@ public class reservationProcess {
 		}
 		return -1; // reservation not found!
 	}
-	
+	//Checks for reservation and returns room ID if reservation is found.
 	int getReservationRoomNum(int reservationId)
 	{
 		int searchLength = entries.size();
@@ -140,7 +148,7 @@ public class reservationProcess {
 		}
 		return -1; // reservation not found!
 	}
-
+        //Function to return start date of a reservation with an input of reservationID.
 	Calendar getReservationStartDate(int reservationId)
 	{
 		int searchLength = entries.size();
@@ -152,7 +160,7 @@ public class reservationProcess {
 		}
 		return null; //reservation not found!
 	}
-	
+	//Function to return end date of a reservation with an input of reservationID.
 	Calendar getReservationEndDate(int reservationId)
 	{
 		int searchLength = entries.size();
@@ -190,6 +198,7 @@ public class reservationProcess {
 		else
 			return -1;
 	}
+        
 	
 	/*
 	 * changeReservation assumes the roomNum is already checked to be valid 
@@ -381,7 +390,7 @@ public class reservationProcess {
 		}
 		return 0; //reservation not found!
 	}
-	
+	//Function to cancel reservation by reservation ID.
 	int adminCancelReservationByRid (int reservationId)
 	{
 		int searchLength = entries.size();
@@ -394,7 +403,7 @@ public class reservationProcess {
 		}
 		return 0; //reservation not found!
 	}
-	
+	//Function to cancel reservation by User ID.
 	int adminCancelReservationByUserId (int userId)
 	{
 		int searchLength = entries.size();
@@ -408,7 +417,7 @@ public class reservationProcess {
 		}
 		return count; 
 	}
-	
+	//Function to cancel reservation by room.
 	int adminCancelReservationByRoomId (int roomId)
 	{
 		int searchLength = entries.size();
@@ -422,7 +431,7 @@ public class reservationProcess {
 		}
 		return count; //return how many reservations cancelled
 	}
-	
+	//Function to clean out the system for all reservations that are prior to indicated date.
 	int adminCleanUpByDate(Date cutoffDate)
 	{
 		int count = 0;

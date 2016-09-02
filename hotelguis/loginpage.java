@@ -8,9 +8,6 @@ import java.lang.String;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-//This is a comment
-//This is another comment
-
 public class loginpage extends javax.swing.JDialog {
     String username = "";
     String pwd = "";
@@ -19,6 +16,7 @@ public class loginpage extends javax.swing.JDialog {
     // removed "users" to use global hotelsystemMAIN.systemUserList
     //Users users = new Users();
     
+ //Instantiation of GUI elements.   
     public loginpage(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -102,18 +100,18 @@ public class loginpage extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+ //Action listener to retreive user input.    
     private void usernametextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametextfieldActionPerformed
         username = usernametextfield.getText();  
     }//GEN-LAST:event_usernametextfieldActionPerformed
-
+//Action listener to bring user to new acocunt GUI.
     private void newuserbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newuserbuttonActionPerformed
         this.dispose();
         createaccount accwindow = new createaccount(new javax.swing.JFrame(), true);
         accwindow.setSize(800,620);
         accwindow.setVisible(true);
     }//GEN-LAST:event_newuserbuttonActionPerformed
-
+//Action listener to intake username and password and log a user into the system.
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
         username = usernametextfield.getText();    
         pwd = passwordtextfield.getText();
@@ -144,14 +142,14 @@ public class loginpage extends javax.swing.JDialog {
             return;
         }
     }//GEN-LAST:event_submitbuttonActionPerformed
-        
+//Action listener to return user to home page.       
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true); 
     }//GEN-LAST:event_homebuttonActionPerformed
-
+//Action listener to retreive user input. 
     private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
         pwd = passwordtextfield.getText();
     }//GEN-LAST:event_passwordtextfieldActionPerformed

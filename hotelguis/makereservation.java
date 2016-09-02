@@ -8,20 +8,26 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class makereservation extends javax.swing.JDialog {
-
-    String roomSelection;
+//Variables List
+    public String roomSelection;
     int roomType;
     int userID;
     int reservationReturn;
+    public ArrayList<Integer> room_List;
     
     private DefaultTableModel model;
     public Calendar startDate = Calendar.getInstance();
     public Calendar endDate = Calendar.getInstance();
-
-     private void setTableContent(){
-        for (int i = 0; i < 1000; i++) { //arbitrary iteration max
-        ArrayList<Integer> room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomtypechoice.getSelectedItem()), startDate, endDate);
-            	if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
+//Populate table with room list that matches the user query (available rooms only).
+     //Function to populate table with rooms that match the user's query.
+     private void setTableContent(){ 
+       ArrayList<Integer> room_List;
+       
+       room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomSelection), startDate, endDate);
+       System.out.println("ArrayList Contents: " + room_List);
+       int arraySize = room_List.size();
+       for (int i = 0; i < arraySize; i++) {
+            if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
                     Vector<String> roomNums = new Vector<>();
                     roomNums.add(Integer.toString(room_List.get(i)));
                     model.addRow(roomNums);
@@ -34,12 +40,34 @@ public class makereservation extends javax.swing.JDialog {
     //User user = new User();
     //Users users = new Users();
     
+     	/* The function below is utility to convert room type input from user to integer matching the hotel room def*/    
+	public int GetRoomType(String roomTypeFromUser)
+	{	
+	    switch (roomTypeFromUser) {
+	    	case "Two King Beds":  roomType = 0;
+	    		break;
+	    	case "One King Bed and One Queen Bed":  roomType = 1;
+	    		break;
+	        case "Two Queen Beds":  roomType = 2;
+	        	break;
+	        case "One King Bed":  roomType = 3;
+        		break;
+	        case "One Queen Bed": roomType = 4;
+	        	break;
+	        default: roomType = -1;
+	        	break;
+	    }
+	    return roomType;
+	}
+    //Initialization of GUI components.    
     public makereservation(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     
-    roomNumTableEdit.setEnabled(false);
-    model = (DefaultTableModel) roomNumTableEdit.getModel();
+        roomNumTableEdit.setEnabled(true);
+        roomNumTableEdit.setRowSelectionAllowed(true);
+        roomNumTableEdit.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        model = (DefaultTableModel) roomNumTableEdit.getModel();   
     }
 
     @SuppressWarnings("unchecked")
@@ -67,7 +95,8 @@ public class makereservation extends javax.swing.JDialog {
         makereservationlabel = new javax.swing.JLabel();
         roomrequestedlabel = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
-        confirmbutton = new javax.swing.JButton();
+        checkavailability = new javax.swing.JButton();
+        makeReservationButton = new javax.swing.JButton();
         reservationbackground = new javax.swing.JLabel();
         checkoutdatelabel1 = new javax.swing.JLabel();
 
@@ -111,6 +140,12 @@ public class makereservation extends javax.swing.JDialog {
 
         roomNumTableEdit.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
                 {null},
                 {null},
                 {null},
@@ -242,14 +277,23 @@ public class makereservation extends javax.swing.JDialog {
         getContentPane().add(homebutton);
         homebutton.setBounds(720, 0, 82, 29);
 
-        confirmbutton.setText("Confirm Reservation");
-        confirmbutton.addActionListener(new java.awt.event.ActionListener() {
+        checkavailability.setText("Check Availability");
+        checkavailability.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmbuttonActionPerformed(evt);
+                checkavailabilityActionPerformed(evt);
             }
         });
-        getContentPane().add(confirmbutton);
-        confirmbutton.setBounds(560, 520, 190, 29);
+        getContentPane().add(checkavailability);
+        checkavailability.setBounds(570, 280, 190, 29);
+
+        makeReservationButton.setText("Make Reservation");
+        makeReservationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeReservationButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(makeReservationButton);
+        makeReservationButton.setBounds(590, 540, 160, 29);
 
         reservationbackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/hotelguis/newpackage/resizedfrontdesk.jpg"))); // NOI18N
         getContentPane().add(reservationbackground);
@@ -263,15 +307,15 @@ public class makereservation extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Action listener to return the user to the welcome page.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-
-    private void confirmbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmbuttonActionPerformed
+//Action listener to retreive user input and confirm a reservation.
+    private void checkavailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkavailabilityActionPerformed
         ArrayList<Integer> roomNum;
     	userID = hotelsystemMAIN.user.getUserID();
         
@@ -330,7 +374,7 @@ public class makereservation extends javax.swing.JDialog {
     		
     		return;
     	}
-        
+        //Check availablity of the system first before a reservation change can be confirmed.
         roomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
         
         System.out.println("room num" + roomNum.get(0) + "startdate" + startDate + "enddate" + endDate + "userID" + userID);//testing
@@ -358,14 +402,22 @@ public class makereservation extends javax.swing.JDialog {
 	            JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
 	        }
         }
-    }//GEN-LAST:event_confirmbuttonActionPerformed
-
+    }//GEN-LAST:event_checkavailabilityActionPerformed
+//Action listener to return user to the user options GUI page.
     private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
         this.dispose();
         useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
         optwin.setSize(800,620);
         optwin.setVisible(true);
     }//GEN-LAST:event_backbuttonActionPerformed
+
+    private void makeReservationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeReservationButtonActionPerformed
+        int selectedRoom = Integer.parseInt((String)roomNumTable.getValueAt(roomNumTable.getSelectedRow(),0));
+        System.out.println("Selected Room # = " + selectedRoom);       
+        
+         hotelsystemMAIN.systemReservationList.createReservation(selectedRoom, startDate, endDate, ERROR);
+            hotelsystemMAIN.reportError("Successfully made reservation for Room #:" + selectedRoom);
+    }//GEN-LAST:event_makeReservationButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -412,14 +464,15 @@ public class makereservation extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> Month;
     private javax.swing.JComboBox<String> Month2;
     private javax.swing.JButton backbutton;
+    private javax.swing.JButton checkavailability;
     private javax.swing.JLabel checkinlabel;
     private javax.swing.JLabel checkoutdatelabel;
     private javax.swing.JLabel checkoutdatelabel1;
-    private javax.swing.JButton confirmbutton;
     private javax.swing.JComboBox<String> day;
     private javax.swing.JComboBox<String> day2;
     private javax.swing.JLabel dayLabel;
     private javax.swing.JButton homebutton;
+    private javax.swing.JButton makeReservationButton;
     private javax.swing.JLabel makereservationlabel;
     private javax.swing.JLabel monthlabel;
     private javax.swing.JLabel reservationbackground;

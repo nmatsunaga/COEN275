@@ -150,34 +150,34 @@ public class createaccount extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Action listener to return user to welcome page upon click.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-    
+//Action listener to retreive user input.    
     private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
         userfirstname = firstname.getText(); 
     }//GEN-LAST:event_firstnameActionPerformed
-
+//Action listener to retreive user input. 
     private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
         userlastname = lastname.getText();
     }//GEN-LAST:event_lastnameActionPerformed
-
+//Action listener to retreive user input. 
     private void emailtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailtextfieldActionPerformed
         useremail = emailtextfield.getText();
     }//GEN-LAST:event_emailtextfieldActionPerformed
-
+//Action listener to retreive user input. 
     private void usernametextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametextfieldActionPerformed
         username = usernametextfield.getText();
     }//GEN-LAST:event_usernametextfieldActionPerformed
-
+//Action listener to retreive user input. 
     private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
         userpassword = passwordtextfield.getText();
     }//GEN-LAST:event_passwordtextfieldActionPerformed
-
+//Action listener to retreive user input. 
     private void phonenumbertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumbertextfieldActionPerformed
         userphonenum = phonenumbertextfield.getText();
     }//GEN-LAST:event_phonenumbertextfieldActionPerformed
@@ -201,7 +201,7 @@ public class createaccount extends javax.swing.JDialog {
     	return true;
     }
     */
-    
+ //Action listener to retreive user input upon click of create action button.
     private void createaccountbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createaccountbuttonActionPerformed
         boolean valid = true;
     	userfirstname = firstname.getText(); 
@@ -269,7 +269,7 @@ public class createaccount extends javax.swing.JDialog {
         }
         */
         
-       
+       //If user input is valid, then account is created.
         if(valid){
 	        if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
 	        	Component frame = null;

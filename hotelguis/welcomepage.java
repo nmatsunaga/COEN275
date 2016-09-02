@@ -77,15 +77,14 @@ public class welcomepage extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    
+//Action listener to take user to check availability GUI page.   
     private void checkavailbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkavailbuttonActionPerformed
         this.dispose();
         checkavail cawindow = new checkavail(new javax.swing.JFrame(), true);
         cawindow.setSize(800,620);
         cawindow.setVisible(true);
     }//GEN-LAST:event_checkavailbuttonActionPerformed
-
+//Action listener to take user to loginpage.  If the user is already logged in, it takes them to their respective user/admin options GUI pages.
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
         this.dispose();
         if (hotelsystemMAIN.user.getLoggedIn()==true){

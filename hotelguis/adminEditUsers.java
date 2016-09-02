@@ -1,13 +1,12 @@
 package hotelguis;
 
-
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 public class adminEditUsers extends javax.swing.JDialog {
-
+//Variable Declaration for table.
     private DefaultTableModel model;
-
+//Initialization of GUI frame.
     public adminEditUsers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -15,7 +14,7 @@ public class adminEditUsers extends javax.swing.JDialog {
         model = (DefaultTableModel) userListTable.getModel();
         setTableContent();
     }
-    
+//Populating table of user account information.    
     private void setTableContent(){
         Users.Iterator uIter = hotelsystemMAIN.systemUserList.getUserIter();
         
@@ -34,7 +33,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             model.addRow(usr);            
         }
     }
-    
+//Function to validate and return userID selected.    
     private int checkAndGetInput(){
     	int userID = Integer.parseInt(UserIDSearch.getText());
     	User user = hotelsystemMAIN.systemUserList.getUserByID(userID);
@@ -216,7 +215,7 @@ public class adminEditUsers extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Action listener for changing of first name.
     private void changeFirstNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameButtonActionPerformed
         //Doesn't change full name, just the last name.
     	int userID = checkAndGetInput();
@@ -232,7 +231,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_changeFirstNameButtonActionPerformed
-    
+//Action listener for editing of last name.    
     private void changeLastNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameButtonActionPerformed
     	int userID = checkAndGetInput();
     	
@@ -247,7 +246,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_changeLastNameButtonActionPerformed
-    
+//Action listener for editing of username.    
     private void editUsernameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUsernameButtonActionPerformed
     	int userID = checkAndGetInput();
     	
@@ -262,7 +261,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_editUsernameButtonActionPerformed
-
+//Action listener for editing of password.
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
     	int userID = checkAndGetInput();
     	
@@ -277,7 +276,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_changePasswordButtonActionPerformed
-    
+//Action listener for editing of email.    
     private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
     	int userID = checkAndGetInput();
     	
@@ -292,7 +291,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_changeEmailButtonActionPerformed
-    
+//Action Listener for editing of phone number.    
     private void changePhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhoneButtonActionPerformed
     	int userID = checkAndGetInput();
     	
@@ -307,7 +306,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_changePhoneButtonActionPerformed
-
+//Creation of action listener to delete user account that has been selected by user.
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
     	int userID = checkAndGetInput();
     	
@@ -322,20 +321,16 @@ public class adminEditUsers extends javax.swing.JDialog {
     		}
     	}
     }//GEN-LAST:event_deleteUserButtonActionPerformed
-
+//Creation of action listener for returning the user to the administrator options window.
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.dispose();
         administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(), true);
         adminwindow.setSize(800,620);
         adminwindow.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
-
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
+        //Setting look and feel of GUI.
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -352,7 +347,6 @@ public class adminEditUsers extends javax.swing.JDialog {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(adminEditUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
