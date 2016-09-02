@@ -10,7 +10,7 @@ import java.util.Calendar;
 public class editreservations extends javax.swing.JDialog {
 
     private DefaultTableModel model;
-
+//Initialization of GUI Components.
     public editreservations(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -22,11 +22,11 @@ public class editreservations extends javax.swing.JDialog {
 
     public String reservationID;
     User user = new User();
-    
+    //Allows for translation of Calendar to Date.
     private String getDateString(Calendar date){
     	return (date.get(Calendar.MONTH) + 1) + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + date.get(Calendar.YEAR);
     }
-    
+    //Populates the table with the reservations currently held by the user that is logged in.
     private void setTableContent(){
         for (int i = 0; i < hotelsystemMAIN.systemReservationList.reservationCount(); i++) {
             reservationProcess.Entry e = hotelsystemMAIN.systemReservationList.entries.get(i); //NEED TO set to ONLY one user's reservations.
@@ -296,14 +296,14 @@ public class editreservations extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+//Action listener to return user back to the welcome page.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-
+//Action Listener to have a user search for specific reservations associated with  their accounts.
     private void reservationIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationIDtextfieldActionPerformed
         /*
     	reservationID = reservationIDtextfield.getText();
@@ -316,7 +316,7 @@ public class editreservations extends javax.swing.JDialog {
         }
         */
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
-
+//Action Listener to collect all information from the user and reset reservation based on new parameters.
     private void confirmchangesbuttonActionPerformed(java.awt.event.ActionEvent evt) {                                                       
     	int reserveID = Integer.parseInt(reservationIDtextfield.getText());
     	int roomType = roomtypechoice.getSelectedIndex();
@@ -342,6 +342,7 @@ public class editreservations extends javax.swing.JDialog {
     	
     	hotelsystemMAIN.hotelRoomList.cancel_room(oldStartDate, oldEndDate, oldRoomNum);
     	
+//First check availability of rooms before confirming reservation can be changed.
     	ArrayList<Integer> newAvailableRooms = hotelsystemMAIN.hotelRoomList.check_availability(roomType, newStartDate, newEndDate);
     	
     	for(int i = 0; i < newAvailableRooms.size(); i++){
@@ -355,6 +356,7 @@ public class editreservations extends javax.swing.JDialog {
     		hotelsystemMAIN.hotelRoomList.Occupy_Hotel_room(oldStartDate, oldEndDate, oldRoomNum);
     		hotelsystemMAIN.reportError("Requested change is unavailable!");
     	}
+        
     	else{
     		reservationProcess.Entry r = hotelsystemMAIN.systemReservationList.checkReservationByRid(reserveID);
     		
@@ -379,14 +381,14 @@ public class editreservations extends javax.swing.JDialog {
     		}
     	}
     }                                                    
-
+////Action listener to retreive user input for cancelling reservation.
     private void cancelbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelbuttonActionPerformed
         reservationID = reservationIDtextfield.getText();
         hotelsystemMAIN.systemReservationList.cancelReservation(Integer.parseInt(reservationID));
         hotelsystemMAIN.reportError("Reservation has been cancelled!");
         //Should add sanity check to make sure that the reservation ID is found, and add logic.
     }//GEN-LAST:event_cancelbuttonActionPerformed
-
+////Action listener to return user to user options page.
     private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
         this.dispose();
         useroptionswindow userpage = new useroptionswindow(new javax.swing.JFrame(), true);

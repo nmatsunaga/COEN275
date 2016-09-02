@@ -1,6 +1,5 @@
 package hotelguis;
 
-
 import java.awt.Component;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,7 +8,6 @@ import java.util.Vector;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 public class adminEditReservations extends javax.swing.JDialog {
 
@@ -23,6 +21,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     
     User user = new User();
     
+    //Initializes GUI
     public adminEditReservations(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -31,10 +30,12 @@ public class adminEditReservations extends javax.swing.JDialog {
         setTableContents();
     }
     
+    //Conversion Function from Calendar to Date
     private String getDateString(Calendar date){
     	return (date.get(Calendar.MONTH) + 1) + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + date.get(Calendar.YEAR);
     }
     
+    //Populate Table with Existing Reservations in System
     private void setTableContents(){
     	for (int i = 0; i < hotelsystemMAIN.systemReservationList.reservationCount(); i++) {
             reservationProcess.Entry e = hotelsystemMAIN.systemReservationList.entries.get(i); //NEED TO set to ONLY one user's reservations.
@@ -51,6 +52,7 @@ public class adminEditReservations extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
+    //GUI Element Descriptions
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -320,10 +322,12 @@ public class adminEditReservations extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Action Listener for User Entry in Reservation ID Field
     private void reservationIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationIDtextfieldActionPerformed
         reservationIDinput = reservationIDtextfield.getText();
     }//GEN-LAST:event_reservationIDtextfieldActionPerformed
 
+    //Action Listener to return user to Administrator Options GUI Page
     private void adminPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPageButtonActionPerformed
         this.dispose();
         administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(), true);
@@ -331,6 +335,7 @@ public class adminEditReservations extends javax.swing.JDialog {
         adminwindow.setVisible(true);
     }//GEN-LAST:event_adminPageButtonActionPerformed
 
+    //Action Listener for Button to Search Reservations for a specific reservation.
     private void searchResButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchResButtonActionPerformed
         reservationIDinput = reservationIDtextfield.getText();
         reservationID = Integer.parseInt(reservationIDinput);
@@ -343,16 +348,14 @@ public class adminEditReservations extends javax.swing.JDialog {
         model.addRow(new Object[]{reservationID, userID, startDate, endDate});
     }//GEN-LAST:event_searchResButtonActionPerformed
 
+    //Action Listener for table with list of reservations (admin selects one).
     private void editResDatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editResDatesActionPerformed
         selectedReservationID = reservationDisplayTable.getSelectedRow();
         System.out.println(reservationID);//testing to ensure correct reservationID is selected
-        
-        
     }//GEN-LAST:event_editResDatesActionPerformed
 
+    //Action Listener for deleting reservation that has been selected in table.
     private void deleteResButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteResButtonActionPerformed
-       //NEED TO FINISH, INCOMPLETE
-        
         int selectedRowIndex = reservationDisplayTable.getSelectedRow();
         int selectedColumnIndex = reservationDisplayTable.getSelectedColumn();
         Object selectedObject = reservationDisplayTable.getValueAt(selectedRowIndex, 0);
@@ -369,33 +372,11 @@ public class adminEditReservations extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(frame, "Reservation not found.");
         }        
     }//GEN-LAST:event_deleteResButtonActionPerformed
-
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminEditReservations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminEditReservations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminEditReservations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminEditReservations.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 adminEditReservations dialog = new adminEditReservations(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
