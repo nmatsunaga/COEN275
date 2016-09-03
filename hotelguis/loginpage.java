@@ -1,31 +1,19 @@
 package hotelguis;
 
-import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import javax.swing.JOptionPane;
+
 import java.lang.String;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+
 
 public class loginpage extends javax.swing.JDialog {
-    String username = "";
-    String pwd = "";
-    //User user = new User();
-    String checklogin = "";
-    // removed "users" to use global hotelsystemMAIN.systemUserList
-    //Users users = new Users();
     
- //Instantiation of GUI elements.   
+    //CONSTRUCTOR
     public loginpage(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-    
-    @SuppressWarnings("unchecked")   
+     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         passwordtextfield = new javax.swing.JTextField();
         homebutton = new javax.swing.JButton();
         usernamelabel = new javax.swing.JLabel();
@@ -38,11 +26,6 @@ public class loginpage extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(passwordtextfield);
         passwordtextfield.setBounds(560, 210, 190, 30);
 
@@ -61,11 +44,6 @@ public class loginpage extends javax.swing.JDialog {
         getContentPane().add(usernamelabel);
         usernamelabel.setBounds(430, 160, 100, 20);
 
-        usernametextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernametextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(usernametextfield);
         usernametextfield.setBounds(560, 160, 190, 30);
 
@@ -100,22 +78,20 @@ public class loginpage extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
- //Action listener to retreive user input.    
-    private void usernametextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametextfieldActionPerformed
-        username = usernametextfield.getText();  
-    }//GEN-LAST:event_usernametextfieldActionPerformed
-//Action listener to bring user to new acocunt GUI.
+
+    //Action listener to bring user to new acocunt GUI.
     private void newuserbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newuserbuttonActionPerformed
         this.dispose();
         createaccount accwindow = new createaccount(new javax.swing.JFrame(), true);
         accwindow.setSize(800,620);
         accwindow.setVisible(true);
     }//GEN-LAST:event_newuserbuttonActionPerformed
-//Action listener to intake username and password and log a user into the system.
+    
+    //Action listener to intake username and password and log a user into the system.
     private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
-        username = usernametextfield.getText();    
-        pwd = passwordtextfield.getText();
-        //users.login(username, pwd);
+        String username = usernametextfield.getText();    
+        String pwd = passwordtextfield.getText();
+        
         hotelsystemMAIN.user = hotelsystemMAIN.systemUserList.login(username, pwd);
         
         if (hotelsystemMAIN.user == null){
@@ -142,18 +118,17 @@ public class loginpage extends javax.swing.JDialog {
             return;
         }
     }//GEN-LAST:event_submitbuttonActionPerformed
-//Action listener to return user to home page.       
+    
+    //Action listener to return user to home page.       
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true); 
     }//GEN-LAST:event_homebuttonActionPerformed
-//Action listener to retreive user input. 
-    private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
-        pwd = passwordtextfield.getText();
-    }//GEN-LAST:event_passwordtextfieldActionPerformed
 
+    //Local main to test page specific GUI attributes
+    /*
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -170,6 +145,7 @@ public class loginpage extends javax.swing.JDialog {
             }
         });
     }
+    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homebutton;

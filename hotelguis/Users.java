@@ -30,31 +30,33 @@ public class Users {
 	
 	//ITERATORS
 	class Iterator {
-		int index;
+		int _index;
+		ArrayList<User> _users;
 		
-		public Iterator()
+		public Iterator(ArrayList<User> users)
 		{
+			_users = users;
 			rewind();
 		}
 		
 		public void rewind()
 		{
-			index = 0;
+			_index = 0;
 		}
 		
 		public void next()
 		{
-			index++;
+			_index++;
 		}
 		
 		public boolean isValid()
 		{
-			return index < _users.size();
+			return _index < _users.size();
 		}
 		
 		public User getValue()
 		{
-			return _users.get(index);
+			return _users.get(_index);
 		}
 	}
 	
@@ -70,10 +72,12 @@ public class Users {
 	//None
 	
 	//METHODS
+	//Return an iterator for the User objects in the system
 	public Iterator getUserIter(){
-		return new Iterator();
+		return new Iterator(_users);
 	}
 	
+	//Create a new User object and add it to the system
 	public boolean createNewUser(String firstName,
             String lastName,
             String userName,
@@ -96,6 +100,7 @@ public class Users {
 		return true;
 	}
 	
+	//Create a new User object from saved file
 	private boolean createUserFromFile(String firstName,
             String lastName,
             String userName,
@@ -150,6 +155,7 @@ public class Users {
 		return null;
 	}
 	
+	//Logout current user
 	public boolean logout(String userName){
 		
 		int i;
@@ -169,6 +175,7 @@ public class Users {
 		return false;
 	}
 	
+	//Return if given user is logged in
 	public boolean isLoggedIn(String userName){
 		
 		int i;
@@ -184,6 +191,7 @@ public class Users {
 		return false;
 	}
 	
+	//Return if given user is an admin
 	public boolean isAdmin(String userName){
 		
 		int i;
@@ -199,6 +207,7 @@ public class Users {
 		return false;
 	}
 	
+	//Set the value of a given User attribute
 	public void editUserInfo(String userName, int field, String newValue){
 		
 		int i;
@@ -221,6 +230,7 @@ public class Users {
 		}
 	}
 	
+	//Write User info to file
 	public void writeToFile(){
 		Charset charset = Charset.forName("US-ASCII");
 		Path p = Paths.get("list.txt");
@@ -247,6 +257,7 @@ public class Users {
 		}
 	}
 	
+	//Helper function to parse User info written in file
 	private void parseAndAdd(String line){
 		
 		String firstName = "";
@@ -309,6 +320,7 @@ public class Users {
 		createUserFromFile(firstName, lastName, userName, passWord, email, phoneNumber, userID);
 	}
 	
+	//Read User info from file
 	public void readFromFile(){
 		Charset charset = Charset.forName("US-ASCII");
 		Path p = Paths.get("list.txt");
@@ -324,6 +336,7 @@ public class Users {
 		}
 	}
 	
+	//Remove a User from the system
 	public boolean removeUser(int userID){
 		int i;
 		
@@ -343,6 +356,7 @@ public class Users {
 		}
 	}
 	
+	//Return the User object associated with the given user ID
 	public User getUserByID(int userID){
 		int i;
 		

@@ -1,12 +1,16 @@
 package hotelguis;
 
+
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
+
 public class adminEditUsers extends javax.swing.JDialog {
-//Variable Declaration for table.
+
+	//DATA
     private DefaultTableModel model;
-//Initialization of GUI frame.
+    
+    //CONSTRUCTOR
     public adminEditUsers(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -14,7 +18,8 @@ public class adminEditUsers extends javax.swing.JDialog {
         model = (DefaultTableModel) userListTable.getModel();
         setTableContent();
     }
-//Populating table of user account information.    
+    
+    //Populating table of user account information.    
     private void setTableContent(){
         Users.Iterator uIter = hotelsystemMAIN.systemUserList.getUserIter();
         
@@ -33,19 +38,25 @@ public class adminEditUsers extends javax.swing.JDialog {
             model.addRow(usr);            
         }
     }
-//Function to validate and return userID selected.    
-    private int checkAndGetInput(){
-    	int userID = Integer.parseInt(UserIDSearch.getText());
-    	User user = hotelsystemMAIN.systemUserList.getUserByID(userID);
+    
+    //Function to validate and return userID selected.    
+    private int checkAndGetInput(String s){
+    	int result = 0;
     	 
-    	if(user.getUserID() > 0){
-    		return userID;
-    	}
-    	else{
-    		hotelsystemMAIN.reportError("Invalid user ID!");
-    		 
+    	if(s.length() == 0){
     		return -1;
     	}
+    	
+    	for(int i = 0; i < s.length(); i++){
+    		if(s.charAt(i) >= '0' && s.charAt(i) <= '9'){
+    			result = (10 * result) + (s.charAt(i) - '0');
+    		}
+    		else{
+    			return -1;
+    		}
+    	}
+    	
+    	return result;
     }
      
     @SuppressWarnings("unchecked")
@@ -68,7 +79,7 @@ public class adminEditUsers extends javax.swing.JDialog {
         userListTable = new javax.swing.JTable();
         changeFirstNameTXT = new javax.swing.JTextField();
         changeEmailTXT = new javax.swing.JTextField();
-        changePhoneNumTXT = new javax.swing.JTextField();
+        changePhoneNumTXT = new javax.swing.JFormattedTextField();
         changePasswordTXT = new javax.swing.JTextField();
         changeLastNameTXT = new javax.swing.JTextField();
         instructions = new javax.swing.JLabel();
@@ -168,18 +179,17 @@ public class adminEditUsers extends javax.swing.JDialog {
 
         userListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
-            new String [] {
-                "User ID", "First Name", "Last Name", "Username", "Password", "Email", "Phone Number"
-            })
-        {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
+            new String [] {"User ID", "First Name", "Last Name", "Username", "Password", "Email", "Phone Number"}
+            ) {
+            	Class[] types = new Class [] {
+            			java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            	};
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+            	public Class getColumnClass(int columnIndex) {
+            		return types [columnIndex];
+            	}
+        	}
+        );
         jScrollPane1.setViewportView(userListTable);
 
         getContentPane().add(jScrollPane1);
@@ -191,6 +201,11 @@ public class adminEditUsers extends javax.swing.JDialog {
         getContentPane().add(changeEmailTXT);
         changeEmailTXT.setBounds(230, 450, 320, 26);
 
+        try {
+            changePhoneNumTXT.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
         getContentPane().add(changePhoneNumTXT);
         changePhoneNumTXT.setBounds(230, 480, 320, 26);
 
@@ -215,100 +230,154 @@ public class adminEditUsers extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Action listener for changing of first name.
+    
+    //Action listener for changing of first name.
     private void changeFirstNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeFirstNameButtonActionPerformed
-        //Doesn't change full name, just the last name.
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
-    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 0, changeFirstNameTXT.getText());
-    		//Update table
-    		for(int i = 0; i < model.getRowCount(); i++){
-    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
-    				model.setValueAt(changeFirstNameTXT.getText(), i, 1);
-    				break;
-    			}
+    		if(hotelsystemMAIN.isValidName(changeFirstNameTXT.getText())){
+	    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 0, changeFirstNameTXT.getText());
+	    		//Update table
+	    		for(int i = 0; i < model.getRowCount(); i++){
+	    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
+	    				model.setValueAt(changeFirstNameTXT.getText(), i, 1);
+	    				break;
+	    			}
+	    		}
     		}
+    		else{
+    			hotelsystemMAIN.reportError("Invalid value for First Name!");
+    		}
+    	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
     	}
     }//GEN-LAST:event_changeFirstNameButtonActionPerformed
-//Action listener for editing of last name.    
+    
+    //Action listener for editing of last name.    
     private void changeLastNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeLastNameButtonActionPerformed
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
-    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 1, changeLastNameTXT.getText());
-    		//Update table
-    		for(int i = 0; i < model.getRowCount(); i++){
-    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
-    				model.setValueAt(changeLastNameTXT.getText(), i, 2);
-    				break;
-    			}
+    		if(hotelsystemMAIN.isValidName(changeLastNameTXT.getText())){
+	    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 1, changeLastNameTXT.getText());
+	    		//Update table
+	    		for(int i = 0; i < model.getRowCount(); i++){
+	    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
+	    				model.setValueAt(changeLastNameTXT.getText(), i, 2);
+	    				break;
+	    			}
+	    		}
     		}
+    		else{
+    			hotelsystemMAIN.reportError("Invalid value for Last Name!");
+    		}
+    	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
     	}
     }//GEN-LAST:event_changeLastNameButtonActionPerformed
-//Action listener for editing of username.    
+    
+    //Action listener for editing of username.    
     private void editUsernameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUsernameButtonActionPerformed
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
-    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 2, editUserNameTXT.getText());
-    		//Update table
-    		for(int i = 0; i < model.getRowCount(); i++){
-    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
-    				model.setValueAt(editUserNameTXT.getText(), i, 3);
-    				break;
-    			}
+    		if(hotelsystemMAIN.isValidName(editUserNameTXT.getText())){
+	    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 2, editUserNameTXT.getText());
+	    		//Update table
+	    		for(int i = 0; i < model.getRowCount(); i++){
+	    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
+	    				model.setValueAt(editUserNameTXT.getText(), i, 3);
+	    				break;
+	    			}
+	    		}
     		}
+    		else{
+    			hotelsystemMAIN.reportError("Invalid value for Username!");
+    		}
+    	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
     	}
     }//GEN-LAST:event_editUsernameButtonActionPerformed
-//Action listener for editing of password.
+    
+    //Action listener for editing of password.
     private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
-    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 3, changePasswordTXT.getText());
-    		//Update table
-    		for(int i = 0; i < model.getRowCount(); i++){
-    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
-    				model.setValueAt(changePasswordTXT.getText(), i, 4);
-    				break;
-    			}
+    		if(hotelsystemMAIN.isValidName(changePasswordTXT.getText())){
+	    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 3, changePasswordTXT.getText());
+	    		//Update table
+	    		for(int i = 0; i < model.getRowCount(); i++){
+	    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
+	    				model.setValueAt(changePasswordTXT.getText(), i, 4);
+	    				break;
+	    			}
+	    		}
     		}
+    		else{
+    			hotelsystemMAIN.reportError("Invalid value for Password!");
+    		}
+    	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
     	}
     }//GEN-LAST:event_changePasswordButtonActionPerformed
-//Action listener for editing of email.    
+    
+    //Action listener for editing of email.    
     private void changeEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeEmailButtonActionPerformed
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
-    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 4, changeEmailTXT.getText());
-    		//Update table
-    		for(int i = 0; i < model.getRowCount(); i++){
-    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
-    				model.setValueAt(changeEmailTXT.getText(), i, 5);
-    				break;
-    			}
+    		if(hotelsystemMAIN.isValidName(changeEmailTXT.getText())){
+	    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 4, changeEmailTXT.getText());
+	    		//Update table
+	    		for(int i = 0; i < model.getRowCount(); i++){
+	    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
+	    				model.setValueAt(changeEmailTXT.getText(), i, 5);
+	    				break;
+	    			}
+	    		}
     		}
+    		else{
+    			hotelsystemMAIN.reportError("Invalid value for Email!");
+    		}
+    	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
     	}
     }//GEN-LAST:event_changeEmailButtonActionPerformed
-//Action Listener for editing of phone number.    
+    
+    //Action Listener for editing of phone number.    
     private void changePhoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePhoneButtonActionPerformed
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
-    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 5, changePhoneNumTXT.getText());
-    		//Update table
-    		for(int i = 0; i < model.getRowCount(); i++){
-    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
-    				model.setValueAt(changePhoneNumTXT.getText(), i, 6);
-    				break;
-    			}
+    		if(hotelsystemMAIN.isValidName(changePhoneNumTXT.getText())){
+	    		hotelsystemMAIN.systemUserList.editUserInfo(hotelsystemMAIN.systemUserList.getUserByID(userID).getUserName(), 5, changePhoneNumTXT.getText());
+	    		//Update table
+	    		for(int i = 0; i < model.getRowCount(); i++){
+	    			if(Integer.parseInt((String) model.getValueAt(i, 0)) == userID){
+	    				model.setValueAt(changePhoneNumTXT.getText(), i, 6);
+	    				break;
+	    			}
+	    		}
+    		}
+    		else{
+    			hotelsystemMAIN.reportError("Invalid value for Phone Number!");
     		}
     	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
+    	}
     }//GEN-LAST:event_changePhoneButtonActionPerformed
-//Creation of action listener to delete user account that has been selected by user.
+    
+    //Creation of action listener to delete user account that has been selected by user.
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
-    	int userID = checkAndGetInput();
+    	int userID = checkAndGetInput(UserIDSearch.getText());
     	
     	if(userID > 0){
     		hotelsystemMAIN.systemUserList.removeUser(userID);
@@ -320,14 +389,21 @@ public class adminEditUsers extends javax.swing.JDialog {
     			}
     		}
     	}
+    	else{
+    		hotelsystemMAIN.reportError("Invalid user ID!");
+    	}
     }//GEN-LAST:event_deleteUserButtonActionPerformed
-//Creation of action listener for returning the user to the administrator options window.
+    
+    //Creation of action listener for returning the user to the administrator options window.
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         this.dispose();
         administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(), true);
         adminwindow.setSize(800,620);
         adminwindow.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
+    
+    //Local main to test page specific GUI attributes
+    /*
     public static void main(String args[]) {
         
         //Setting look and feel of GUI.
@@ -362,6 +438,7 @@ public class adminEditUsers extends javax.swing.JDialog {
             }
         });
     }
+    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField UserIDSearch;
@@ -376,7 +453,7 @@ public class adminEditUsers extends javax.swing.JDialog {
     private javax.swing.JButton changePasswordButton;
     private javax.swing.JTextField changePasswordTXT;
     private javax.swing.JButton changePhoneButton;
-    private javax.swing.JTextField changePhoneNumTXT;
+    private javax.swing.JFormattedTextField changePhoneNumTXT;
     private javax.swing.JButton deleteUserButton;
     private javax.swing.JTextField editUserNameTXT;
     private javax.swing.JButton editUsernameButton;

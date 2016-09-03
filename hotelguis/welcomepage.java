@@ -1,28 +1,16 @@
 package hotelguis;
 
-import java.awt.Toolkit;
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 public class welcomepage extends javax.swing.JDialog {   
 
-    /* Creates new form welcomepage */
+    //CONSTRUCTOR
     public welcomepage(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        jPopupMenu1 = new javax.swing.JPopupMenu();
         welcomepagepanel = new javax.swing.JPanel();
         welcometext = new javax.swing.JLabel();
         checkavailbutton = new javax.swing.JButton();
@@ -77,36 +65,40 @@ public class welcomepage extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Action listener to take user to check availability GUI page.   
+    
+    //Action listener to take user to check availability GUI page.   
     private void checkavailbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkavailbuttonActionPerformed
         this.dispose();
         checkavail cawindow = new checkavail(new javax.swing.JFrame(), true);
         cawindow.setSize(800,620);
         cawindow.setVisible(true);
     }//GEN-LAST:event_checkavailbuttonActionPerformed
-//Action listener to take user to loginpage.  If the user is already logged in, it takes them to their respective user/admin options GUI pages.
+    
+    //Action listener to take user to loginpage.  If the user is already logged in, it takes them to their respective user/admin options GUI pages.
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
         this.dispose();
+        
         if (hotelsystemMAIN.user.getLoggedIn()==true){
-            useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
-            optwin.setSize(800,620);
-            optwin.setVisible(true);
+        	if(hotelsystemMAIN.user.getAdmin()==true){
+        		administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(),true);
+            	adminwindow.setSize(800,620);
+            	adminwindow.setVisible(true);
+        	}
+        	else{
+        		useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
+        		optwin.setSize(800,620);
+        		optwin.setVisible(true);
+        	}
         }
-        if (hotelsystemMAIN.user.getLoggedIn()==true && hotelsystemMAIN.user.getAdmin()==true){
-        	dispose();
-        	administratoroptions adminwindow = new administratoroptions(new javax.swing.JFrame(),true);
-        	adminwindow.setSize(800,620);
-        	adminwindow.setVisible(true);
-                    
-        	return;
-        }
-        else {
-        loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
-        loginwindow.setSize(800,620);
-        loginwindow.setVisible(true);
+        else{
+        	loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
+        	loginwindow.setSize(800,620);
+        	loginwindow.setVisible(true);
         }
     }//GEN-LAST:event_loginbuttonActionPerformed
 
+    //Local main to test page specific GUI attributes
+    /*
     public static void main(String args[]) {
       
         try {
@@ -127,7 +119,7 @@ public class welcomepage extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
+        // Create and display the dialog
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 welcomepage dialog = new welcomepage(new javax.swing.JFrame(), true);
@@ -142,11 +134,11 @@ public class welcomepage extends javax.swing.JDialog {
             }
         });
     }
+	*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton checkavailbutton;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JButton loginbutton;
     private javax.swing.JPanel welcomepagepanel;
     private javax.swing.JLabel welcometext;

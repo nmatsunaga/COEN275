@@ -1,28 +1,16 @@
 package hotelguis;
 
-import java.awt.Component;
-import javax.swing.JOptionPane;
 
 public class createaccount extends javax.swing.JDialog {
-
-    //Users users = new Users();
-    User user = new User();
-    String userfirstname = "";
-    String userlastname = "";
-    String useremail = "";
-    String userpassword = "";
-    String userphonenum = "";
-    String username = "";
     
+	//CONSTRUCTOR
     public createaccount(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         homebutton = new javax.swing.JButton();
         lastname = new javax.swing.JTextField();
         emaillabel = new javax.swing.JLabel();
@@ -52,25 +40,20 @@ public class createaccount extends javax.swing.JDialog {
         getContentPane().add(homebutton);
         homebutton.setBounds(700, 10, 97, 29);
 
-        lastname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lastnameActionPerformed(evt);
-            }
-        });
         getContentPane().add(lastname);
         lastname.setBounds(430, 40, 200, 26);
 
         emaillabel.setText("Email Address");
         getContentPane().add(emaillabel);
-        emaillabel.setBounds(320, 70, 90, 16);
+        emaillabel.setBounds(320, 130, 90, 16);
 
         passwordlabel.setText("Password");
         getContentPane().add(passwordlabel);
-        passwordlabel.setBounds(350, 130, 59, 16);
+        passwordlabel.setBounds(350, 100, 59, 16);
 
         usernamelabel.setText("Desired Username");
         getContentPane().add(usernamelabel);
-        usernamelabel.setBounds(300, 100, 120, 16);
+        usernamelabel.setBounds(300, 70, 120, 16);
 
         phonenumberlabel.setText("Phone Number");
         getContentPane().add(phonenumberlabel);
@@ -80,48 +63,23 @@ public class createaccount extends javax.swing.JDialog {
             phonenumbertextfield.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-###-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
-        }
-        phonenumbertextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phonenumbertextfieldActionPerformed(evt);
-            }
-        });
+        }      
         getContentPane().add(phonenumbertextfield);
         phonenumbertextfield.setBounds(430, 160, 200, 26);
 
-        passwordtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(passwordtextfield);
-        passwordtextfield.setBounds(430, 130, 200, 26);
+        passwordtextfield.setBounds(430, 100, 200, 26);
 
         namelabel.setText("First Name");
         getContentPane().add(namelabel);
         namelabel.setBounds(340, 10, 70, 20);
 
-        emailtextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailtextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(emailtextfield);
-        emailtextfield.setBounds(430, 70, 200, 26);
+        emailtextfield.setBounds(430, 130, 200, 26);
 
-        usernametextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernametextfieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(usernametextfield);
-        usernametextfield.setBounds(430, 100, 200, 26);
+        usernametextfield.setBounds(430, 70, 200, 26);
 
-        firstname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                firstnameActionPerformed(evt);
-            }
-        });
         getContentPane().add(firstname);
         firstname.setBounds(430, 10, 200, 26);
 
@@ -150,145 +108,79 @@ public class createaccount extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Action listener to return user to welcome page upon click.
+    
+    //Action listener to return user to welcome page upon click.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-//Action listener to retreive user input.    
-    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
-        userfirstname = firstname.getText(); 
-    }//GEN-LAST:event_firstnameActionPerformed
-//Action listener to retreive user input. 
-    private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
-        userlastname = lastname.getText();
-    }//GEN-LAST:event_lastnameActionPerformed
-//Action listener to retreive user input. 
-    private void emailtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailtextfieldActionPerformed
-        useremail = emailtextfield.getText();
-    }//GEN-LAST:event_emailtextfieldActionPerformed
-//Action listener to retreive user input. 
-    private void usernametextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernametextfieldActionPerformed
-        username = usernametextfield.getText();
-    }//GEN-LAST:event_usernametextfieldActionPerformed
-//Action listener to retreive user input. 
-    private void passwordtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordtextfieldActionPerformed
-        userpassword = passwordtextfield.getText();
-    }//GEN-LAST:event_passwordtextfieldActionPerformed
-//Action listener to retreive user input. 
-    private void phonenumbertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phonenumbertextfieldActionPerformed
-        userphonenum = phonenumbertextfield.getText();
-    }//GEN-LAST:event_phonenumbertextfieldActionPerformed
-
-   
-    /*
-    private boolean emailIsValid(String s){
-    	boolean firstEmpty = true;
-    	boolean first = true;
-    	for(int i = 0; i < s.length(); i++){
-    		char c = s.charAt(i);
-    		if(c == )
-    		if(!(c >= 'a' && c <= 'z') &&
-				!(c >= 'A' && c <= 'Z') &&
-				!(c >= '0' && c <= '9') &&
-				c != '!' &&
-				c != '#' &&
-				)
-    	}
-    	
-    	return true;
-    }
-    */
- //Action listener to retreive user input upon click of create action button.
+    
+    //Action listener to retrieve user input upon click of create action button.
     private void createaccountbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createaccountbuttonActionPerformed
-        boolean valid = true;
-    	userfirstname = firstname.getText(); 
-        userlastname = lastname.getText();
-        username = usernametextfield.getText();
-        userpassword = passwordtextfield.getText();
-        useremail = emailtextfield.getText();
-        userphonenum = phonenumbertextfield.getText();
+    	String userfirstname = firstname.getText(); 
+        String userlastname = lastname.getText();
+        String username = usernametextfield.getText();
+        String userpassword = passwordtextfield.getText();
+        String useremail = emailtextfield.getText();
+        String userphonenum = phonenumbertextfield.getText();
         
         //Checks on user input
-        for(int i = 0; i < userfirstname.length(); i++){
-        	char c = userfirstname.charAt(i);
-        	if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')){
-        		System.out.println("Invalid character in First Name!");
-        		hotelsystemMAIN.reportError("Invalid character in \"First Name\"");
-        		valid = false;
-        		break;
-        	}
+        if(!hotelsystemMAIN.isValidName(userfirstname)){
+        	hotelsystemMAIN.reportError("Invalid First Name!");
+        	
+        	return;
         }
         
-        for(int i = 0; i < userlastname.length(); i++){
-        	char c = userlastname.charAt(i);
-        	if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z')){
-        		System.out.println("Invalid character in Last Name!");
-        		hotelsystemMAIN.reportError("Invalid character in \"Last Name\"");
-        		valid = false;
-        		break;
-        	}
+        if(!hotelsystemMAIN.isValidName(userlastname)){
+        	hotelsystemMAIN.reportError("Invalid Last Name!");
+        	
+        	return;
         }
         
-        for(int i = 0; i < username.length(); i++){
-        	char c = username.charAt(i);
-        	if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && !(c >= '0' && c <= '9')){
-        		System.out.println("Invalid character in User Name!");
-        		hotelsystemMAIN.reportError("Invalid character in \"Desired Username\"");
-        		valid = false;
-        		break;
-        	}
+        if(!hotelsystemMAIN.isValidUserName(username)){
+        	hotelsystemMAIN.reportError("Invalid Username!");
+        	
+        	return;
         }
         
-        for(int i = 0; i < userpassword.length(); i++){
-        	char c = userpassword.charAt(i);
-        	if(!(c >= '!' && c <= '}') || (c == '\"') || (c == '`')){
-        		System.out.println("Invalid character in Password!");
-        		hotelsystemMAIN.reportError("Invalid character in \"Password\"");
-        		valid = false;
-        		break;
-        	}
+        if(!hotelsystemMAIN.isValidPassWord(userpassword)){
+        	hotelsystemMAIN.reportError("Invalid Password!");
+        	
+        	return;
         }
         
-        /*
-        if(!emailIsValid(useremail)){
-        	hotelsystemMAIN.reportError("Invalid character in \"Email\"");
-        	valid = false;
+        if(!hotelsystemMAIN.isValidEmail(useremail)){
+        	hotelsystemMAIN.reportError("Invalid Email!");
+        	
+        	return;
         }
         
-        for(int i = 0; i < userphonenum.length(); i++){
-        	char c = userphonenum.charAt(i);
-        	if(!(c >= '!' && c <= '}') || (c == '\"') || (c == '`')){
-        		System.out.println("Invalid character in Password!");
-        		hotelsystemMAIN.reportError("Invalid character in \"Password\"");
-        		valid = false;
-        		break;
-        	}
-        }
-        */
-        
-       //If user input is valid, then account is created.
-        if(valid){
-	        if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
-	        	Component frame = null;
-				JOptionPane.showMessageDialog(frame, "Username already exists!");
-	        }
-	        else{
-	        	Component frame = null;
-	            JOptionPane.showMessageDialog(frame, "Successfully created new account!");
-                    this.dispose();
-                    loginpage loginPage = new loginpage(new javax.swing.JFrame(), true);
-                    loginPage.setSize(800,620);
-                    loginPage.setVisible(true);
-	        }
-        
-	        System.out.println("added " + username);
+        if(!hotelsystemMAIN.isValidPhoneNumber(userphonenum)){
+        	hotelsystemMAIN.reportError("Invalid Phone Number!");
+        	
+        	return;
         }
         
+        //If user input is valid, then account is created.
+	    if(!hotelsystemMAIN.systemUserList.createNewUser(userfirstname, userlastname, username, userpassword, useremail, userphonenum)){
+        	hotelsystemMAIN.reportError("Username already exists!");
+        }
+        else{
+        	hotelsystemMAIN.reportError("Successfully created new account!");
+            
+            this.dispose();
+            loginpage loginPage = new loginpage(new javax.swing.JFrame(), true);
+            loginPage.setSize(800,620);
+            loginPage.setVisible(true);
+            
+            System.out.println("Added " + username);
+        }     
     }//GEN-LAST:event_createaccountbuttonActionPerformed
 
+    //Local main to test page specific GUI attributes
+    /*
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -305,6 +197,7 @@ public class createaccount extends javax.swing.JDialog {
             }
         });
     }
+    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel createaccountbackground;

@@ -375,7 +375,7 @@ public class reservationProcess {
 	 * the general changeReservation function cannot change userId.  
 	 */
         //int roomNum taken out as a parameter temporarily for testing of adminEditReservations
-	int adminChangeReservation (int reservationId, Calendar startDate, Calendar endDate, int userId)
+	boolean adminChangeReservation (int reservationId, Calendar startDate, Calendar endDate)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
@@ -384,24 +384,24 @@ public class reservationProcess {
 				//entries.get(i).setRoomId(roomNum);
 				entries.get(i).setStartDate(startDate);
 				entries.get(i).setEndDate(endDate);
-				entries.get(i).adminSetUserId(userId);
-				return 1;
+				return true;
 			}
 		}
-		return 0; //reservation not found!
+		return false; //reservation not found!
 	}
-	//Function to cancel reservation by reservation ID.
-	int adminCancelReservationByRid (int reservationId)
+	
+	public boolean adminCancelReservationByRid (int reservationId)
 	{
 		int searchLength = entries.size();
 		for (int i = 0; i < searchLength; i++) {
 			if ((entries.get(i).getReservId() == reservationId))
 			{
-						entries.remove(i);
-						return 1;
+				entries.remove(i);
+				return true;
 			}
 		}
-		return 0; //reservation not found!
+		
+		return false; //reservation not found!
 	}
 	//Function to cancel reservation by User ID.
 	int adminCancelReservationByUserId (int userId)

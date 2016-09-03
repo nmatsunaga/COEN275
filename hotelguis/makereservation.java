@@ -1,65 +1,33 @@
 package hotelguis;
 
-import java.awt.Component;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
 public class makereservation extends javax.swing.JDialog {
-//Variables List
-    public String roomSelection;
-    int roomType;
-    int userID;
-    int reservationReturn;
-    public ArrayList<Integer> room_List;
-    
+	
+	//Variables List
     private DefaultTableModel model;
-    public Calendar startDate = Calendar.getInstance();
-    public Calendar endDate = Calendar.getInstance();
-//Populate table with room list that matches the user query (available rooms only).
-     //Function to populate table with rooms that match the user's query.
-     private void setTableContent(){ 
-       ArrayList<Integer> room_List;
-       
-       room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomSelection), startDate, endDate);
-       System.out.println("ArrayList Contents: " + room_List);
-       int arraySize = room_List.size();
-       for (int i = 0; i < arraySize; i++) {
-            if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
-                    Vector<String> roomNums = new Vector<>();
-                    roomNums.add(Integer.toString(room_List.get(i)));
-                    model.addRow(roomNums);
-            }
-                else {
-                    hotelsystemMAIN.reportError("No rooms found with your desired dates!");
-                }
-        }
-    }
-    //User user = new User();
-    //Users users = new Users();
     
-     	/* The function below is utility to convert room type input from user to integer matching the hotel room def*/    
-	public int GetRoomType(String roomTypeFromUser)
-	{	
-	    switch (roomTypeFromUser) {
-	    	case "Two King Beds":  roomType = 0;
-	    		break;
-	    	case "One King Bed and One Queen Bed":  roomType = 1;
-	    		break;
-	        case "Two Queen Beds":  roomType = 2;
-	        	break;
-	        case "One King Bed":  roomType = 3;
-        		break;
-	        case "One Queen Bed": roomType = 4;
-	        	break;
-	        default: roomType = -1;
-	        	break;
-	    }
-	    return roomType;
-	}
-    //Initialization of GUI components.    
+    //Function to populate table with rooms that match the user's query.
+    private void setTableContent(ArrayList<Integer> roomNumbers){
+   	 	for(int i = model.getRowCount() - 1; i >= 0; i--){
+   	 		model.removeRow(i);
+   	 	}
+   	 
+	   	 System.out.println("ArrayList Contents: " + roomNumbers);
+	   	 int arraySize = roomNumbers.size();
+	   	 for (int i = 0; i < arraySize; i++) {
+	   		 Vector<Integer> roomNums = new Vector<>();
+	   		 roomNums.add(roomNumbers.get(i));
+	   		 model.addRow(roomNums);
+	   	 }
+    }
+    
+    //CONSTRUCTOR  
     public makereservation(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -106,7 +74,7 @@ public class makereservation extends javax.swing.JDialog {
         usernameLabel.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(usernameLabel);
         usernameLabel.setBounds(110, 570, 100, 0);
-        usernameLabel.setText(String.valueOf(user._userID));
+        usernameLabel.setText(String.valueOf(hotelsystemMAIN.user._userID));
 
         monthlabel.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         monthlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,30 +107,18 @@ public class makereservation extends javax.swing.JDialog {
         roomChoiceInstructionLabel1.setBounds(70, 520, 390, 30);
 
         roomNumTableEdit.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Room Number"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class
-            };
+            new Object [][] {},
+            new String [] {"Room Number"}
+        	) {
+            	Class[] types = new Class [] {
+            		java.lang.Integer.class
+            	};
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+            	public Class getColumnClass(int columnIndex) {
+            		return types [columnIndex];
+            	}
+        	}
+        );
         roomNumTable.setViewportView(roomNumTableEdit);
 
         getContentPane().add(roomNumTable);
@@ -170,11 +126,6 @@ public class makereservation extends javax.swing.JDialog {
 
         Month.setMaximumRowCount(12);
         Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        Month.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MonthActionPerformed(evt);
-            }
-        });
         getContentPane().add(Month);
         Month.setBounds(300, 200, 120, 30);
 
@@ -189,58 +140,28 @@ public class makereservation extends javax.swing.JDialog {
 
         Month2.setMaximumRowCount(12);
         Month2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        Month2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Month2ActionPerformed(evt);
-            }
-        });
         getContentPane().add(Month2);
         Month2.setBounds(300, 240, 120, 27);
 
         day.setMaximumRowCount(31);
         day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        day.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dayActionPerformed(evt);
-            }
-        });
         getContentPane().add(day);
         day.setBounds(450, 200, 100, 27);
 
         day2.setMaximumRowCount(31);
         day2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-        day2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                day2ActionPerformed(evt);
-            }
-        });
         getContentPane().add(day2);
         day2.setBounds(450, 240, 100, 27);
 
         year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017", "2018" }));
-        year.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                yearActionPerformed(evt);
-            }
-        });
         getContentPane().add(year);
         year.setBounds(580, 200, 88, 27);
 
         year2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2016", "2017", "2018" }));
-        year2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                year2ActionPerformed(evt);
-            }
-        });
         getContentPane().add(year2);
         year2.setBounds(580, 240, 90, 27);
 
         roomtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Two King Beds", "One King Bed & One Queen Bed", "Two Queen Beds", "One King Bed", "One Queen Bed" }));
-        roomtype.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roomtypeActionPerformed(evt);
-            }
-        });
         getContentPane().add(roomtype);
         roomtype.setBounds(300, 280, 250, 27);
 
@@ -307,103 +228,44 @@ public class makereservation extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Action listener to return the user to the welcome page.
+    
+    //Action listener to return the user to the welcome page.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-//Action listener to retreive user input and confirm a reservation.
+    
+    //Action listener to retrieve user input and confirm a reservation.
     private void checkavailabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkavailabilityActionPerformed
-        ArrayList<Integer> roomNum;
-    	userID = hotelsystemMAIN.user.getUserID();
+    	int startDay = day.getSelectedIndex() + 1;
+        int startMonth = Month.getSelectedIndex();
+        int startYear = year.getSelectedIndex() + 2016;
         
-    	int startDay;
-    	int startMonth;
-    	int startYear;
+        int endDay = day2.getSelectedIndex() + 1;
+        int endMonth = Month2.getSelectedIndex();
+        int endYear = year2.getSelectedIndex() + 2016;
+        
+        int roomType = roomtype.getSelectedIndex();
+        
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(startYear, startMonth, startDay);
+              
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(endYear, endMonth, endDay);
     	
-    	int endDay;
-    	int endMonth;
-    	int endYear;
-    	
-    	Calendar startDate = Calendar.getInstance();
-    	Calendar endDate = Calendar.getInstance();
-    	
-        startMonth = Integer.valueOf((String)Month.getSelectedItem());
-        startDay = Integer.valueOf((String)day.getSelectedItem());
-        startYear = Integer.valueOf((String)year.getSelectedItem());
-        
-        startDate.set(Calendar.MONTH, (startMonth - 1));
-        startDate.set(Calendar.DAY_OF_MONTH, startDay);
-        startDate.set(Calendar.YEAR, startYear);
-        
-        endMonth = Integer.valueOf((String)Month2.getSelectedItem());
-        endDay = Integer.valueOf((String)day2.getSelectedItem());
-        endYear = Integer.valueOf((String)year2.getSelectedItem());
-        
-        endDate.set(Calendar.MONTH, (endMonth - 1));
-        endDate.set(Calendar.DAY_OF_MONTH, endDay);
-        endDate.set(Calendar.YEAR, endYear);
-        
-        roomSelection = (String) roomtype.getSelectedItem();
-        
-        if ("Two King Beds".equals(roomSelection)){
-            roomType = 0;
-            //roomNum = 0;
-        }
-        if ("One King & One Queen Bed".equals(roomSelection)){
-            roomType = 1;
-            //roomNum = 1;
-        }
-        if ("Two Queen Beds".equals(roomSelection)){
-            roomType = 2;
-            //roomNum = 2;
-        }
-        if ("One King Bed".equals(roomSelection)){
-            roomType = 3;
-            //roomNum = 3;
-        }
-        if ("One Queen Bed".equals(roomSelection)){
-            roomType = 4;
-            //roomNum = 4;
-        }
-        
-        if(!hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)){
-    		hotelsystemMAIN.reportError("Dates given are invalid");
+    	if(!hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)){
+    		hotelsystemMAIN.reportError("Dates given are invalid!");
     		
     		return;
     	}
-        //Check availablity of the system first before a reservation change can be confirmed.
-        roomNum = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
         
-        System.out.println("room num" + roomNum.get(0) + "startdate" + startDate + "enddate" + endDate + "userID" + userID);//testing
-        
-        if (roomNum.isEmpty())
-        {
-        	hotelsystemMAIN.reportError(roomSelection + " room is not available in the dates specified.");	
-        }
-        else
-        {
-        	reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNum.get(0), startDate, endDate, userID);
-        
-	        if (reservationReturn < 0 ){
-	            Component frame = null;
-	            String errorMessage = "Reservation unsuccessful!";
-	            if (reservationReturn == -2)
-	            	errorMessage+= "  Invalid dates.";
-	            else if (reservationReturn == -1)
-	            	errorMessage+= "  The user ID is not valid.";
-	            
-	            JOptionPane.showMessageDialog(frame, errorMessage);
-	        }
-	        if (reservationReturn >= 0){
-	            Component frame = null;
-	            JOptionPane.showMessageDialog(frame, "Successfully made reservation.  Your reservation ID # is" + reservationReturn);
-	        }
-        }
+    	ArrayList<Integer> roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
+    	setTableContent(roomNumber);
     }//GEN-LAST:event_checkavailabilityActionPerformed
-//Action listener to return user to the user options GUI page.
+    
+    //Action listener to return user to the user options GUI page.
     private void backbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backbuttonActionPerformed
         this.dispose();
         useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
@@ -411,20 +273,42 @@ public class makereservation extends javax.swing.JDialog {
         optwin.setVisible(true);
     }//GEN-LAST:event_backbuttonActionPerformed
 
+    //Function to make a reservation when the make reservation button is selected
     private void makeReservationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeReservationButtonActionPerformed
-        int selectedRoom = Integer.parseInt((String)roomNumTable.getValueAt(roomNumTable.getSelectedRow(),0));
-        System.out.println("Selected Room # = " + selectedRoom);       
+    	int startDay = day.getSelectedIndex() + 1;
+        int startMonth = Month.getSelectedIndex();
+        int startYear = year.getSelectedIndex() + 2016;
         
-         hotelsystemMAIN.systemReservationList.createReservation(selectedRoom, startDate, endDate, ERROR);
-            hotelsystemMAIN.reportError("Successfully made reservation for Room #:" + selectedRoom);
+        int endDay = day2.getSelectedIndex() + 1;
+        int endMonth = Month2.getSelectedIndex();
+        int endYear = year2.getSelectedIndex() + 2016;
+        
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(startYear, startMonth, startDay);
+              
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(endYear, endMonth, endDay);	
+    	
+        int row = roomNumTableEdit.getSelectedRow();
+        
+        if(row >= 0){
+        	int selectedRoom = (Integer) roomNumTableEdit.getValueAt(row, 0);
+        	System.out.println("Selected Room # = " + selectedRoom);       
+        
+        	hotelsystemMAIN.systemReservationList.createReservation(selectedRoom, startDate, endDate, hotelsystemMAIN.user.getUserID());
+        	hotelsystemMAIN.reportError("Successfully made reservation for Room #" + selectedRoom);
+        }
+        else{
+        	hotelsystemMAIN.reportError("Invalid room selection!");
+        }
+        
+        for(int i = model.getRowCount() - 1; i >= 0; i--){
+   	 		model.removeRow(i);
+   	 	}
     }//GEN-LAST:event_makeReservationButtonActionPerformed
 
+    /*
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -443,7 +327,7 @@ public class makereservation extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
+        //Create and display the dialog
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -459,6 +343,7 @@ public class makereservation extends javax.swing.JDialog {
             }
         });
     }
+	*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Month;

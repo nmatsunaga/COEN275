@@ -1,29 +1,18 @@
 package hotelguis;
 
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Date;
+
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Vector;
-import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-//import java.awt.Component;
-//import javax.swing.JOptionPane;
+
 
 public class checkavail extends javax.swing.JDialog {
     
-//Variable Declaration
+	//DATA
     private DefaultTableModel model;
-    public Calendar startDate = Calendar.getInstance();
-    public Calendar endDate = Calendar.getInstance();
-    public int roomType;
     
-//Initialization of GUI components.    
+    //CONSTRUCTOR
     public checkavail(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -33,26 +22,23 @@ public class checkavail extends javax.swing.JDialog {
         roomNumTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         model = (DefaultTableModel) roomNumTable.getModel();
     }
-//Function to populate table with rooms that match the user's query.
-     private void setTableContent(){ 
-       ArrayList<Integer> room_List;
-       
-       room_List = hotelsystemMAIN.hotelRoomList.check_availability(GetRoomType(roomtypechoice.getSelectedItem()), startDate, endDate);
-       System.out.println("ArrayList Contents: " + room_List);
-       int arraySize = room_List.size();
-       for (int i = 0; i < arraySize; i++) {
-            if (hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)== true){
-                    Vector<String> roomNums = new Vector<>();
-                    roomNums.add(Integer.toString(room_List.get(i)));
-                    model.addRow(roomNums);
-            }
-                else {
-                    hotelsystemMAIN.reportError("No rooms found with your desired dates!");
-                }
-        }
-    }
+    
+    //Function to populate table with rooms that match the user's query.
+     private void setTableContent(ArrayList<Integer> roomNumbers){
+    	 for(int i = model.getRowCount() - 1; i >= 0; i--){
+    		 model.removeRow(i);
+    	 }
+    	 
+    	 System.out.println("ArrayList Contents: " + roomNumbers);
+    	 int arraySize = roomNumbers.size();
+    	 for (int i = 0; i < arraySize; i++) {
+    		 Vector<Integer> roomNums = new Vector<>();
+    		 roomNums.add(roomNumbers.get(i));
+    		 model.addRow(roomNums);
+    	 }
+     }
      
-      /*utility for converting read in month from user to int format*/
+    //Utility for converting read in month from user to int format
 	public int SwitchMonth(String monthString)
 	{
 		int month;
@@ -87,31 +73,7 @@ public class checkavail extends javax.swing.JDialog {
             }
 	    return month;
 	}    
-    
-	/* The function below is utility to convert room type input from user to integer matching the hotel room def*/    
-	public int GetRoomType(String roomTypeFromUser)
-	{	
-	    switch (roomTypeFromUser) {
-	    	case "Two King Beds":  roomType = 0;
-	    		break;
-	    	case "One King Bed and One Queen Bed":  roomType = 1;
-	    		break;
-	        case "Two Queen Beds":  roomType = 2;
-	        	break;
-	        case "One King Bed":  roomType = 3;
-        		break;
-	        case "One Queen Bed": roomType = 4;
-	        	break;
-	        default: roomType = -1;
-	        	break;
-	    }
-	    return roomType;
-	}
      
-    checkavail() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -187,21 +149,18 @@ public class checkavail extends javax.swing.JDialog {
         roomResLabel.setBounds(160, 520, 360, 20);
 
         roomNumTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][] {},
+            new String [] {"Room Number"}) {
+            	Class[] types = new Class [] {
+            			java.lang.Integer.class
+            	};
 
-            },
-            new String [] {
-                "Room Number"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class
-            };
+            	public Class getColumnClass(int columnIndex) {
+            		return types [columnIndex];
+            	}
+        	}
+        );
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         jScrollPane1.setViewportView(roomNumTable);
 
         checkavailabilitypanel.add(jScrollPane1);
@@ -277,8 +236,6 @@ public class checkavail extends javax.swing.JDialog {
         daychoice.add("29");
         daychoice.add("30");
         daychoice.add("31");
-        daychoice.add("1");
-        daychoice.add("1");
         checkavailabilitypanel.add(daychoice);
         daychoice.setBounds(410, 90, 70, 20);
 
@@ -313,14 +270,12 @@ public class checkavail extends javax.swing.JDialog {
         daychoice1.add("29");
         daychoice1.add("30");
         daychoice1.add("31");
-        daychoice.add("1");
-        daychoice.add("1");
         checkavailabilitypanel.add(daychoice1);
         daychoice1.setBounds(410, 60, 70, 20);
 
         roomtypechoice.add("Two King Beds");
-        roomtypechoice.add("Two Queen Beds");
         roomtypechoice.add("One King Bed, One Queen Bed");
+        roomtypechoice.add("Two Queen Beds");
         roomtypechoice.add("One King Bed");
         roomtypechoice.add("One Queen Bed");
         checkavailabilitypanel.add(roomtypechoice);
@@ -367,153 +322,58 @@ public class checkavail extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Action listener for users to be returned to the welcome page of the system via button click.
+    
+    //Action listener for users to be returned to the welcome page of the system via button click.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
     	welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
         homewindow.setSize(800,620);
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
-//Action listener for the system to retrieve all of the information user has provided when submit button is clicked.
-    private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed
-        /*get the user's date input*/
-    	String dayStart = daychoice1.getSelectedItem();
-    	String dayEnd = daychoice.getSelectedItem();
-    	String monthStart = monthchoice1.getSelectedItem();
-    	String monthEnd = monthchoice.getSelectedItem();
-    	String yearStart = yearchoice1.getSelectedItem();
-    	String yearEnd = yearchoice.getSelectedItem();
-    	String roomTypeSelected = roomtypechoice.getSelectedItem();
-    	
-    	/*
-        int startMonth = SwitchMonth(monthStart);
-        int startDay = Integer.valueOf((String)daychoice1.getSelectedItem());
-        int startYear = Integer.valueOf((String)yearchoice1.getSelectedItem());
-        */
-        
+    
+    //Action listener for the system to retrieve all of the information user has provided when submit button is clicked.
+    private void submitbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitbuttonActionPerformed   
     	int startDay = daychoice1.getSelectedIndex() + 1;
         int startMonth = monthchoice1.getSelectedIndex();
         int startYear = yearchoice1.getSelectedIndex() + 2016;
-        
-        /*
-        Calendar startDate = Calendar.getInstance();
-        startDate.set(Calendar.MONTH, (startMonth-1));
-        startDate.set(Calendar.DAY_OF_MONTH, startDay);
-        startDate.set(Calendar.YEAR, (startYear));
-        */
-        
-      //  startDate = Calendar.getInstance();
-        startDate.set(startYear, startMonth, startDay);
-        
-        /*
-        int endMonth = SwitchMonth(monthEnd);
-        int endDay = Integer.valueOf((String)daychoice.getSelectedItem());
-        int endYear = Integer.valueOf((String)yearchoice.getSelectedItem());
-        */
         
         int endDay = daychoice.getSelectedIndex() + 1;
         int endMonth = monthchoice.getSelectedIndex();
         int endYear = yearchoice.getSelectedIndex() + 2016;
         
-        /*
-        Calendar endDate = Calendar.getInstance();
-        endDate.set(Calendar.MONTH, (endMonth - 1));
-        endDate.set(Calendar.DAY_OF_MONTH, endDay);
-        endDate.set(Calendar.YEAR, (endYear));
-		*/
+        int roomType = roomtypechoice.getSelectedIndex();
         
-       // endDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(startYear, startMonth, startDay);
+              
+        Calendar endDate = Calendar.getInstance();
         endDate.set(endYear, endMonth, endDay);
     	
     	if(!hotelsystemMAIN.hotelRoomList.Are_Valid_Dates(startDate, endDate)){
-    		hotelsystemMAIN.reportError("Dates given are invalid");
+    		hotelsystemMAIN.reportError("Dates given are invalid!");
     		
     		return;
     	}
         
-    	//ArrayList<Integer> roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
-    	setTableContent();
-  /*  	
-    	//the following boolean value is to indicate if an available room is found in the date specified
-    	boolean roomFound = false;
-    	if (roomNumber.size() > 0)
-    		roomFound = true;
-    	
-    	if (roomFound == true)
-    	{
-    		JFrame frame = new JFrame();
-			
-                //message is for displaying to user when a room is available, if the user wants to make a reservation
-    		//currently the hotel room mgr only returns one available room number, so the code below only display that single room
-		    String message = "The following rooms are available that match your desired dates and room type.  Would you like to make a reservation?\n";
-		    message += "Room Number: ";
-		    for(int i = 0; i < roomNumber.size() - 1; i++){
-		    	message += roomNumber.get(i) + ", ";
-		    }
-		    message += roomNumber.get(roomNumber.size() - 1) + "\n";
-		    int answer = JOptionPane.showConfirmDialog(frame, message);
-		    if (answer == JOptionPane.YES_OPTION) {
-		      // User clicked YES.
-		    	boolean loggedInStatus = hotelsystemMAIN.user.getLoggedIn();
-				if (loggedInStatus) //if user already logged in
-				{
-                    //this.dispose();
-					int reservationReturn = hotelsystemMAIN.systemReservationList.createReservation(roomNumber.get(0), startDate, endDate, hotelsystemMAIN.user.getUserID());
-					if (reservationReturn < 0){
-			            Component reservationConfirmFrame = null;
-			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Reservation unsuccessful!  Return code = " + reservationReturn);
-			        }
-					else if (reservationReturn >= 0){
-			            Component reservationConfirmFrame = null;
-			            JOptionPane.showMessageDialog(reservationConfirmFrame, "Successfully made reservation.  Your reservation ID # is " + reservationReturn);
-			        }    
-				}
-				else
-				{
-                    hotelsystemMAIN.reportError("You must log-in first to make a reservation.");                
-                    this.dispose();
-                    loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
-                    loginwindow.setSize(800,620);
-                    loginwindow.setVisible(true);
-				}
-		    }
-    	}
-    	else 
-    	{
-    		Component roomUnavailableFrame = null;
-            JOptionPane.showMessageDialog(roomUnavailableFrame, "Sorry, " + roomTypeSelected + " room is not available in the date range specified!");
-    	}
-    */
+    	ArrayList<Integer> roomNumber = hotelsystemMAIN.hotelRoomList.check_availability(roomType, startDate, endDate);
+    	setTableContent(roomNumber);
     }//GEN-LAST:event_submitbuttonActionPerformed
-//Action Listener for room to be reserved.    
+    
+    //Action Listener for room to be reserved.
     private void reserveRoomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reserveRoomButtonActionPerformed
-        int selectedRoom = Integer.parseInt((String)roomNumTable.getValueAt(roomNumTable.getSelectedRow(),0));
+        int selectedRoom = (Integer) roomNumTable.getValueAt(roomNumTable.getSelectedRow(), 0);
         System.out.println("Selected Room # = " + selectedRoom);
         
-        if (hotelsystemMAIN.user.getLoggedIn()==true){
-            hotelsystemMAIN.systemReservationList.createReservation(selectedRoom, startDate, endDate, ERROR);
-            hotelsystemMAIN.reportError("Successfully made reservation for Room #:" + selectedRoom);
-            this.dispose();
-            useroptionswindow optwin = new useroptionswindow(new javax.swing.JFrame(), true);
-            optwin.setSize(800,620);
-            optwin.setVisible(true);
-        }
-
-        else {
         hotelsystemMAIN.reportError("Unable to make reservation, please login first!");
         this.dispose();
         loginpage loginwindow = new loginpage(new javax.swing.JFrame(), true);
         loginwindow.setSize(800,620);
         loginwindow.setVisible(true);
-        }
     }//GEN-LAST:event_reserveRoomButtonActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    //Local main to test page specific GUI attributes
+    /*
+    public static void main(String args[]) { 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -532,7 +392,7 @@ public class checkavail extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-        /* Create and display the dialog */
+        //Create and display the dialog
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 checkavail dialog = new checkavail(new javax.swing.JFrame(), true);
@@ -547,6 +407,7 @@ public class checkavail extends javax.swing.JDialog {
             }
         });
     }
+	*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel checkavailabilitypanel;

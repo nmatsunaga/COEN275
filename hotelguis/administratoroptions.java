@@ -1,16 +1,16 @@
 package hotelguis;
 
+
 public class administratoroptions extends javax.swing.JDialog {
     
+	//CONSTRUCTOR
     public administratoroptions(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         edituserslabel = new javax.swing.JLabel();
         editreservationslabel = new javax.swing.JLabel();
         homebutton = new javax.swing.JButton();
@@ -83,21 +83,24 @@ public class administratoroptions extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Action listener for user to be sent to the 'editAccounts' GUI.
+    
+    //Action listener for user to be sent to the 'editAccounts' GUI.
     private void editaccountsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editaccountsActionPerformed
         this.dispose();
         adminEditUsers editAccounts = new adminEditUsers(new javax.swing.JFrame(), true);
         editAccounts.setSize(800,620);
         editAccounts.setVisible(true);
     }//GEN-LAST:event_editaccountsActionPerformed
-//Action listener for user to be sent to the 'adminEditReservations' GUI.
+    
+    //Action listener for user to be sent to the 'adminEditReservations' GUI.
     private void changereservationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changereservationsActionPerformed
         this.dispose();
         adminEditReservations editRes = new adminEditReservations(new javax.swing.JFrame(),true);
         editRes.setSize(800,620);
         editRes.setVisible(true);
     }//GEN-LAST:event_changereservationsActionPerformed
-//Action listener for user to signout via button.
+    
+    //Action listener for user to signout via button.
     private void signoutbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signoutbuttonActionPerformed
         this.dispose();
         String currentUserName = hotelsystemMAIN.user.getUserName();
@@ -106,7 +109,8 @@ public class administratoroptions extends javax.swing.JDialog {
         signout.setSize(800,620);
         signout.setVisible(true);
     }//GEN-LAST:event_signoutbuttonActionPerformed
-//Action listener for user to return to the welcome page of the system.
+    
+    //Action listener for user to return to the welcome page of the system.
     private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
         this.dispose();
         welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
@@ -114,6 +118,8 @@ public class administratoroptions extends javax.swing.JDialog {
         homewindow.setVisible(true);
     }//GEN-LAST:event_homebuttonActionPerformed
 
+    //Local main to test page specific GUI attributes
+    /*
     public static void main(String args[]) {
        //Setting look and feel.
         try {
@@ -148,6 +154,7 @@ public class administratoroptions extends javax.swing.JDialog {
             }
         });
     }
+    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel administratoroptionsbackground;

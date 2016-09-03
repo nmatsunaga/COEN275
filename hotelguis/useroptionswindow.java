@@ -1,5 +1,6 @@
 package hotelguis;
 
+
 public class useroptionswindow extends javax.swing.JDialog {
 //Initialize GUI components.
     public useroptionswindow(java.awt.Frame parent, boolean modal) {
@@ -7,12 +8,9 @@ public class useroptionswindow extends javax.swing.JDialog {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         makereservationbutton = new javax.swing.JButton();
-        homebutton = new javax.swing.JButton();
         signoutbutton = new javax.swing.JButton();
         welcometitle = new javax.swing.JLabel();
         updateaccountbutton = new javax.swing.JButton();
@@ -31,15 +29,6 @@ public class useroptionswindow extends javax.swing.JDialog {
         getContentPane().add(makereservationbutton);
         makereservationbutton.setBounds(30, 540, 190, 29);
 
-        homebutton.setText("HOME");
-        homebutton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homebuttonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(homebutton);
-        homebutton.setBounds(710, 10, 82, 29);
-
         signoutbutton.setText("Sign Out");
         signoutbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,7 +44,7 @@ public class useroptionswindow extends javax.swing.JDialog {
         getContentPane().add(welcometitle);
         welcometitle.setBounds(30, 10, 310, 60);
 
-        updateaccountbutton.setText("Update Account Info.");
+        updateaccountbutton.setText("Update Account Info");
         updateaccountbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateaccountbuttonActionPerformed(evt);
@@ -109,13 +98,6 @@ public class useroptionswindow extends javax.swing.JDialog {
         signoutwindow.setSize(800,620);
         signoutwindow.setVisible(true);
     }//GEN-LAST:event_signoutbuttonActionPerformed
-//Takes user to welcomepage if clicked.
-    private void homebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homebuttonActionPerformed
-        this.dispose();
-        welcomepage homewindow = new welcomepage(new javax.swing.JFrame(), true);
-        homewindow.setSize(800,620);
-        homewindow.setVisible(true);
-    }//GEN-LAST:event_homebuttonActionPerformed
 
     public static void main(String args[]) {
 
@@ -136,7 +118,6 @@ public class useroptionswindow extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton editreservationsbutton;
-    private javax.swing.JButton homebutton;
     private javax.swing.JButton makereservationbutton;
     private javax.swing.JButton signoutbutton;
     private javax.swing.JButton updateaccountbutton;
